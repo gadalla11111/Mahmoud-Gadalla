@@ -1,12 +1,3 @@
 [submodule "tools/diffgate"]
 	path = tools/diffgate
 	url = https://github.com/srbsa/diffgate
-[submodule "tools/memex"]
-	path = tools/memex
-	url = https://github.com/dioniipereyraa/memex
-[submodule "tools/fastled"]
-	path = tools/fastled
-	url = https://github.com/fastled/fastled
-[submodule "tools/starter-workflows"]
-	path = tools/starter-workflows
-	url = https://github.com/actions/starter-workflows
