@@ -25,7 +25,9 @@
       "message": "Read config through the typed config module, not process.env directly."
     }
   ],
-  "rules": {},
+  "rules": {
+    "db-schema-destructive": { "tier": "yellow" }
+  },
   "guidelines": {
     "enabled": true,
     "autoDetect": true,
