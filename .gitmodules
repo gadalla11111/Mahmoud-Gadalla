@@ -1,0 +1,3 @@
+[submodule "tools/diffgate"]
+	path = tools/diffgate
+	url = https://github.com/srbsa/diffgate
