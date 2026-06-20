@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "umbriel": {
+      "type": "stdio",
+      "command": "bunx",
+      "args": ["umbriel"]
+    },
+    "diffgate": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["tools/diffgate/dist/cli.js", "mcp"]
+    },
+    "memex": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["memex", "mcp"]
+    }
+  }
+}
