@@ -134,6 +134,8 @@ def print_activity(msg: Any) -> None:
     Args:
         msg: A message object from the Claude Agent SDK response stream
     """
+    global _subagent_context
+
     if "Assistant" in msg.__class__.__name__:
         # Check if content exists and has elements
         if hasattr(msg, "content") and msg.content:

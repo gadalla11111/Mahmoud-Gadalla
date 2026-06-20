@@ -82,32 +82,6 @@ skills/
 
 ---
 
-## Anthropic Skills (`/anthropic_skills/`)
-
-Drop-in skill folders from [anthropics/skills](https://github.com/anthropics/skills). Each contains a `SKILL.md` with instructions Claude loads on demand.
-
-| Skill | Folder | What It Does |
-|---|---|---|
-| Algorithmic Art | `algorithmic-art/` | Generative art with p5.js |
-| Brand Guidelines | `brand-guidelines/` | Apply brand rules to content |
-| Canvas Design | `canvas-design/` | Visual design in PNG/PDF |
-| Claude API | `claude-api/` | Claude API usage patterns |
-| Doc Co-authoring | `doc-coauthoring/` | Collaborative document editing |
-| DOCX | `docx/` | Word document creation & editing |
-| Frontend Design | `frontend-design/` | HTML/React/Tailwind artifacts |
-| Internal Comms | `internal-comms/` | Internal communications drafting |
-| MCP Builder | `mcp-builder/` | Build MCP servers |
-| PDF | `pdf/` | PDF document skills |
-| PPTX | `pptx/` | PowerPoint presentation skills |
-| Skill Creator | `skill-creator/` | Build new skills |
-| Slack GIF Creator | `slack-gif-creator/` | Animated GIFs for Slack |
-| Theme Factory | `theme-factory/` | Professional artifact themes |
-| Web Artifacts Builder | `web-artifacts-builder/` | Web app artifacts |
-| Webapp Testing | `webapp-testing/` | Playwright testing |
-| XLSX | `xlsx/` | Excel spreadsheet skills |
-
----
-
 ## Models in Use
 
 - **Sonnet:** `claude-sonnet-4-6`
