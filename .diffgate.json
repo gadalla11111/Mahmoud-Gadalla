@@ -40,6 +40,16 @@
     "**/node_modules/**",
     "**/dist/**",
     "**/build/**",
-    "**/*.ipynb"
+    "**/*.ipynb",
+    "anthropic_skills/**",
+    "claude_agent_sdk/belief-gate/docs/**",
+    "claude_agent_sdk/harness-primitives/**",
+    "financial_services/**",
+    "tools/claude-for-foundation-models/**",
+    "tools/jetbrains-plugin-lib/**",
+    "tools/starter-workflows/**",
+    "tools/fastled/**",
+    "tools/diffgate/**",
+    "tools/memex/**"
   ]
 }
