@@ -29,8 +29,6 @@
 | Excel | `anthropic_skills/xlsx` |
 | MCP server creation | `anthropic_skills/mcp-builder` |
 | Brand guidelines | `anthropic_skills/brand-guidelines` |
-| Fact-check claims (3× rule, QA grid) | `anthropic_skills/fact-checker` |
-| Ministry proposal orchestration | `anthropic_skills/ministry-proposal` |
 
 ## Environment
 
