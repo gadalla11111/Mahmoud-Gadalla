@@ -7,3 +7,6 @@
 [submodule "tools/fastled"]
 	path = tools/fastled
 	url = https://github.com/fastled/fastled
+[submodule "tools/starter-workflows"]
+	path = tools/starter-workflows
+	url = https://github.com/actions/starter-workflows
