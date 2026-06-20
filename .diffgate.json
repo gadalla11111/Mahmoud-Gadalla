@@ -39,6 +39,7 @@
   "ignore": [
     "**/node_modules/**",
     "**/dist/**",
-    "**/build/**"
+    "**/build/**",
+    "**/*.ipynb"
   ]
 }
