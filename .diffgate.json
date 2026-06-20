@@ -40,6 +40,13 @@
     "**/node_modules/**",
     "**/dist/**",
     "**/build/**",
-    "**/*.ipynb"
+    "**/*.ipynb",
+    "financial_services/**",
+    "tools/claude-for-foundation-models/**",
+    "tools/jetbrains-plugin-lib/**",
+    "tools/starter-workflows/**",
+    "tools/fastled/**",
+    "tools/diffgate/**",
+    "tools/memex/**"
   ]
 }
