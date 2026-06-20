@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  python:
+    name: Python lint & syntax
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Install dependencies
+        run: uv sync --all-extras
+        continue-on-error: true  # no pyproject.toml at root yet; skip gracefully
+
+      - name: Lint (syntax errors + undefined names only)
+        run: |
+          pip install flake8
+          flake8 misc/ claude_agent_sdk/ \
+            --count --select=E9,F63,F7,F82 \
+            --show-source --statistics \
+            --exclude=**/node_modules,**/.git
+
+      - name: Check for accidental .env commits
+        run: |
+          if git ls-files | grep -E '^\.env$'; then
+            echo "ERROR: .env file is tracked by git"
+            exit 1
+          fi
