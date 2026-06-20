@@ -25,9 +25,7 @@
       "message": "Read config through the typed config module, not process.env directly."
     }
   ],
-  "rules": {
-    "db-schema-destructive": { "tier": "yellow" }
-  },
+  "rules": {},
   "guidelines": {
     "enabled": true,
     "autoDetect": true,
@@ -39,14 +37,6 @@
   "ignore": [
     "**/node_modules/**",
     "**/dist/**",
-    "**/build/**",
-    "**/*.ipynb",
-    "financial_services/**",
-    "tools/claude-for-foundation-models/**",
-    "tools/jetbrains-plugin-lib/**",
-    "tools/starter-workflows/**",
-    "tools/fastled/**",
-    "tools/diffgate/**",
-    "tools/memex/**"
+    "**/build/**"
   ]
 }
