@@ -4,3 +4,6 @@
 [submodule "tools/memex"]
 	path = tools/memex
 	url = https://github.com/dioniipereyraa/memex
+[submodule "tools/fastled"]
+	path = tools/fastled
+	url = https://github.com/fastled/fastled
