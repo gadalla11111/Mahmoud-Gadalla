@@ -50,6 +50,8 @@
     "tools/starter-workflows/**",
     "tools/fastled/**",
     "tools/diffgate/**",
-    "tools/memex/**"
+    "tools/memex/**",
+    "agent-instructions/**",
+    "tokslayer/**"
   ]
 }

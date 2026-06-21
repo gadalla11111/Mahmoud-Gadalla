@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Run lint-staged (prettier, eslint, tsc on staged files)
+pnpm exec lint-staged
+
+# Check for unused code/dependencies
+pnpm knip --no-config-hints
+
+# Check for code duplication
+pnpm duplication-check
+
+# Build (includes markdownlint --fix)
+pnpm build
+
+# Run tests with coverage (fails if below 100%)
+pnpm test:coverage
+
+# Stage generated files
+git add README.md
+git add .claude/commands/
+git add .claude/skills/
+git add .opencode/commands/
+git add .opencode/skills/

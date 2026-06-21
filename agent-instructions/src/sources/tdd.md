@@ -1,0 +1,31 @@
+---
+description: Remind agent about TDD approach and continue conversation
+argument-hint: [optional-response-to-last-message]
+_hint: TDD reminder
+_category: Test-Driven Development
+_order: 1
+---
+
+# TDD Reminder
+
+<!-- docs INCLUDE path='src/fragments/universal-guidelines.md' -->
+<!-- /docs -->
+
+<!-- docs INCLUDE path='src/fragments/beads-awareness.md' featureFlag='beads' -->
+<!-- /docs -->
+
+<!-- docs INCLUDE path='src/fragments/no-plan-files.md' featureFlag='no-plan-files' -->
+<!-- /docs -->
+
+<!-- docs INCLUDE path='src/fragments/tdd-fundamentals.md' -->
+<!-- /docs -->
+
+## Continue Conversation
+
+**User arguments:**
+
+TDD: $ARGUMENTS
+
+**End of user arguments**
+
+Please continue with the user input above, applying TDD approach.
