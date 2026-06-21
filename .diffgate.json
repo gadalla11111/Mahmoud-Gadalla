@@ -52,6 +52,10 @@
     "tools/diffgate/**",
     "tools/memex/**",
     "agent-instructions/**",
-    "tokslayer/**"
+    "tokslayer/**",
+    "claude-code-setup/**",
+    "layrr/**",
+    "claude-code-queue/**",
+    "custom-instructions/**"
   ]
 }
