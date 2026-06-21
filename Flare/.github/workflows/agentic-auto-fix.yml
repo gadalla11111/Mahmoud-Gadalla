@@ -1,0 +1,104 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+name: .github/workflows/agentic-auto-fix.yml
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+  workflow_dispatch: {}
+
+jobs:
+  auto-fix:
+    if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'agentic-auto-fix') }}
+    runs-on: windows-2022
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          lfs: false
+          submodules: false
+          fetch-depth: 0
+          persist-credentials: true
+          clean: true
+
+      - name: Install vcpkg
+        shell: cmd
+        run: |
+          @echo on
+          if exist vcpkg rmdir /S /Q vcpkg
+          :clone_vcpkg
+          git clone --depth 1 https://github.com/microsoft/vcpkg.git vcpkg || (
+            echo fallback to zip
+            curl -fsSL -o vcpkg.zip https://github.com/microsoft/vcpkg/archive/refs/heads/master.zip
+            7z x -y vcpkg.zip -ovcpkg_tmp
+            move /Y vcpkg_tmp\vcpkg-master vcpkg
+            rmdir /S /Q vcpkg_tmp
+            del /Q vcpkg.zip
+            goto :vcpkg_ready
+          )
+          timeout /t 3 /nobreak
+          goto :vcpkg_ready
+          :vcpkg_ready
+          pushd vcpkg
+          call bootstrap-vcpkg.bat || (echo bootstrap failed & exit /b 1)
+          popd
+
+      - name: Configure (CMake)
+        shell: cmd
+        run: |
+          @echo on
+          if exist build rmdir /S /Q build
+          mkdir build
+          cmake -S flare/sources -B build ^
+            -G "Visual Studio 17 2022" -A x64 ^
+            -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake ^
+            -DVCPKG_TARGET_TRIPLET=x64-windows-static ^
+            -DWITH_SYSTEM_LZO=OFF -DWITH_LZODRIVER=OFF ^
+            -DWITH_TWAIN=OFF -DWITH_CANON=OFF ^
+            -DWITH_SQLITE=OFF -DWITH_OPENCV=OFF ^
+            -DWITH_GSL=OFF -DWITH_BOOST=OFF ^
+            -DWITH_FREETYPE=OFF -DWITH_GLEW=OFF ^
+            -DWITH_LZ4=OFF -DWITH_LZO=OFF ^
+            -DWITH_PNG=OFF -DWITH_JPEG=OFF ^
+            -DWITH_TIFF=OFF -DWITH_ZLIB=OFF ^
+            -DWITH_QT=OFF ^
+            > build\cmake_configure.log 2>&1
+          if %ERRORLEVEL% NEQ 0 ( type build\cmake_configure.log & exit /b 1 )
+          type build\cmake_configure.log
+
+      - name: Build
+        shell: cmd
+        run: |
+          @echo on
+          cmake --build build --config RelWithDebInfo --parallel 4 > build\build.log 2>&1
+          if %ERRORLEVEL% NEQ 0 ( type build\build.log & exit /b 1 )
+          type build\build.log
+
+      - name: Upload build logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs
+          path: build\*.log
+          if-no-files-found: ignore
+
+      - name: Post build logs to PR
+        if: ${{ github.event_name == 'pull_request' && always() }}
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const pr = context.payload.pull_request.number;
+            
+            let logText = '';
+            if (fs.existsSync('build/cmake_configure.log')) {
+              logText += '--- CMake configure log ---\n' + fs.readFileSync('build/cmake_configure.log', 'utf8').slice(-2000) + '\n';
+            }
+            if (fs.existsSync('build/build.log')) {
+              logText += '--- Build log ---\n' + fs.readFileSync('build/build.log', 'utf8').slice(-2000) + '\n';
+            }
+            
+            const body = 'Automated build logs (truncated)\n```\n' + (logText || '(no logs found)') + '\n```';
+            await github.rest.issues.createComment({ owner, repo, issue_number: pr, body });

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php" backupGlobals="false"
+         colors="true" processIsolation="false"
+         stopOnFailure="false" stopOnError="false" stderr="false"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd">
+    <source>
+        <include>
+            <directory>src</directory>
+        </include>
+    </source>
+    <testsuites>
+        <testsuite name="application-tests">
+            <directory>tests/src/Unit</directory>
+            <directory>tests/src/Feature</directory>
+        </testsuite>
+        <testsuite name="mcp-inspector">
+            <directory>tests/src/McpInspector</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <env name="OAUTH_ENABLED" value="false"/>
+        <env name="OAUTH_ISSUER_URL" value="http://127.0.0.1:8090"/>
+        <env name="OAUTH_SERVER_URL" value="http://127.0.0.1:8090"/>
+        <env name="OAUTH_CLIENT_ID" value="test-id"/>
+        <env name="OAUTH_CLIENT_SECRET" value="test-secret"/>
+
+        <ini name="error_reporting" value="-1"/>
+        <ini name="memory_limit" value="-1"/>
+    </php>
+</phpunit>

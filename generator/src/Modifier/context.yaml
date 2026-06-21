@@ -1,0 +1,30 @@
+documents:
+  - description: Modifiers System
+    outputPath: modifiers/modifiers-core.md
+    sources:
+      - type: file
+        sourcePaths: .
+        filePattern:
+          - '*.php'
+          - 'Alias/*.php'
+        notPath:
+          - 'PhpContentFilter.php'
+          - 'PhpSignature.php'
+          - 'ContextSanitizerModifier.php'
+
+  - description: PHP Content Modifiers
+    outputPath: modifiers/php-modifiers.md
+    sources:
+      - type: file
+        sourcePaths: .
+        filePattern:
+          - 'PhpContentFilter.php'
+          - 'PhpSignature.php'
+
+  - description: Sanitizer Modifier
+    outputPath: modifiers/sanitizer.md
+    sources:
+      - type: file
+        sourcePaths:
+          - ./Sanitizer
+          - ../Lib/Sanitizer

@@ -56,6 +56,25 @@
     "claude-code-setup/**",
     "layrr/**",
     "claude-code-queue/**",
-    "custom-instructions/**"
+    "custom-instructions/**",
+    "cv-optimizer-claude/**",
+    "garden-skills/**",
+    "skills-workspace/**",
+    "agent-toolkit/**",
+    "rulebook-ai/**",
+    "ClaudeForge/**",
+    "generator/**",
+    "cc-context-awareness/**",
+    "hardstop/**",
+    "routeros-skills/**",
+    "idstack/**",
+    "nuclear-grade-context-engineering/**",
+    "open-design/**",
+    "taste-skill/**",
+    "ui-ux-pro-max-skill/**",
+    "claude-quickstarts/**",
+    "Flare/**",
+    "financial-services/**",
+    "anthropics-skills/**"
   ]
 }

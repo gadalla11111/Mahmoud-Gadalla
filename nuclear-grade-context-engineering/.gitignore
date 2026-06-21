@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Test and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Virtual environments and local env files
+.venv/
+venv/
+env/
+.env
+
+# Editor and OS artifacts
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Nuclear-grade private research scratch space
+.research/
+
+# Claude Code working directory (local settings, agent worktrees)
+.claude/
