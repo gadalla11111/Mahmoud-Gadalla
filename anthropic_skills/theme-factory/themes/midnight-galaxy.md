@@ -1,19 +1,13 @@
-# Midnight Galaxy
-
-A dramatic and cosmic theme with deep purples and mystical tones for impactful presentations.
-
-## Color Palette
-
-- **Deep Purple**: `#2b1e3e` - Rich dark base
-- **Cosmic Blue**: `#4a4e8f` - Mystical mid-tone
-- **Lavender**: `#a490c2` - Soft accent color
-- **Silver**: `#e6e6fa` - Light highlights and text
-
-## Typography
-
-- **Headers**: FreeSans Bold
-- **Body Text**: FreeSans
-
-## Best Used For
-
-Entertainment industry, gaming presentations, nightlife venues, luxury brands, creative agencies.
+---
+name: Midnight Galaxy
+---
+colors:
+  primary: "#0B0C2A"
+  secondary: "#3D1A78"
+  accent: "#9B59B6"
+  background: "#07080F"
+  text: "#E8E8F5"
+  muted: "#6B5B95"
+fonts:
+  heading: "Tektur"
+  body: "Silkscreen"

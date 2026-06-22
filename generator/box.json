@@ -1,0 +1,27 @@
+{
+  "$schema": "https://raw.githubusercontent.com/box-project/box/main/res/schema.json",
+  "compactors": [
+    "KevinGH\\Box\\Compactor\\Json",
+    "KevinGH\\Box\\Compactor\\Php"
+  ],
+  "annotations": false,
+  "check-requirements": false,
+  "dump-autoload": false,
+  "compression": "GZ",
+  "git": "git",
+  "directories": [
+    "src",
+    "rag",
+    "vendor"
+  ],
+  "files": [
+    "ctx",
+    "app.php",
+    "LICENSE",
+    "composer.json",
+    "composer.lock",
+    "version.json",
+    "json-schema.json"
+  ],
+  "output": ".build/phar/ctx.phar"
+}

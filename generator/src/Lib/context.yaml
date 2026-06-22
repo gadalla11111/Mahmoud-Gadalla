@@ -1,0 +1,57 @@
+documents:
+  - description: Path Filtering Utilities
+    outputPath: utilities/path-filters.md
+    sources:
+      - type: file
+        sourcePaths: ./PathFilter
+
+  - description: Tree Building Utilities
+    outputPath: utilities/tree-builder.md
+    sources:
+      - type: file
+        sourcePaths: ./TreeBuilder
+
+  - description: HTTP Client
+    outputPath: utilities/http-client.md
+    sources:
+      - type: file
+        sourcePaths: ./HttpClient
+
+  - description: Binary Updater
+    outputPath: utilities/binary-updater.md
+    sources:
+      - type: file
+        sourcePaths: ./BinaryUpdater
+
+  - description: GitHub Client
+    outputPath: utilities/github-client.md
+    sources:
+      - type: file
+        sourcePaths:
+          - ./GithubClient
+
+  - description: Gitlab Client
+    outputPath: utilities/gitlab-client.md
+    sources:
+      - type: file
+        sourcePaths:
+          - ./GitlabClient
+
+  - description: Git Client
+    outputPath: utilities/git-client.md
+    sources:
+      - type: file
+        sourcePaths:
+          - ./Git
+
+  - description: Variable System
+    outputPath: utilities/variable-system.md
+    sources:
+      - type: file
+        sourcePaths: ./Variable
+
+  - description: HTML Utilities
+    outputPath: utilities/html.md
+    sources:
+      - type: file
+        sourcePaths: ./Html

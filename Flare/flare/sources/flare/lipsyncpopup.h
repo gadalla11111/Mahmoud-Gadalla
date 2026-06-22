@@ -1,0 +1,84 @@
+#pragma once
+
+#ifndef LIPSYNCPOPUP_H
+#define LIPSYNCPOPUP_H
+
+#include "flareqt/dvdialog.h"
+#include "flareqt/filefield.h"
+#include "flare/txshlevel.h"
+#include "flareqt/intfield.h"
+
+#include <QPushButton>
+#include <QLabel>
+#include <QCheckBox>
+
+// Forward declarations
+class TXshSimpleLevel;
+class TXshChildLevel;
+class TFrameId;
+
+//=============================================================================
+// LipSyncPopup
+//-----------------------------------------------------------------------------
+
+class LipSyncPopup final : public DVGui::Dialog {
+  Q_OBJECT
+
+  // Phoneme labels
+  QLabel *m_aiLabel;
+  QLabel *m_oLabel;
+  QLabel *m_eLabel;
+  QLabel *m_uLabel;
+  QLabel *m_lLabel;
+  QLabel *m_wqLabel;
+  QLabel *m_mbpLabel;
+  QLabel *m_fvLabel;
+  QLabel *m_restLabel;
+  QLabel *m_otherLabel;
+
+  // UI elements
+  QLabel *m_imageLabels[10];
+  QLabel *m_textLabels[10];
+  QPushButton *m_navButtons[20];
+  QPixmap m_pixmaps[10];
+  QPushButton *m_applyButton;
+
+  // Data members
+  std::vector<TFrameId> m_levelFrameIds;
+  std::vector<TFrameId> m_activeFrameIds;
+  DVGui::FileField *m_file;
+  TXshSimpleLevel *m_sl;
+  TXshChildLevel *m_cl;
+  TXshLevelP m_childLevel;
+  DVGui::IntLineEdit *m_startAt;
+  int m_col;
+  bool m_valid = false;
+  bool m_isEditingLevel;
+  QStringList m_textLines;
+  QCheckBox *m_restToEnd;
+
+public:
+  LipSyncPopup();
+  ~LipSyncPopup() override;
+
+protected:
+  void showEvent(QShowEvent *event) override;
+  void hideEvent(QHideEvent *event) override;
+  void paintEvent(QPaintEvent *event) override;
+
+  // Helper functions
+  void generateThumbnails();
+  void updateThumbnail(int index);
+
+private slots:
+  // Internal slot for icon generation updates
+  void onIconGenerated();  // Called when IconGenerator finishes generating thumbnails
+
+public slots:
+  void onApplyButton();
+  void imageNavClicked(int id);
+  void onPathChanged();
+  void onStartValueChanged();
+};
+
+#endif  // LIPSYNCPOPUP_H

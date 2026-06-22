@@ -1,19 +1,13 @@
-# Forest Canopy
-
-A natural and grounded theme featuring earth tones inspired by dense forest environments.
-
-## Color Palette
-
-- **Forest Green**: `#2d4a2b` - Primary dark green
-- **Sage**: `#7d8471` - Muted green accent
-- **Olive**: `#a4ac86` - Light accent color
-- **Ivory**: `#faf9f6` - Backgrounds and text
-
-## Typography
-
-- **Headers**: FreeSerif Bold
-- **Body Text**: FreeSans
-
-## Best Used For
-
-Environmental presentations, sustainability reports, outdoor brands, wellness content, organic products.
+---
+name: Forest Canopy
+---
+colors:
+  primary: "#2D4A22"
+  secondary: "#5A7A3A"
+  accent: "#8BC34A"
+  background: "#F5F7F0"
+  text: "#1A2E14"
+  muted: "#7D9B6A"
+fonts:
+  heading: "Young Serif"
+  body: "DM Mono"

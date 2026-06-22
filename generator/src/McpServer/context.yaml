@@ -1,0 +1,67 @@
+documents:
+  - description: "MCP bootstrap"
+    outputPath: "mcp/bootstrap.md"
+    sources:
+      - type: file
+        sourcePaths:
+          - Console/MCPServerCommand.php
+          - HttpTransportBootloader.php
+          - McpServer/Middleware
+          - "{{ROOT_PATH}}/vendor/ctx/mcp-server/src/McpServerCoreBootloader.php"
+          - "{{ROOT_PATH}}/vendor/ctx/mcp-server/src/OauthConfig.php"
+
+  - description: "MCP Server Actions"
+    outputPath: "mcp/actions.md"
+    sources:
+      - type: file
+        sourcePaths:
+          - ./Action
+          - ./Attribute
+          - ./Registry
+
+  - description: "MCP Server Prompts"
+    outputPath: "mcp/prompts.md"
+    sources:
+      - type: file
+        sourcePaths:
+          - ./Prompt
+
+  - description: "MCP Server Tools"
+    outputPath: "mcp/tools.md"
+    sources:
+      - type: file
+        sourcePaths:
+          - ./Tool
+          - ./Action/Tools
+
+  - description: "MCP Server Projects"
+    outputPath: "mcp/projects.md"
+    sources:
+      - type: file
+        sourcePaths:
+          - Projects
+
+  - description: MCP file tools
+    outputPath: "mcp/filesystem.md"
+    sources:
+      - type: file
+        sourcePaths:
+          - Action/Tools/Filesystem
+          - "{{ROOT_PATH}}/vendor/spiral/files/src/FilesInterface.php"
+
+  - description: "MCP Docs search"
+    outputPath: "mcp/docs-search.md"
+    sources:
+      - type: file
+        sourcePaths:
+          - ./Action/Tools/Docs/LibrarySearchAction.php
+          - ./Action/Tools/Docs/FetchLibraryDocsAction.php
+      - type: file
+        sourcePaths: ../Lib/HttpClient
+        filePattern:
+          - '*Interface.php'
+      - type: file
+        sourcePaths:
+          - ./Attribute/Tool.php
+          - ./Attribute/InputSchema.php
+          - ./Routing/Attribute/Post.php

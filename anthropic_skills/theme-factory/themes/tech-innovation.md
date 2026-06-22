@@ -1,19 +1,13 @@
-# Tech Innovation
-
-A bold and modern theme with high-contrast colors perfect for cutting-edge technology presentations.
-
-## Color Palette
-
-- **Electric Blue**: `#0066ff` - Vibrant primary accent
-- **Neon Cyan**: `#00ffff` - Bright highlight color
-- **Dark Gray**: `#1e1e1e` - Deep backgrounds
-- **White**: `#ffffff` - Clean text and contrast
-
-## Typography
-
-- **Headers**: DejaVu Sans Bold
-- **Body Text**: DejaVu Sans
-
-## Best Used For
-
-Tech startups, software launches, innovation showcases, AI/ML presentations, digital transformation content.
+---
+name: Tech Innovation
+---
+colors:
+  primary: "#0D1117"
+  secondary: "#238636"
+  accent: "#58A6FF"
+  background: "#0D1117"
+  text: "#E6EDF3"
+  muted: "#8B949E"
+fonts:
+  heading: "JetBrains Mono"
+  body: "Red Hat Mono"

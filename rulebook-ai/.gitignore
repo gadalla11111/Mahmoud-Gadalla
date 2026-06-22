@@ -1,0 +1,142 @@
+# ignore packages/repos, modelcontextprotocol is for perplexity, and tools folder has non-MCP tools for llm, but before adding description in documents should not add into repo for now. 
+modelcontextprotocol/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+env.bak/
+venv.bak/
+
+# IDE - VSCode
+.vscode/
+*.code-workspace
+.history/
+
+# IDE - PyCharm
+.idea/
+*.iml
+*.iws
+.idea_modules/
+
+# IDE - Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Logs
+*.log
+logs/
+log/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+test_env/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Local development files
+*.sqlite
+*.db
+*.pid
+*.swp 
+
+# AI coding IDE files (.windsurfrules can deprecate near future)
+.clinerules/
+.cursor/
+.roo/
+.windsurfrules
+.windsurf/rules/
+GEMINI.md
+# GitHub Copilot but allow workflows
+.github/copilot-instructions.md
+.idx/
+project_rules/
+.gemini/GEMINI.md
+
+.rulebook-ai/
+
+# vscode extension
+### VS Code extension package
+*.vsix
+
+### Node & TypeScript ###
+node_modules/
+out/                 
+# or dist/
+*.vsix
+npm-debug.log*
+*.log
+
+### VS Code test harness ###
+.vscode-test*/       
+# downloaded by @vscode/test-electron
+
+### OS junk ###
+.DS_Store
+Thumbs.db
+
+### Coverage ###
+coverage/
+
+### Environment secrets ###
+.env
+.env.*
+
+
+### Optional: ignore personal workspace settings ###
+# .vscode/      <- uncomment if you don't want per-user settings in repo
+!.vscode/extensions.json    # but keep recommended extensions list
+
+

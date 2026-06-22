@@ -1,0 +1,13 @@
+{
+  "editor.tabSize": 2,
+  "editor.rulers": [80],
+  "less.lint.emptyRules": "ignore",
+  "less.lint.unknownProperties": "ignore",
+  "less.lint.vendorPrefix": "ignore",
+
+  "less.compile": {
+    "compress": false,
+    "sourceMap": false,
+    "out": false
+  }
+}

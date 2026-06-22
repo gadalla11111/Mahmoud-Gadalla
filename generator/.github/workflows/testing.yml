@@ -1,0 +1,178 @@
+---
+
+name: 🧪 Unit testing
+
+on: # yamllint disable-line rule:truthy
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  code-coverage:
+    timeout-minutes: 4
+    runs-on: ${{ matrix.os }}
+    concurrency:
+      cancel-in-progress: true
+      group: code-coverage-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ matrix.php-version }}-${{ matrix.dependencies }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-latest
+        php-version:
+          - '8.3'
+        dependencies:
+          - locked
+    steps:
+      - name: 📦 Check out the codebase
+        uses: actions/checkout@v4
+
+      - name: 🛠️ Setup PHP
+        uses: shivammathur/setup-php@2.32.0
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: none, ctype, curl, dom, json, mbstring, phar, simplexml, tokenizer, xml, xmlwriter, sockets, opcache, pcntl, posix, fileinfo
+          ini-values: error_reporting=E_ALL
+          coverage: xdebug
+
+      - name: 🛠️ Setup problem matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: 🤖 Validate composer.json and composer.lock
+        run: composer validate --ansi --strict
+
+      - name: 🔍 Get composer cache directory
+        uses: wayofdev/gh-actions/actions/composer/get-cache-directory@v3.2.0
+
+      - name: ♻️ Restore cached dependencies installed with composer
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-${{ hashFiles('composer.lock') }}
+          restore-keys: php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-
+
+      - name: 📥 Install "${{ matrix.dependencies }}" dependencies
+        uses: wayofdev/gh-actions/actions/composer/install@v3.2.0
+        with:
+          dependencies: ${{ matrix.dependencies }}
+
+      - name: 🧪 Collect code coverage with Xdebug
+        run: composer test:cc
+
+      - name: 📤 Upload code coverage report to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: .build/phpunit/logs/clover.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
+
+  testing:
+    timeout-minutes: 4
+    runs-on: ${{ matrix.os }}
+    concurrency:
+      cancel-in-progress: true
+      group: testing-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ matrix.php-version }}-${{ matrix.dependencies }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-latest
+        php-version:
+          - '8.3'
+        dependencies:
+          - lowest
+          - locked
+          - highest
+        include:
+          - php-version: '8.4'
+            dependencies: highest
+    steps:
+      - name: 📦 Check out the codebase
+        uses: actions/checkout@v4
+
+      - name: 🛠️ Setup PHP
+        uses: shivammathur/setup-php@2.32.0
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: none, ctype, curl, dom, json, mbstring, phar, simplexml, tokenizer, xml, xmlwriter, sockets, opcache, pcntl, posix, fileinfo
+          ini-values: error_reporting=E_ALL
+          coverage: xdebug
+
+      - name: 🛠️ Setup problem matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: 🤖 Validate composer.json and composer.lock
+        run: composer validate --ansi --strict
+
+      - name: 🔍 Get composer cache directory
+        uses: wayofdev/gh-actions/actions/composer/get-cache-directory@v3.2.0
+
+      - name: ♻️ Restore cached dependencies installed with composer
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-${{ hashFiles('composer.lock') }}
+          restore-keys: php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-
+
+      - name: ⚙️ Remove platform configuration with composer
+        if: matrix.dependencies != 'locked'
+        run: composer config platform.php --ansi --unset
+
+      - name: 📥 Install "${{ matrix.dependencies }}" dependencies
+        uses: wayofdev/gh-actions/actions/composer/install@v3.2.0
+        with:
+          dependencies: ${{ matrix.dependencies }}
+
+      - name: 🧪 Run unit tests using phpunit/phpunit
+        run: composer test
+
+  mcp-inspector:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    concurrency:
+      cancel-in-progress: true
+      group: mcp-inspector-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+    steps:
+      - name: 📦 Check out the codebase
+        uses: actions/checkout@v4
+
+      - name: 🛠️ Setup PHP
+        uses: shivammathur/setup-php@2.32.0
+        with:
+          php-version: '8.3'
+          extensions: none, ctype, curl, dom, json, mbstring, phar, simplexml, tokenizer, xml, xmlwriter, sockets, opcache, pcntl, posix, fileinfo
+          ini-values: error_reporting=E_ALL
+          coverage: none
+
+      - name: 🛠️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📥 Install MCP Inspector
+        run: npm install -g @modelcontextprotocol/inspector
+
+      - name: 🔍 Get composer cache directory
+        uses: wayofdev/gh-actions/actions/composer/get-cache-directory@v3.2.0
+
+      - name: ♻️ Restore cached dependencies installed with composer
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: php-8.3-composer-locked-${{ hashFiles('composer.lock') }}
+          restore-keys: php-8.3-composer-locked-
+
+      - name: 📥 Install composer dependencies
+        uses: wayofdev/gh-actions/actions/composer/install@v3.2.0
+        with:
+          dependencies: locked
+
+      - name: 🧪 Run MCP Inspector tests
+        run: composer test-mcp

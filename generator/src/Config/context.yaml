@@ -1,0 +1,33 @@
+documents:
+  - description: Configuration System
+    outputPath: core/config-loader.md
+    sources:
+      - type: file
+        sourcePaths:
+          - .
+          - ../Document
+          - ../Fetcher
+          - ./ConfigLoaderBootloader.php
+          - ./ImportBootloader.php
+
+  - description: Configuration Import
+    outputPath: core/config-import.md
+    sources:
+      - type: file
+        sourcePaths:
+          - ./Import
+
+  - description: Configuration Exclude
+    outputPath: core/config-exclude.md
+    sources:
+      - type: file
+        sourcePaths:
+          - ./Exclude
+
+  - description: Configuration Parser
+    outputPath: core/config-parser.md
+    sources:
+      - type: file
+        sourcePaths:
+          - ./Parser
+

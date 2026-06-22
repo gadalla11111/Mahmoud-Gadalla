@@ -29,8 +29,12 @@
 | Excel | `anthropic_skills/xlsx` |
 | MCP server creation | `anthropic_skills/mcp-builder` |
 | Brand guidelines | `anthropic_skills/brand-guidelines` |
-| Fact-check claims (3× rule, QA grid) | `anthropic_skills/fact-checker` |
-| Ministry proposal orchestration | `anthropic_skills/ministry-proposal` |
+| Route any task to the right skill | `anthropic_skills/orchestrator` |
+| Structured feature development (SPARC) | `anthropic_skills/sparc` |
+| Architecture Decision Records | `anthropic_skills/adr` |
+| Deep delegation via agent tree | `anthropic_skills/nested-subagents` |
+| Arabic ministry proposal (MERIDIAN brand) | `anthropic_skills/ministry-proposal` |
+| Triple-source fact verification / QA grid | `anthropic_skills/fact-checker` |
 
 ## Environment
 

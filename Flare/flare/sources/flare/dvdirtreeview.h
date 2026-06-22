@@ -1,0 +1,337 @@
+#pragma once
+
+#ifndef DVDIRTREEVIEW_H
+#define DVDIRTREEVIEW_H
+
+// Tnz6 includes
+#include "dvitemview.h"
+#include "versioncontrol.h"
+#include "filebrowsermodel.h"
+
+// TnzQt includes
+#include "flareqt/selection.h"
+#include "flareqt/lineedit.h"
+
+// TnzCore includes
+#include "tfilepath.h"
+
+// Qt includes
+#include <QTreeView>
+#include <QItemDelegate>
+#include <QWidget>
+#include <QFileSystemWatcher>
+
+//==============================================================
+
+// Forward declarations
+class DvDirModel;
+class DvDirModelNode;
+class DvDirVersionControlNode;
+class DvDirTreeView;
+
+//==============================================================
+
+class MyFileSystemWatcher final : public QObject {  // singleton
+  Q_OBJECT
+
+  QStringList m_watchedPath;
+  QFileSystemWatcher *m_watcher;
+
+  explicit MyFileSystemWatcher(QObject *parent = nullptr);
+
+public:
+  // Delete copy constructor and assignment operator for singleton
+  MyFileSystemWatcher(const MyFileSystemWatcher &)            = delete;
+  MyFileSystemWatcher &operator=(const MyFileSystemWatcher &) = delete;
+
+  MyFileSystemWatcher(MyFileSystemWatcher &&)            = delete;
+  MyFileSystemWatcher &operator=(MyFileSystemWatcher &&) = delete;
+
+  ~MyFileSystemWatcher() override = default;
+
+  static MyFileSystemWatcher *instance() {
+    static MyFileSystemWatcher _instance;
+    return &_instance;
+  }
+
+  void addPaths(const QStringList &paths, bool onlyNewPath = false);
+  void removePaths(const QStringList &paths);
+  void removeAllPaths();
+
+signals:
+  void directoryChanged(const QString &path);
+};
+
+//**********************************************************************************
+//    DvDirTreeView declaration
+//**********************************************************************************
+
+// StyledTreeView is inherited by DvDirTreeView and ExportSceneTreeView
+// (see exportscenepopup.h)
+
+class StyledTreeView : public QTreeView {
+  Q_OBJECT
+
+  QColor m_textColor;                // Text color (black)
+  QColor m_selectedTextColor;        // Selected item text color (white)
+  QColor m_folderTextColor;          // Folder item text color (blue)
+  QColor m_selectedFolderTextColor;  // Selected folder item text color (yellow)
+  QColor m_selectedItemBackground;   // Selected item background color (0,0,128)
+
+  Q_PROPERTY(QColor TextColor READ getTextColor WRITE setTextColor)
+  Q_PROPERTY(QColor SelectedTextColor READ getSelectedTextColor WRITE
+                 setSelectedTextColor)
+  Q_PROPERTY(
+      QColor FolderTextColor READ getFolderTextColor WRITE setFolderTextColor)
+  Q_PROPERTY(QColor SelectedFolderTextColor READ getSelectedFolderTextColor
+                 WRITE setSelectedFolderTextColor)
+  Q_PROPERTY(QColor SelectedItemBackground READ getSelectedItemBackground WRITE
+                 setSelectedItemBackground)
+
+public:
+  explicit StyledTreeView(QWidget *parent = nullptr) : QTreeView(parent) {
+    m_textColor               = QColor(0, 0, 0);        // Black
+    m_selectedTextColor       = QColor(255, 255, 255);  // White
+    m_folderTextColor         = QColor(0, 0, 255);      // Blue
+    m_selectedFolderTextColor = QColor(255, 255, 0);    // Yellow
+    m_selectedItemBackground  = QColor(0, 0, 128);      // Dark Blue
+  }
+
+  void setTextColor(const QColor &color) { m_textColor = color; }
+  QColor getTextColor() const { return m_textColor; }
+
+  void setSelectedTextColor(const QColor &color) {
+    m_selectedTextColor = color;
+  }
+  QColor getSelectedTextColor() const { return m_selectedTextColor; }
+
+  void setFolderTextColor(const QColor &color) { m_folderTextColor = color; }
+  QColor getFolderTextColor() const { return m_folderTextColor; }
+
+  void setSelectedFolderTextColor(const QColor &color) {
+    m_selectedFolderTextColor = color;
+  }
+  QColor getSelectedFolderTextColor() const {
+    return m_selectedFolderTextColor;
+  }
+
+  void setSelectedItemBackground(const QColor &color) {
+    m_selectedItemBackground = color;
+  }
+  QColor getSelectedItemBackground() const { return m_selectedItemBackground; }
+};
+
+class DvDirTreeView final : public StyledTreeView, public TSelection {
+  Q_OBJECT
+
+public:
+  explicit DvDirTreeView(QWidget *parent = nullptr);
+
+  // Disable copying mand moving
+  DvDirTreeView(const DvDirTreeView &)            = delete;
+  DvDirTreeView &operator=(const DvDirTreeView &) = delete;
+
+  DvDirTreeView(DvDirTreeView &&)            = delete;
+  DvDirTreeView &operator=(DvDirTreeView &&) = delete;
+
+  ~DvDirTreeView() override = default;
+
+  // Path operations
+  TFilePath getCurrentPath()
+      const;  //!< Returns the path of currently selected file or folder,
+              //!  or an empty one in case it couldn't be extracted.
+  DvDirModelNode *getCurrentNode() const;
+  DvDirModelNode *getCurrentDropNode() const { return m_currentDropItem; }
+
+  // From TSelection
+  bool isEmpty() const override { return false; }
+  void selectNone() override {}
+  void enableCommands() override;
+
+  void enableGlobalSelection(bool enabled) {
+    if (!enabled) makeNotCurrent();
+    m_globalSelectionEnabled = enabled;
+  }
+
+  // Version control operations
+  void refreshVersionControl(DvDirVersionControlNode *node,
+                             const QStringList &files = QStringList());
+
+  void setRefreshVersionControlEnabled(bool value) {
+    m_refreshVersionControlEnabled = value;
+  }
+  bool refreshVersionControlEnabled() const {
+    return m_refreshVersionControlEnabled;
+  }
+
+  DvItemListModel::Status getItemVersionControlStatus(
+      DvDirVersionControlNode *node, const TFilePath &fp);
+
+signals:
+  void currentNodeChanged();  //!< Emitted when user selects a different node.
+
+public slots:
+  void deleteFolder();  //!< Deletes the selected folder.
+
+  void setCurrentNode(
+      DvDirModelNode *node);  //!< Sets the current node, make it visible.
+  void setCurrentNode(const TFilePath &fp, bool expandNode = false);
+  void resizeToConts();
+
+  void cleanupVersionControl(DvDirVersionControlNode *node);
+  void purgeVersionControl(DvDirVersionControlNode *node);
+  void deleteVersionControl(DvDirVersionControlNode *node);
+  void putVersionControl(DvDirVersionControlNode *node);
+  void updateVersionControl(DvDirVersionControlNode *node);
+
+  void listVersionControl(DvDirVersionControlNode *lastExistingNode,
+                          const QString &relativePath);
+
+  // Only for tnz "special folder" and project folder (working in this case on
+  // project settings xml file)
+  void editCurrentVersionControlNode();
+  void unlockCurrentVersionControlNode();
+  void revertCurrentVersionControlNode();
+
+  void updateCurrentVersionControlNode();
+  void putCurrentVersionControlNode();
+  void deleteCurrentVersionControlNode();
+  void refreshCurrentVersionControlNode();
+  void cleanupCurrentVersionControlNode();
+  void purgeCurrentVersionControlNode();
+
+  // Version control callbacks
+  void onInfoDone(const QString &);
+  void onListDone(const QString &);
+
+  void onCheckPartialLockError(const QString &);
+  void onCheckPartialLockDone(const QString &);
+
+  void onCheckOutError(const QString &);
+  void onCheckOutDone(const QString &);
+
+  void onRefreshStatusDone(const QString &);
+  void onRefreshStatusError(const QString &);
+
+  // Tree view operations
+  void onExpanded(const QModelIndex &);
+  void onCollapsed(const QModelIndex &);
+  void onMonitoredDirectoryChanged(const QString &);
+  void onPreferenceChanged(const QString &);
+
+protected:
+  // QWidget overrides
+  QSize sizeHint() const override;
+  void resizeEvent(QResizeEvent *event) override;
+
+  // QAbstractItemView overrides
+  void currentChanged(const QModelIndex &current,
+                      const QModelIndex &previous) override;
+  bool edit(const QModelIndex &index, EditTrigger trigger,
+            QEvent *event) override;
+
+  // Drag and drop
+  void dragEnterEvent(QDragEnterEvent *event) override;
+  void dragLeaveEvent(QDragLeaveEvent *event) override;
+  void dragMoveEvent(QDragMoveEvent *event) override;
+  void dropEvent(QDropEvent *event) override;
+
+  // Context menu
+  void contextMenuEvent(QContextMenuEvent *event) override;
+
+private:
+  bool m_globalSelectionEnabled     = true;
+  DvDirModelNode *m_currentDropItem = nullptr;
+  VersionControlThread m_thread;
+
+  bool m_refreshVersionControlEnabled = false;
+
+  // Temporary variable used while retrieving list of missing directories
+  QString m_getSVNListRelativePath;
+
+  // Used for version control node refreshing
+  DvDirVersionControlNode *m_currentRefreshedNode = nullptr;
+
+  // Helper methods
+  void createMenuAction(QMenu &menu, const QString &name, const char *slot,
+                        bool enable = true);
+  void checkPartialLock(const QString &workingDir, const QStringList &files);
+
+  /*- Refresh monitoring paths according to expand/shrink state of the folder
+   * tree -*/
+  void addPathsToWatcher();
+  void getExpandedPathsRecursive(const QModelIndex &index, QStringList &paths);
+};
+
+//**********************************************************************************
+//    DvDirTreeViewDelegate declaration
+//**********************************************************************************
+
+class DvDirTreeViewDelegate final : public QItemDelegate {
+  Q_OBJECT
+
+public:
+  explicit DvDirTreeViewDelegate(DvDirTreeView *parent);
+  ~DvDirTreeViewDelegate() override;
+
+  // QItemDelegate overrides
+  QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
+                        const QModelIndex &index) const override;
+  bool editorEvent(QEvent *event, QAbstractItemModel *model,
+                   const QStyleOptionViewItem &option,
+                   const QModelIndex &index) override;
+  void paint(QPainter *painter, const QStyleOptionViewItem &option,
+             const QModelIndex &index) const override;
+  void setEditorData(QWidget *editor, const QModelIndex &index) const override;
+  void setModelData(QWidget *editor, QAbstractItemModel *model,
+                    const QModelIndex &index) const override;
+  QSize sizeHint(const QStyleOptionViewItem &option,
+                 const QModelIndex &index) const override;
+  void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option,
+                            const QModelIndex &index) const override;
+
+private:
+  DvDirTreeView *m_treeView;
+
+private slots:
+  void commitAndCloseEditor();
+};
+
+//**********************************************************************************
+//    NodeEditor declaration
+//**********************************************************************************
+
+class NodeEditor final : public QWidget {
+  Q_OBJECT
+
+public:
+  explicit NodeEditor(QWidget *parent = nullptr, const QRect &rect = QRect(),
+                      int leftMargin = 0);
+
+  // Disable copying and moving
+  NodeEditor(const NodeEditor &)            = delete;
+  NodeEditor &operator=(const NodeEditor &) = delete;
+
+  NodeEditor(NodeEditor &&)            = delete;
+  NodeEditor &operator=(NodeEditor &&) = delete;
+
+  ~NodeEditor() override = default;
+
+  void setText(const QString &value) { m_lineEdit->setText(value); }
+  QString getText() const { return m_lineEdit->text(); }
+
+signals:
+  void editingFinished();
+
+protected:
+  void focusInEvent(QFocusEvent *event) override;
+
+private slots:
+  void emitFinished();
+
+private:
+  DVGui::LineEdit *m_lineEdit;
+};
+
+#endif  // DVDIRTREEVIEW_H
+

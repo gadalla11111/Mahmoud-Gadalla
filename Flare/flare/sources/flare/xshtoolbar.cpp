@@ -1,0 +1,93 @@
+#include "xshtoolbar.h"
+
+// Tnz6 includes
+#include "xsheetviewer.h"
+#include "tapp.h"
+#include "menubarcommandids.h"
+#include "commandbarpopup.h"
+
+// TnzLib includes
+#include "flare/preferences.h"
+#include "flare/toonzscene.h"
+#include "flare/tscenehandle.h"
+#include "flare/childstack.h"
+
+// Qt includes
+#include <QWidgetAction>
+
+//=============================================================================
+
+namespace XsheetGUI {
+
+//=============================================================================
+// Toolbar
+//-----------------------------------------------------------------------------
+
+XSheetToolbar::XSheetToolbar(XsheetViewer *parent, Qt::WindowFlags flags,
+                             bool isCollapsible)
+    : CommandBar(parent, flags, isCollapsible, true), m_viewer(parent) {
+  setObjectName("cornerWidget");
+  setFixedHeight(29);
+  setObjectName("XSheetToolbar");
+  setIconSize(QSize(20, 20));
+}
+
+//-----------------------------------------------------------------------------
+
+void XSheetToolbar::showToolbar(bool show) {
+  if (!m_isCollapsible) return;
+  show ? this->show() : this->hide();
+}
+
+//-----------------------------------------------------------------------------
+
+void XSheetToolbar::toggleXSheetToolbar() {
+  bool toolbarEnabled = Preferences::instance()->isShowXSheetToolbarEnabled();
+  Preferences::instance()->setValue(showXSheetToolbar, !toolbarEnabled);
+  TApp::instance()->getCurrentScene()->notifyPreferenceChanged("XSheetToolbar");
+}
+
+//-----------------------------------------------------------------------------
+
+void XSheetToolbar::showEvent(QShowEvent *e) {
+  if (Preferences::instance()->isShowXSheetToolbarEnabled() || !m_isCollapsible)
+    show();
+  else
+    hide();
+  emit updateVisibility();
+}
+
+//-----------------------------------------------------------------------------
+
+void XSheetToolbar::contextMenuEvent(QContextMenuEvent *event) {
+  QMenu *menu = new QMenu(this);
+  QAction *customizeCommandBar =
+      menu->addAction(tr("Customize XSheet Toolbar"));
+  connect(customizeCommandBar, SIGNAL(triggered()),
+          SLOT(doCustomizeCommandBar()));
+  menu->exec(event->globalPos());
+}
+
+//-----------------------------------------------------------------------------
+
+void XSheetToolbar::doCustomizeCommandBar() {
+  CommandBarPopup *cbPopup = new CommandBarPopup(true);
+
+  if (cbPopup->exec()) {
+    fillToolbar(this, true);
+  }
+  delete cbPopup;
+}
+
+//============================================================
+
+class ToggleXSheetToolbarCommand final : public MenuItemHandler {
+public:
+  ToggleXSheetToolbarCommand() : MenuItemHandler(MI_ToggleXSheetToolbar) {}
+  void execute() override { XSheetToolbar::toggleXSheetToolbar(); }
+} ToggleXSheetToolbarCommand;
+
+//============================================================
+
+}  // namespace XsheetGUI
+

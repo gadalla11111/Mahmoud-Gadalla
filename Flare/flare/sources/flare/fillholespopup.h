@@ -1,0 +1,16 @@
+#include "flareqt/dvdialog.h"
+#include "flareqt/intfield.h"
+#include <QProgressBar>
+
+class FillHolesDialog final : public DVGui::Dialog {
+  Q_OBJECT
+
+  DVGui::IntField* m_size;
+  DVGui::ProgressDialog* m_progressDialog;
+
+public:
+  FillHolesDialog();
+
+protected slots:
+  void apply();
+};
