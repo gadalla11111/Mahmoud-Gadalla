@@ -1648,6 +1648,10 @@ def _rtl_postprocess(path):
 
                 elif item.filename == 'word/document.xml':
                     root = etree.fromstring(data)
+                    # Add <w:bidi/> to sectPr — flips page layout to RTL
+                    for sectPr in root.iter(f'{W}sectPr'):
+                        if sectPr.find(f'{W}bidi') is None:
+                            sectPr.append(_el('bidi'))
                     # Patch every paragraph
                     for pPr in root.iter(f'{W}pPr'):
                         # <w:bidi/> before <w:jc>
