@@ -75,6 +75,7 @@
     "claude-quickstarts/**",
     "Flare/**",
     "financial-services/**",
-    "anthropics-skills/**"
+    "anthropics-skills/**",
+    "ruflo/**"
   ]
 }
