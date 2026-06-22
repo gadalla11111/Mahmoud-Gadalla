@@ -1353,12 +1353,61 @@ def build_pptx(output_path):
 
 def set_rtl_doc(para):
     pPr = para._p.get_or_add_pPr()
+    # Remove any existing bidi/jc to avoid duplicates
+    for tag in ('w:bidi', 'w:jc'):
+        existing = pPr.find(dqn(tag))
+        if existing is not None:
+            pPr.remove(existing)
     bidi = OxmlElement('w:bidi')
-    bidi.set(dqn('w:val'), '1')
     pPr.append(bidi)
     jc = OxmlElement('w:jc')
     jc.set(dqn('w:val'), 'right')
     pPr.append(jc)
+
+
+def _set_run_rtl(run):
+    rPr = run._r.get_or_add_rPr()
+    # w:rtl — marks run as right-to-left
+    if rPr.find(dqn('w:rtl')) is None:
+        rtl_el = OxmlElement('w:rtl')
+        rPr.append(rtl_el)
+    # w:lang — tell Word this is Arabic; without this Word ignores w:rtl
+    lang_el = rPr.find(dqn('w:lang'))
+    if lang_el is None:
+        lang_el = OxmlElement('w:lang')
+        rPr.append(lang_el)
+    lang_el.set(dqn('w:bidi'), 'ar-SA')
+    # w:rFonts cs — complex-script font for Arabic glyphs
+    rFonts = rPr.find(dqn('w:rFonts'))
+    if rFonts is None:
+        rFonts = OxmlElement('w:rFonts')
+        rPr.insert(0, rFonts)
+    rFonts.set(dqn('w:cs'), 'Arial')
+
+
+def _init_doc_rtl(doc):
+    """Document-level: bidi mode + Arabic as default language."""
+    settings = doc.settings.element
+    if settings.find(dqn('w:bidi')) is None:
+        settings.append(OxmlElement('w:bidi'))
+    # Set default language to Arabic in document defaults
+    body = doc.element.body
+    sectPr = body.find(dqn('w:sectPr'))
+    # Set theme language defaults via docDefaults in styles
+    styles = doc.styles.element
+    docDefaults = styles.find(dqn('w:docDefaults'))
+    if docDefaults is not None:
+        rPrDefault = docDefaults.find('.//' + dqn('w:rPrDefault'))
+        if rPrDefault is not None:
+            rPr = rPrDefault.find(dqn('w:rPr'))
+            if rPr is None:
+                rPr = OxmlElement('w:rPr')
+                rPrDefault.append(rPr)
+            lang = rPr.find(dqn('w:lang'))
+            if lang is None:
+                lang = OxmlElement('w:lang')
+                rPr.append(lang)
+            lang.set(dqn('w:bidi'), 'ar-SA')
 
 
 def doc_heading(doc, text, level=1, color=DGOLD):
@@ -1369,11 +1418,12 @@ def doc_heading(doc, text, level=1, color=DGOLD):
     run.font.size = DPt(26 - (level - 1) * 4)
     run.font.bold = True
     run.font.color.rgb = color
-    run.font.name = "Montserrat"
+    run.font.name = "Arial"
+    _set_run_rtl(run)
     return p
 
 
-def doc_para(doc, text, color=DWHITE, size=11):
+def doc_para(doc, text, color=DBLACK, size=11):
     p = doc.add_paragraph()
     set_rtl_doc(p)
     p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
@@ -1381,6 +1431,7 @@ def doc_para(doc, text, color=DWHITE, size=11):
     run.font.size = DPt(size)
     run.font.color.rgb = color
     run.font.name = "Arial"
+    _set_run_rtl(run)
     return p
 
 
@@ -1392,12 +1443,14 @@ def doc_bullet(doc, text):
     run.font.size = DPt(11)
     run.font.color.rgb = DBLACK
     run.font.name = "Arial"
+    _set_run_rtl(run)
     return p
 
 
 def build_docx(output_path):
     doc = Document()
     # Page background approximation via page color
+    _init_doc_rtl(doc)
     section = doc.sections[0]
     section.page_width = DInches(8.5)
     section.page_height = DInches(11)
