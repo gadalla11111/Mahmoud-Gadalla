@@ -1599,7 +1599,99 @@ def build_docx(output_path):
                 doc_para(doc, f"{label}:  {val}", color=DBLACK, size=11)
 
     doc.save(output_path)
+    _rtl_postprocess(output_path)
     print(f"Saved: {output_path}")
+
+
+def _rtl_postprocess(path):
+    """Directly patch every paragraph/run in the DOCX zip for Arabic RTL."""
+    import zipfile, shutil, io
+    NS = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'
+    W = f'{{{NS}}}'
+
+    def _el(tag):
+        from lxml import etree
+        return etree.Element(f'{W}{tag}')
+
+    def _ensure(parent, tag, attribs=None, before_tags=None):
+        el = parent.find(f'{W}{tag}')
+        if el is None:
+            el = _el(tag)
+            if before_tags:
+                for bt in before_tags:
+                    ref = parent.find(f'{W}{bt}')
+                    if ref is not None:
+                        ref.addprevious(el)
+                        break
+                else:
+                    parent.append(el)
+            else:
+                parent.append(el)
+        if attribs:
+            for k, v in attribs.items():
+                el.set(f'{W}{k}', v)
+        return el
+
+    from lxml import etree
+    tmp = path + '.tmp'
+    with zipfile.ZipFile(path, 'r') as zin:
+        with zipfile.ZipFile(tmp, 'w', zipfile.ZIP_DEFLATED) as zout:
+            for item in zin.infolist():
+                data = zin.read(item.filename)
+
+                if item.filename == 'word/settings.xml':
+                    root = etree.fromstring(data)
+                    if root.find(f'{W}bidi') is None:
+                        root.append(_el('bidi'))
+                    data = etree.tostring(root, xml_declaration=True,
+                                         encoding='UTF-8', standalone=True)
+
+                elif item.filename == 'word/document.xml':
+                    root = etree.fromstring(data)
+                    # Patch every paragraph
+                    for pPr in root.iter(f'{W}pPr'):
+                        # <w:bidi/> before <w:jc>
+                        if pPr.find(f'{W}bidi') is None:
+                            bidi = _el('bidi')
+                            jc_el = pPr.find(f'{W}jc')
+                            if jc_el is not None:
+                                jc_el.addprevious(bidi)
+                            else:
+                                pPr.append(bidi)
+                        # <w:jc val="right"/>
+                        jc = pPr.find(f'{W}jc')
+                        if jc is None:
+                            jc = _el('jc')
+                            pPr.append(jc)
+                        jc.set(f'{W}val', 'right')
+
+                    # Paragraphs with no pPr get one
+                    for p in root.iter(f'{W}p'):
+                        if p.find(f'{W}pPr') is None:
+                            pPr = _el('pPr')
+                            bidi = _el('bidi')
+                            jc = _el('jc')
+                            jc.set(f'{W}val', 'right')
+                            pPr.append(bidi)
+                            pPr.append(jc)
+                            p.insert(0, pPr)
+
+                    # Patch every run
+                    for rPr in root.iter(f'{W}rPr'):
+                        if rPr.find(f'{W}rtl') is None:
+                            rPr.append(_el('rtl'))
+                        lang = rPr.find(f'{W}lang')
+                        if lang is None:
+                            lang = _el('lang')
+                            rPr.append(lang)
+                        lang.set(f'{W}bidi', 'ar-SA')
+
+                    data = etree.tostring(root, xml_declaration=True,
+                                         encoding='UTF-8', standalone=True)
+
+                zout.writestr(item, data)
+
+    shutil.move(tmp, path)
 
 
 if __name__ == "__main__":
