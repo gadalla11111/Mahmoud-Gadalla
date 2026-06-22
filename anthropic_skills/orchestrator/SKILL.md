@@ -48,6 +48,7 @@ check the **chain** column — that is the ordered execution plan.
 | "CLAUDE.md accurate?" / "check docs for staleness" | `claude-md-audit` | S |
 | "what does this change affect" / "ripple effect" | `change-impact` | S |
 | "prove these claims" / "evidence for" | `prove-claims` | S |
+| "fact check" / "verify claims" / "source this" / "triple check" / "QA grid" | `fact-checker` | S–M |
 | "hand off work" / "transfer to another agent" | `handoff` | S |
 | "create a PRD" / "product requirements" | `prd-generator` | M |
 | "deep research" / "comprehensive research" | `deep-research` | L |

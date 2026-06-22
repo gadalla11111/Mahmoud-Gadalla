@@ -16,6 +16,19 @@ argument-hint: "<initiative-title> [--brand meridian|jahizoon] [--phase draft|re
 
 Produces proposals that match either MBK Education visual system and Egyptian governmental writing standards. Two brand variants; share the same Arabic register and strategy alignment rules.
 
+## Primary References (canonical — use these, not generic templates)
+
+| File | Role |
+|---|---|
+| `MBK_Education_Brand_Guidelines.pdf` + `.pptx` | MERIDIAN design system — colours, typography, woven mark, icon rules |
+| `MBK_Jahizoon_MoSS_AR_v2.pdf` / `.pptx` | **QA reference** — every layout decision and Arabic copy pattern is benchmarked against this file |
+| `MBK_Education_Field_Ready_Ministry.pptx` | English-language parallel (same initiative, different audience) |
+| `Generic_Issue.pptx` | Full 15-slide expanded version — authoritative slide schema |
+
+**The MBK_Jahizoon_MoSS_AR_v2 PDF is the QA grid baseline.** When reviewing output, compare slide-by-slide against it: gold placement, stat card layout, 3-party footer, co-branding positions, Arabic phrasing. Any deviation from that reference requires explicit justification.
+
+> All content produced by this skill must pass `anthropic_skills/fact-checker` before finalizing. Every statistic needs 3 independent sources.
+
 ---
 
 ## Visual System A — MERIDIAN (MY4 Education)
