@@ -40,20 +40,16 @@ ASSETS = "/tmp/pptx_extract/extracted/ppt/media"
 def asset(name):
     return os.path.join(ASSETS, name)
 
-# Named asset shortcuts
-LOGO          = asset("image-1-1.png")    # 300×780 — vertical logo strip
+# Named asset shortcuts — all 300×780 are woven texture strips (no separate wordmark)
 WOVEN_FULL    = asset("image-7-1.png")    # 720×540 — full-slide woven texture
 WOVEN_BAR     = asset("image-18-1.png")   # 1320×120 — horizontal woven strip
-WOVEN_STRIP   = asset("image-2-1.png")    # 300×780 — vertical woven strip
-WOVEN_STRIP2  = asset("image-5-1.png")    # 300×780 — alternate vertical strip
-WOVEN_STRIP3  = asset("image-10-1.png")   # 300×780
+WOVEN_STRIP   = asset("image-2-1.png")    # 300×780 — vertical woven strip (cover/dividers only)
 
-# Layout constants — narrow woven edge accent, wide content area
-WOVEN_W  = Inches(0.38)   # thin left woven strip width
-LOGO_W   = Inches(0.75)   # right logo strip width
-CONTENT_L = WOVEN_W       # content left edge
-CONTENT_R = W - LOGO_W    # content right edge
-CONTENT_W = CONTENT_R - CONTENT_L  # usable content width
+# Layout constants — full-bleed content, no side strips on content slides
+PAD   = Inches(0.55)      # left/right content padding
+CONTENT_L = PAD
+CONTENT_R = W - PAD
+CONTENT_W = CONTENT_R - CONTENT_L
 
 # Icon set (slide 8 — 32 icons, 320×320 RGBA)
 ICONS = [asset(f"image-8-{i}.png") for i in range(1, 33)]
@@ -370,177 +366,187 @@ def section_label(slide, text):
 #  SLIDE BUILDERS
 # ═══════════════════════════════════════════════════════════════════════════════
 
+
+# ── Shared helpers for content slides ─────────────────────────────────────────
+
+def content_header(slide, section_text, title_text, slide_num, total):
+    """Gold top bar, section label, title, gold rule, footer."""
+    add_rect(slide, 0, 0, W, Pt(5), GOLD)
+    # "M" wordmark top-right
+    add_text_box(slide, "M",
+                 W - Inches(0.7), Inches(0.04), Inches(0.6), Inches(0.42),
+                 font_size=20, bold=True, color=GOLD,
+                 align=PP_ALIGN.CENTER, rtl=False, font_name="Montserrat")
+    # Section label
+    add_text_box(slide, section_text,
+                 PAD, Inches(0.1), W - PAD * 2 - Inches(0.7), Inches(0.3),
+                 font_size=9, color=GOLD, align=PP_ALIGN.RIGHT,
+                 rtl=True, font_name="Inter")
+    # Title
+    add_text_box(slide, title_text,
+                 PAD, Inches(0.42), W - PAD * 2, Inches(0.72),
+                 font_size=36, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
+    # Gold rule under title
+    add_rect(slide, PAD, Inches(1.18), CONTENT_W, Pt(2), GOLD)
+    footer(slide, slide_num, total)
+
+
 def slide_cover(slide, data):
     slide_bg(slide, BLACK)
-    # Full woven texture as subtle background overlay (right half)
-    add_image(slide, WOVEN_FULL,
-              W - Inches(7.5), 0, Inches(7.5), H)
-    # Dark overlay to keep woven subtle
-    add_rect(slide, W - Inches(7.5), 0, Inches(7.5), H, BLACK)
-    # Apply low-opacity by reordering: woven first, then semi-transparent rect
-    # (python-pptx doesn't support opacity natively; we use the woven as texture)
+    # Woven texture fills LEFT half (decorative)
+    add_image(slide, WOVEN_FULL, 0, 0, W * 0.5, H)
+    # Black overlay — left fades into dark
+    add_rect(slide, W * 0.3, 0, W * 0.7, H, BLACK)
 
-    # Vertical LOGO strip on right edge
-    add_image(slide, LOGO, CONTENT_R, 0, LOGO_W, H)
+    # Thin gold top bar full width
+    add_rect(slide, 0, 0, W, Pt(5), GOLD)
+    # Red left accent
+    add_rect(slide, 0, Pt(5), Pt(5), H - Pt(5), RED)
 
-    # Gold top accent bar
-    add_rect(slide, 0, 0, CONTENT_R, Pt(5), GOLD)
-
-    # Red accent chip
-    add_rect(slide, Inches(0.5), Inches(1.8), Pt(5), Inches(2.0), RED)
-
-    # Ministry tag
+    # Ministry label top-right
     add_text_box(slide, data["ministry"],
-                 Inches(0.7), Inches(0.2), W - Inches(2.0), Inches(0.4),
-                 font_size=9, color=GOLD, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
+                 PAD, Inches(0.2), W - PAD * 2, Inches(0.35),
+                 font_size=10, color=GOLD, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
 
-    # Main title
+    # "M" mark
+    add_text_box(slide, "M",
+                 W - Inches(0.9), Inches(0.1), Inches(0.75), Inches(0.55),
+                 font_size=24, bold=True, color=GOLD,
+                 align=PP_ALIGN.CENTER, rtl=False, font_name="Montserrat")
+
+    # Main title — huge
     add_text_box(slide, data["title"],
-                 Inches(0.7), Inches(1.7), Inches(9.5), Inches(1.5),
-                 font_size=72, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
+                 PAD, Inches(1.5), W - PAD * 2, Inches(1.8),
+                 font_size=82, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
 
-    # Subtitle
     add_text_box(slide, data["subtitle"],
-                 Inches(0.7), Inches(3.2), Inches(9.5), Inches(0.8),
-                 font_size=28, color=GOLD, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
+                 PAD, Inches(3.35), W - PAD * 2, Inches(0.85),
+                 font_size=30, color=GOLD, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
 
-    # Tagline
     add_text_box(slide, data["tagline"],
-                 Inches(0.7), Inches(4.1), Inches(9.5), Inches(0.5),
-                 font_size=14, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True,
+                 PAD, Inches(4.25), W - PAD * 2, Inches(0.5),
+                 font_size=16, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True,
                  font_name="Inter", italic=True)
 
-    # Gold divider
-    gold_rule(slide, Inches(4.8), left=Inches(0.7), width_pct=0)
-    add_rect(slide, Inches(0.7), Inches(4.8), Inches(6.5), Pt(2), GOLD)
+    add_rect(slide, PAD, Inches(4.9), W - PAD * 2, Pt(2), GOLD)
 
-    # Brand name
     add_text_box(slide, data["brand"],
-                 Inches(0.7), Inches(5.0), Inches(4.5), Inches(0.6),
-                 font_size=20, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=False)
+                 PAD, Inches(5.05), Inches(5), Inches(0.55),
+                 font_size=22, bold=True, color=WHITE, align=PP_ALIGN.RIGHT,
+                 rtl=False, font_name="Montserrat")
 
-    # Year
     add_text_box(slide, "٢٠٢٦",
-                 Inches(0.7), Inches(5.6), Inches(4.5), Inches(0.5),
-                 font_size=14, color=GOLD, align=PP_ALIGN.RIGHT, rtl=False, font_name="Inter")
+                 PAD, Inches(5.65), Inches(5), Inches(0.45),
+                 font_size=15, color=GOLD, align=PP_ALIGN.RIGHT,
+                 rtl=False, font_name="Inter")
+
+    # Narrow woven bar at bottom
+    add_image(slide, WOVEN_BAR, 0, H - Inches(0.38), W, Inches(0.38))
 
 
 def slide_toc(slide, data, slide_num, total):
     slide_bg(slide, BLACK)
-    add_image(slide, WOVEN_STRIP, 0, 0, WOVEN_W, H)
-    add_image(slide, LOGO, CONTENT_R, 0, LOGO_W, H)
-    add_rect(slide, CONTENT_L, 0, CONTENT_W, Pt(4), GOLD)
+    content_header(slide, "", data["title"], slide_num, total)
 
-    pad = Inches(0.2)
-    add_text_box(slide, data["title"],
-                 CONTENT_L + pad, Inches(0.18), CONTENT_W - pad * 2, Inches(0.6),
-                 font_size=32, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
-    add_rect(slide, CONTENT_L + pad, Inches(0.85), CONTENT_W - pad * 2, Pt(2), GOLD)
-
-    row_h = Inches(0.9)
-    start_y = Inches(1.0)
-    icon_w = Inches(0.52)
+    row_h = Inches(0.88)
+    start_y = Inches(1.28)
+    icon_sz = Inches(0.52)
 
     for i, (num, title, sub) in enumerate(data["items"]):
         y = start_y + i * row_h
         icon_path = TOC_ICONS[i] if i < len(TOC_ICONS) else ICONS[i]
 
-        # Icon on right side (before logo strip)
-        add_image(slide, icon_path, CONTENT_R - Inches(0.65), y + Inches(0.19), icon_w, icon_w)
+        # Right edge: icon
+        add_image(slide, icon_path, CONTENT_R - icon_sz, y + Inches(0.18), icon_sz, icon_sz)
 
-        # Number chip
+        # Number chip (gold bg, black text)
+        add_rect(slide, CONTENT_R - icon_sz - Inches(0.62), y + Inches(0.22),
+                 Inches(0.5), Inches(0.38), GOLD)
         add_text_box(slide, num,
-                     CONTENT_R - Inches(1.3), y + Inches(0.2), Inches(0.55), Inches(0.42),
-                     font_size=10, bold=True, color=GOLD, align=PP_ALIGN.CENTER,
-                     rtl=False, font_name="Montserrat")
+                     CONTENT_R - icon_sz - Inches(0.62), y + Inches(0.22),
+                     Inches(0.5), Inches(0.38),
+                     font_size=11, bold=True, color=BLACK,
+                     align=PP_ALIGN.CENTER, rtl=False, font_name="Montserrat")
 
-        # Title + subtitle
+        text_right = CONTENT_R - icon_sz - Inches(0.75)
+        # Title
         add_text_box(slide, title,
-                     CONTENT_L + pad, y + Inches(0.05), CONTENT_W - Inches(1.7), Inches(0.38),
-                     font_size=13, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
+                     PAD, y + Inches(0.06), text_right - PAD, Inches(0.4),
+                     font_size=16, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
+        # Subtitle
         add_text_box(slide, sub,
-                     CONTENT_L + pad, y + Inches(0.42), CONTENT_W - Inches(1.7), Inches(0.35),
-                     font_size=9, color=GOLD, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
+                     PAD, y + Inches(0.46), text_right - PAD, Inches(0.35),
+                     font_size=11, color=GOLD, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
 
         if i < len(data["items"]) - 1:
-            add_rect(slide, CONTENT_L + pad, y + row_h - Pt(1),
-                     CONTENT_W - pad * 2, Pt(1), RGBColor(0x2A, 0x24, 0x14))
-
-    footer(slide, slide_num, total)
+            add_rect(slide, PAD, y + row_h - Pt(1), CONTENT_W, Pt(1),
+                     RGBColor(0x2A, 0x24, 0x14))
 
 
 def slide_exec_summary(slide, data, slide_num, total):
     slide_bg(slide, BLACK)
-    add_image(slide, WOVEN_STRIP, 0, 0, WOVEN_W, H)
-    add_image(slide, LOGO, CONTENT_R, 0, LOGO_W, H)
-    add_rect(slide, CONTENT_L, 0, CONTENT_W, Pt(4), GOLD)
-
-    section_label(slide, data["section"])
-    pad = Inches(0.2)
-
-    add_text_box(slide, data["title"],
-                 CONTENT_L + pad, Inches(0.45), CONTENT_W - pad * 2, Inches(0.75),
-                 font_size=34, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
-    add_rect(slide, CONTENT_L + pad, Inches(1.25), CONTENT_W - pad * 2, Pt(2), GOLD)
+    content_header(slide, data["section"], data["title"], slide_num, total)
 
     add_text_box(slide, data["body"],
-                 CONTENT_L + pad, Inches(1.4), Inches(7.5), Inches(2.1),
-                 font_size=12, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
+                 PAD, Inches(1.32), CONTENT_W * 0.72, Inches(1.9),
+                 font_size=13, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
 
-    # Stats — 3 equal cards filling content width
+    # Stats — 3 equal cards
     n = len(data["stats"])
-    gap = Inches(0.22)
-    card_w = (CONTENT_W - pad * 2 - gap * (n - 1)) / n
-    card_h = Inches(2.1)
-    y = Inches(3.9)
+    gap = Inches(0.25)
+    card_w = (CONTENT_W - gap * (n - 1)) / n
+    card_h = Inches(2.35)
+    y = Inches(3.45)
 
     for i, (num, label, src) in enumerate(data["stats"]):
-        x = CONTENT_L + pad + i * (card_w + gap)
+        x = PAD + i * (card_w + gap)
         add_rect(slide, x, y, card_w, card_h, RGBColor(0x18, 0x14, 0x08),
                  line_color=GOLD, line_width=1)
-        add_image(slide, ICONS[i * 4], x + card_w - Inches(0.62), y + Inches(0.12),
-                  Inches(0.5), Inches(0.5))
+        # Icon top-left
+        add_image(slide, ICONS[i * 4], x + Inches(0.14), y + Inches(0.14),
+                  Inches(0.52), Inches(0.52))
+        # Big number right-aligned
         add_text_box(slide, num,
-                     x + Inches(0.1), y + Inches(0.3), card_w - Inches(0.75), Inches(0.85),
-                     font_size=38, bold=True, color=GOLD, align=PP_ALIGN.RIGHT,
+                     x + Inches(0.1), y + Inches(0.28), card_w - Inches(0.2), Inches(0.95),
+                     font_size=44, bold=True, color=GOLD, align=PP_ALIGN.RIGHT,
                      rtl=False, font_name="Montserrat")
         add_text_box(slide, label,
-                     x + Inches(0.1), y + Inches(1.1), card_w - Inches(0.2), Inches(0.6),
-                     font_size=10, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
+                     x + Inches(0.1), y + Inches(1.2), card_w - Inches(0.2), Inches(0.7),
+                     font_size=12, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
         add_text_box(slide, src,
-                     x + Inches(0.1), y + Inches(1.72), card_w - Inches(0.2), Inches(0.28),
-                     font_size=7, color=GOLD, align=PP_ALIGN.RIGHT, rtl=False,
+                     x + Inches(0.1), y + Inches(1.9), card_w - Inches(0.2), Inches(0.3),
+                     font_size=8, color=GOLD, align=PP_ALIGN.RIGHT, rtl=False,
                      font_name="Inter", italic=True)
-
-    footer(slide, slide_num, total)
 
 
 def slide_section_divider(slide, data, slide_num, total):
     slide_bg(slide, BLACK)
-    # Woven covers left 45%, dark panel right 55%
-    add_image(slide, WOVEN_FULL, 0, 0, W * 0.48, H)
-    add_rect(slide, W * 0.45, 0, W * 0.55, H, BLACK)
-    # Thin gold left edge
-    add_rect(slide, 0, 0, Pt(5), H, GOLD)
-    # Red accent bar
-    add_rect(slide, Pt(5), H * 0.38, Pt(4), H * 0.24, RED)
+    # Woven fills exactly left half
+    add_image(slide, WOVEN_FULL, 0, 0, W * 0.5, H)
+    # Clean dark right half
+    add_rect(slide, W * 0.5, 0, W * 0.5, H, BLACK)
+    # Gold vertical divider line
+    add_rect(slide, W * 0.5 - Pt(1.5), 0, Pt(3), H, GOLD)
+    # Red top accent bar
+    add_rect(slide, 0, 0, W, Pt(5), RED)
 
-    add_image(slide, LOGO, CONTENT_R, 0, LOGO_W, H)
-
-    # Ghost section number
+    # Ghost section number on left (inside woven)
     add_text_box(slide, data["num"],
-                 Inches(0.5), Inches(0.8), Inches(6), Inches(3.5),
-                 font_size=160, bold=True, color=RGBColor(0x22, 0x1A, 0x06),
-                 align=PP_ALIGN.LEFT, rtl=False, font_name="Montserrat")
+                 Inches(0.3), Inches(0.5), W * 0.5 - Inches(0.4), H - Inches(1),
+                 font_size=200, bold=True, color=RGBColor(0x20, 0x18, 0x06),
+                 align=PP_ALIGN.CENTER, rtl=False, font_name="Montserrat")
 
+    # Section title on right (big, white)
     add_text_box(slide, data["title"],
-                 Inches(0.5), Inches(2.4), CONTENT_R - Inches(0.7), Inches(1.3),
-                 font_size=54, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
+                 W * 0.52, Inches(2.3), W * 0.44, Inches(1.5),
+                 font_size=56, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
 
-    add_rect(slide, Inches(0.5), Inches(3.8), CONTENT_R - Inches(0.7), Pt(3), GOLD)
+    # Gold rule
+    add_rect(slide, W * 0.52, Inches(3.9), W * 0.44, Pt(3), GOLD)
 
+    # Subtitle
     add_text_box(slide, data["subtitle"],
-                 Inches(0.5), Inches(3.95), CONTENT_R - Inches(0.7), Inches(0.65),
+                 W * 0.52, Inches(4.05), W * 0.44, Inches(0.65),
                  font_size=20, color=GOLD, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
 
     footer(slide, slide_num, total)
@@ -548,366 +554,300 @@ def slide_section_divider(slide, data, slide_num, total):
 
 def slide_problem(slide, data, slide_num, total):
     slide_bg(slide, BLACK)
-    add_image(slide, WOVEN_STRIP2, 0, 0, WOVEN_W, H)
-    add_image(slide, LOGO, CONTENT_R, 0, LOGO_W, H)
-    add_rect(slide, CONTENT_L, 0, CONTENT_W, Pt(4), GOLD)
-
-    section_label(slide, data["section"])
-    pad = Inches(0.2)
-
-    add_text_box(slide, data["title"],
-                 CONTENT_L + pad, Inches(0.45), CONTENT_W - pad * 2, Inches(0.7),
-                 font_size=30, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
-    add_rect(slide, CONTENT_L + pad, Inches(1.2), CONTENT_W - pad * 2, Pt(2), GOLD)
+    content_header(slide, data["section"], data["title"], slide_num, total)
 
     stats = data["stats"]
-    col_w = (CONTENT_W - pad * 2 - Inches(0.25)) / 2
-    row_h = Inches(1.42)
-    x_right = CONTENT_L + pad
-    x_left  = x_right + col_w + Inches(0.25)
-    start_y = Inches(1.35)
+    # 2-col grid, all cards equal
+    gap = Inches(0.22)
+    col_w = (CONTENT_W - gap) / 2
+    row_h = Inches(1.5)
+    start_y = Inches(1.32)
 
     for i, (num, label, src) in enumerate(stats):
         col = i % 2
         row = i // 2
-        x = x_left if col == 0 else x_right
+        x = PAD + col * (col_w + gap)
         y = start_y + row * row_h
 
-        add_rect(slide, x, y, col_w, Inches(1.28),
+        add_rect(slide, x, y, col_w, Inches(1.35),
                  RGBColor(0x1A, 0x14, 0x06), line_color=GOLD, line_width=1)
 
         icon_idx = (i * 3) % len(ICONS)
-        # Icon top-left corner of card (doesn't overlap text)
-        add_image(slide, ICONS[icon_idx], x + Inches(0.1), y + Inches(0.1),
-                  Inches(0.46), Inches(0.46))
+        add_image(slide, ICONS[icon_idx], x + Inches(0.12), y + Inches(0.12),
+                  Inches(0.5), Inches(0.5))
 
-        # Number — right side, no overlap with icon
         add_text_box(slide, num,
-                     x + Inches(0.65), y + Inches(0.06), col_w - Inches(0.8), Inches(0.62),
-                     font_size=30, bold=True, color=GOLD, align=PP_ALIGN.RIGHT,
+                     x + Inches(0.72), y + Inches(0.08), col_w - Inches(0.84), Inches(0.7),
+                     font_size=34, bold=True, color=GOLD, align=PP_ALIGN.RIGHT,
                      rtl=False, font_name="Montserrat")
 
         add_text_box(slide, label,
-                     x + Inches(0.1), y + Inches(0.68), col_w - Inches(0.2), Inches(0.44),
-                     font_size=9, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
+                     x + Inches(0.12), y + Inches(0.72), col_w - Inches(0.24), Inches(0.48),
+                     font_size=11, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
 
         add_text_box(slide, src,
-                     x + Inches(0.1), y + Inches(1.1), col_w - Inches(0.2), Inches(0.2),
-                     font_size=6.5, color=GOLD, align=PP_ALIGN.RIGHT, rtl=False,
+                     x + Inches(0.12), y + Inches(1.17), col_w - Inches(0.24), Inches(0.2),
+                     font_size=7.5, color=GOLD, align=PP_ALIGN.RIGHT, rtl=False,
                      font_name="Inter", italic=True)
-
-    footer(slide, slide_num, total)
 
 
 def slide_solution(slide, data, slide_num, total):
     slide_bg(slide, BLACK)
-    add_image(slide, WOVEN_STRIP, 0, 0, WOVEN_W, H)
-    add_image(slide, LOGO, CONTENT_R, 0, LOGO_W, H)
-    add_rect(slide, CONTENT_L, 0, CONTENT_W, Pt(4), GOLD)
-
-    section_label(slide, data["section"])
-    pad = Inches(0.2)
-
-    add_text_box(slide, data["title"],
-                 CONTENT_L + pad, Inches(0.45), CONTENT_W - pad * 2, Inches(0.65),
-                 font_size=30, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
-    add_rect(slide, CONTENT_L + pad, Inches(1.15), CONTENT_W - pad * 2, Pt(2), GOLD)
+    content_header(slide, data["section"], data["title"], slide_num, total)
 
     n = len(data["steps"])
-    gap = Inches(0.2)
-    step_w = (CONTENT_W - pad * 2 - gap * (n - 1)) / n
-    step_h = Inches(3.5)
-    y = Inches(1.3)
-    colors = [RGBColor(0x1A, 0x14, 0x06), RGBColor(0x20, 0x18, 0x08), RGBColor(0x26, 0x1E, 0x0A)]
+    gap = Inches(0.22)
+    step_w = (CONTENT_W - gap * (n - 1)) / n
+    step_h = Inches(3.6)
+    y = Inches(1.32)
+    card_colors = [RGBColor(0x1A, 0x14, 0x06),
+                   RGBColor(0x20, 0x18, 0x08),
+                   RGBColor(0x26, 0x1E, 0x0A)]
 
     for i, (num, title, body) in enumerate(data["steps"]):
-        x = CONTENT_L + pad + i * (step_w + gap)
-        add_rect(slide, x, y, step_w, step_h, colors[i], line_color=GOLD, line_width=1)
+        x = PAD + i * (step_w + gap)
+        add_rect(slide, x, y, step_w, step_h, card_colors[i], line_color=GOLD, line_width=1)
+        # Gold top strip
+        add_rect(slide, x, y, step_w, Inches(0.1), GOLD)
 
-        # Icon centered top
-        add_image(slide, SOL_ICONS[i], x + step_w / 2 - Inches(0.35), y + Inches(0.18),
-                  Inches(0.7), Inches(0.7))
+        # Icon centered
+        add_image(slide, SOL_ICONS[i], x + step_w / 2 - Inches(0.38), y + Inches(0.2),
+                  Inches(0.76), Inches(0.76))
 
         # Gold number chip
-        add_rect(slide, x + Inches(0.12), y + Inches(1.05), Inches(0.48), Inches(0.36),
-                 GOLD)
+        add_rect(slide, x + Inches(0.14), y + Inches(1.12), Inches(0.52), Inches(0.38), GOLD)
         add_text_box(slide, num,
-                     x + Inches(0.12), y + Inches(1.05), Inches(0.48), Inches(0.36),
-                     font_size=11, bold=True, color=BLACK, align=PP_ALIGN.CENTER,
-                     rtl=False, font_name="Montserrat")
+                     x + Inches(0.14), y + Inches(1.12), Inches(0.52), Inches(0.38),
+                     font_size=12, bold=True, color=BLACK,
+                     align=PP_ALIGN.CENTER, rtl=False, font_name="Montserrat")
 
         add_text_box(slide, title,
-                     x + Inches(0.1), y + Inches(1.5), step_w - Inches(0.2), Inches(0.52),
-                     font_size=15, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
+                     x + Inches(0.14), y + Inches(1.6), step_w - Inches(0.28), Inches(0.55),
+                     font_size=17, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
 
         add_text_box(slide, body,
-                     x + Inches(0.1), y + Inches(2.08), step_w - Inches(0.2), Inches(1.3),
-                     font_size=10, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
+                     x + Inches(0.14), y + Inches(2.22), step_w - Inches(0.28), Inches(1.28),
+                     font_size=12, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
 
-    add_rect(slide, CONTENT_L + pad, Inches(4.95), CONTENT_W - pad * 2, Inches(1.12),
+    # Why box
+    why_y = Inches(5.08)
+    add_rect(slide, PAD, why_y, CONTENT_W, Inches(1.1),
              RGBColor(0x14, 0x10, 0x04), line_color=GOLD, line_width=1)
     add_text_box(slide, data["why"],
-                 CONTENT_L + pad * 2, Inches(5.0), CONTENT_W - pad * 4, Inches(1.02),
-                 font_size=9.5, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
-
-    footer(slide, slide_num, total)
+                 PAD + Inches(0.18), why_y + Inches(0.1), CONTENT_W - Inches(0.36), Inches(0.9),
+                 font_size=11, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
 
 
 def slide_proof(slide, data, slide_num, total):
     slide_bg(slide, BLACK)
-    add_image(slide, WOVEN_STRIP2, 0, 0, WOVEN_W, H)
-    add_image(slide, LOGO, CONTENT_R, 0, LOGO_W, H)
-    add_rect(slide, CONTENT_L, 0, CONTENT_W, Pt(4), GOLD)
-
-    section_label(slide, data["section"])
-    pad = Inches(0.2)
-
-    add_text_box(slide, data["title"],
-                 CONTENT_L + pad, Inches(0.45), CONTENT_W - pad * 2, Inches(0.7),
-                 font_size=28, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
-    add_rect(slide, CONTENT_L + pad, Inches(1.2), CONTENT_W - pad * 2, Pt(2), GOLD)
+    content_header(slide, data["section"], data["title"], slide_num, total)
 
     add_text_box(slide, data["body"],
-                 CONTENT_L + pad, Inches(1.32), CONTENT_W * 0.65, Inches(1.05),
-                 font_size=11, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
+                 PAD, Inches(1.32), CONTENT_W * 0.72, Inches(1.0),
+                 font_size=13, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
 
-    # Bullet rows: icon on right, text spans full width minus icon
-    row_h = Inches(0.82)
-    icon_sz = Inches(0.48)
+    row_h = Inches(1.0)
+    icon_sz = Inches(0.54)
+
     for i, bullet in enumerate(data["bullets"]):
         y = Inches(2.5) + i * row_h
         icon_idx = (i * 7 + 2) % len(ICONS)
-        # Icon sits inside content area, right-aligned, with gap before logo
-        icon_x = CONTENT_R - Inches(0.1) - icon_sz
-        add_image(slide, ICONS[icon_idx], icon_x, y + Inches(0.17), icon_sz, icon_sz)
-        # Gold dot
-        add_rect(slide, CONTENT_L + pad, y + Inches(0.28), Inches(0.07), Inches(0.22), GOLD)
-        # Text: from left pad to just before icon
+
+        # Card strip
+        add_rect(slide, PAD, y, CONTENT_W, Inches(0.82),
+                 RGBColor(0x16, 0x12, 0x05), line_color=RGBColor(0x3A, 0x2E, 0x12))
+
+        # Icon right-aligned inside card
+        add_image(slide, ICONS[icon_idx], CONTENT_R - icon_sz - Inches(0.1),
+                  y + Inches(0.14), icon_sz, icon_sz)
+
+        # Gold left marker
+        add_rect(slide, PAD, y, Pt(4), Inches(0.82), GOLD)
+
+        # Text
         add_text_box(slide, bullet,
-                     CONTENT_L + pad + Inches(0.15), y + Inches(0.08),
-                     icon_x - CONTENT_L - pad - Inches(0.25), Inches(0.65),
-                     font_size=12, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
-        if i < len(data["bullets"]) - 1:
-            add_rect(slide, CONTENT_L + pad, y + row_h - Pt(1),
-                     CONTENT_W - pad * 2, Pt(1), RGBColor(0x22, 0x1C, 0x08))
+                     PAD + Inches(0.18), y + Inches(0.16),
+                     CONTENT_W - icon_sz - Inches(0.5), Inches(0.55),
+                     font_size=14, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
 
-    # Narrow woven bar — decorative only, doesn't eat content
-    add_image(slide, WOVEN_BAR, CONTENT_L, H - Inches(0.8), CONTENT_W, Inches(0.42))
-
-    footer(slide, slide_num, total)
+    # Woven bar — slim, bottom
+    add_image(slide, WOVEN_BAR, PAD, H - Inches(0.72), CONTENT_W, Inches(0.35))
 
 
 def slide_phases(slide, data, slide_num, total):
     slide_bg(slide, BLACK)
-    add_image(slide, WOVEN_STRIP3, 0, 0, WOVEN_W, H)
-    add_image(slide, LOGO, CONTENT_R, 0, LOGO_W, H)
-    add_rect(slide, CONTENT_L, 0, CONTENT_W, Pt(4), GOLD)
-
-    section_label(slide, data["section"])
-    pad = Inches(0.2)
-
-    add_text_box(slide, data["title"],
-                 CONTENT_L + pad, Inches(0.45), CONTENT_W - pad * 2, Inches(0.65),
-                 font_size=30, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
-    add_rect(slide, CONTENT_L + pad, Inches(1.15), CONTENT_W - pad * 2, Pt(2), GOLD)
+    content_header(slide, data["section"], data["title"], slide_num, total)
 
     n = len(data["phases"])
-    gap = Inches(0.2)
-    ph_w = (CONTENT_W - pad * 2 - gap * (n - 1)) / n
-    ph_h = Inches(5.3)
-    y = Inches(1.35)
+    gap = Inches(0.22)
+    ph_w = (CONTENT_W - gap * (n - 1)) / n
+    ph_h = Inches(5.35)
+    y = Inches(1.32)
     accent_colors = [GOLD, RGBColor(0xE0, 0xBC, 0x60), RGBColor(0xA8, 0x82, 0x3C)]
 
     for i, phase in enumerate(data["phases"]):
-        x = CONTENT_L + pad + i * (ph_w + gap)
+        x = PAD + i * (ph_w + gap)
         add_rect(slide, x, y, ph_w, ph_h, RGBColor(0x16, 0x12, 0x06),
                  line_color=accent_colors[i], line_width=2)
-        add_rect(slide, x, y, ph_w, Inches(0.1), accent_colors[i])
+        add_rect(slide, x, y, ph_w, Inches(0.12), accent_colors[i])
 
-        add_image(slide, ICONS[i * 6], x + ph_w / 2 - Inches(0.35), y + Inches(0.18),
-                  Inches(0.7), Inches(0.7))
+        # Icon
+        add_image(slide, ICONS[i * 6], x + ph_w / 2 - Inches(0.38), y + Inches(0.2),
+                  Inches(0.76), Inches(0.76))
 
         add_text_box(slide, f"المرحلة {phase['num']}",
-                     x + Inches(0.1), y + Inches(1.0), ph_w - Inches(0.2), Inches(0.38),
-                     font_size=9, color=accent_colors[i], align=PP_ALIGN.RIGHT,
+                     x + Inches(0.12), y + Inches(1.1), ph_w - Inches(0.24), Inches(0.36),
+                     font_size=10, color=accent_colors[i], align=PP_ALIGN.RIGHT,
                      rtl=True, font_name="Inter", bold=True)
 
         add_text_box(slide, phase["name"],
-                     x + Inches(0.1), y + Inches(1.38), ph_w - Inches(0.2), Inches(0.5),
-                     font_size=14, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
+                     x + Inches(0.12), y + Inches(1.48), ph_w - Inches(0.24), Inches(0.52),
+                     font_size=15, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
 
-        add_rect(slide, x + Inches(0.1), y + Inches(1.92), ph_w - Inches(0.2), Inches(0.3),
+        add_rect(slide, x + Inches(0.12), y + Inches(2.06), ph_w - Inches(0.24), Inches(0.32),
                  RGBColor(0x2A, 0x22, 0x0C))
         add_text_box(slide, f"{phase['duration']}  ·  {phase['count']}",
-                     x + Inches(0.1), y + Inches(1.92), ph_w - Inches(0.2), Inches(0.3),
-                     font_size=8, color=GOLD, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
+                     x + Inches(0.12), y + Inches(2.06), ph_w - Inches(0.24), Inches(0.32),
+                     font_size=9, color=GOLD, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
 
-        add_rect(slide, x + Inches(0.1), y + Inches(2.28), ph_w - Inches(0.2), Pt(1), GOLD)
+        add_rect(slide, x + Inches(0.12), y + Inches(2.44), ph_w - Inches(0.24), Pt(1), GOLD)
 
         for j, pt in enumerate(phase["points"]):
-            py = y + Inches(2.45) + j * Inches(0.9)
-            add_rect(slide, x + ph_w - Inches(0.28), py + Inches(0.18),
-                     Inches(0.06), Inches(0.2), GOLD)
+            py = y + Inches(2.6) + j * Inches(0.9)
+            add_rect(slide, x + ph_w - Inches(0.28), py + Inches(0.2),
+                     Pt(4), Inches(0.24), GOLD)
             add_text_box(slide, pt,
-                         x + Inches(0.1), py, ph_w - Inches(0.45), Inches(0.82),
-                         font_size=9.5, color=WHITE, align=PP_ALIGN.RIGHT,
+                         x + Inches(0.12), py, ph_w - Inches(0.46), Inches(0.82),
+                         font_size=11, color=WHITE, align=PP_ALIGN.RIGHT,
                          rtl=True, font_name="Inter")
-
-    footer(slide, slide_num, total)
 
 
 def slide_kpis(slide, data, slide_num, total):
     slide_bg(slide, BLACK)
-    add_image(slide, WOVEN_STRIP, 0, 0, WOVEN_W, H)
-    add_image(slide, LOGO, CONTENT_R, 0, LOGO_W, H)
-    add_rect(slide, CONTENT_L, 0, CONTENT_W, Pt(4), GOLD)
-
-    section_label(slide, data["section"])
-    pad = Inches(0.2)
-
-    add_text_box(slide, data["title"],
-                 CONTENT_L + pad, Inches(0.45), CONTENT_W - pad * 2, Inches(0.65),
-                 font_size=30, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
-    add_rect(slide, CONTENT_L + pad, Inches(1.15), CONTENT_W - pad * 2, Pt(2), GOLD)
+    content_header(slide, data["section"], data["title"], slide_num, total)
 
     n = len(data["kpis"])
-    gap = Inches(0.18)
-    kpi_w = (CONTENT_W - pad * 2 - gap * (n - 1)) / n
-    kpi_h = Inches(2.55)
-    y = Inches(1.35)
+    gap = Inches(0.2)
+    kpi_w = (CONTENT_W - gap * (n - 1)) / n
+    kpi_h = Inches(2.7)
+    y = Inches(1.32)
 
     for i, (num, label, sub) in enumerate(data["kpis"]):
-        x = CONTENT_L + pad + i * (kpi_w + gap)
+        x = PAD + i * (kpi_w + gap)
         add_rect(slide, x, y, kpi_w, kpi_h, RGBColor(0x1A, 0x14, 0x06),
                  line_color=GOLD, line_width=1)
-        add_image(slide, ICONS[i * 5 + 1], x + kpi_w / 2 - Inches(0.3), y + Inches(0.12),
-                  Inches(0.6), Inches(0.6))
+        add_image(slide, ICONS[i * 5 + 1], x + kpi_w / 2 - Inches(0.32), y + Inches(0.14),
+                  Inches(0.64), Inches(0.64))
         add_text_box(slide, num,
-                     x + Inches(0.1), y + Inches(0.82), kpi_w - Inches(0.2), Inches(0.78),
-                     font_size=32, bold=True, color=GOLD, align=PP_ALIGN.RIGHT,
+                     x + Inches(0.1), y + Inches(0.88), kpi_w - Inches(0.2), Inches(0.88),
+                     font_size=36, bold=True, color=GOLD, align=PP_ALIGN.RIGHT,
                      rtl=False, font_name="Montserrat")
         add_text_box(slide, label,
-                     x + Inches(0.1), y + Inches(1.55), kpi_w - Inches(0.2), Inches(0.5),
-                     font_size=9.5, bold=True, color=WHITE, align=PP_ALIGN.RIGHT,
+                     x + Inches(0.1), y + Inches(1.72), kpi_w - Inches(0.2), Inches(0.52),
+                     font_size=11, bold=True, color=WHITE, align=PP_ALIGN.RIGHT,
                      rtl=True, font_name="Inter")
         add_text_box(slide, sub,
-                     x + Inches(0.1), y + Inches(2.05), kpi_w - Inches(0.2), Inches(0.42),
-                     font_size=8, color=GOLD, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
+                     x + Inches(0.1), y + Inches(2.22), kpi_w - Inches(0.2), Inches(0.42),
+                     font_size=9, color=GOLD, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
 
+    add_rect(slide, PAD, Inches(4.2), CONTENT_W, Pt(2), GOLD)
     add_text_box(slide, "التزامات إضافية:",
-                 CONTENT_L + pad, Inches(4.06), CONTENT_W - pad * 2, Inches(0.35),
-                 font_size=10, bold=True, color=GOLD, align=PP_ALIGN.RIGHT, rtl=True)
+                 PAD, Inches(4.28), CONTENT_W, Inches(0.38),
+                 font_size=12, bold=True, color=GOLD, align=PP_ALIGN.RIGHT, rtl=True)
 
-    half_w = (CONTENT_W - pad * 2 - Inches(0.2)) / 2
+    half_w = (CONTENT_W - Inches(0.2)) / 2
     for i, q in enumerate(data["qualitative"]):
         col = i % 2
         row = i // 2
-        x = CONTENT_L + pad + col * (half_w + Inches(0.2))
-        y = Inches(4.46) + row * Inches(0.52)
+        x = PAD + col * (half_w + Inches(0.2))
+        y = Inches(4.7) + row * Inches(0.55)
         icon_idx = (i * 4 + 3) % len(ICONS)
         add_image(slide, ICONS[icon_idx], x + half_w - Inches(0.52), y,
-                  Inches(0.44), Inches(0.44))
+                  Inches(0.46), Inches(0.46))
         add_text_box(slide, q,
-                     x, y + Inches(0.02), half_w - Inches(0.6), Inches(0.44),
-                     font_size=9, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
-
-    footer(slide, slide_num, total)
+                     x, y + Inches(0.02), half_w - Inches(0.6), Inches(0.46),
+                     font_size=11, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
 
 
 def slide_alignment(slide, data, slide_num, total):
     slide_bg(slide, BLACK)
-    add_image(slide, WOVEN_STRIP2, 0, 0, WOVEN_W, H)
-    add_image(slide, LOGO, CONTENT_R, 0, LOGO_W, H)
-    add_rect(slide, CONTENT_L, 0, CONTENT_W, Pt(4), GOLD)
+    content_header(slide, data["section"], data["title"], slide_num, total)
 
-    section_label(slide, data["section"])
-    pad = Inches(0.2)
-
-    add_text_box(slide, data["title"],
-                 CONTENT_L + pad, Inches(0.45), CONTENT_W - pad * 2, Inches(0.65),
-                 font_size=30, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
-    add_rect(slide, CONTENT_L + pad, Inches(1.15), CONTENT_W - pad * 2, Pt(2), GOLD)
-
-    n_align = len(data["alignment"])
     gap = Inches(0.2)
-    col_w = (CONTENT_W - pad * 2 - gap) / 2
+    col_w = (CONTENT_W - gap) / 2
+
     for i, (prog, desc) in enumerate(data["alignment"]):
         col = i % 2
         row = i // 2
-        x = CONTENT_L + pad + col * (col_w + gap)
-        y = Inches(1.35) + row * Inches(1.0)
-        add_rect(slide, x, y, col_w, Inches(0.86), RGBColor(0x1A, 0x14, 0x06),
-                 line_color=GOLD, line_width=1)
+        x = PAD + col * (col_w + gap)
+        y = Inches(1.34) + row * Inches(1.05)
+        add_rect(slide, x, y, col_w, Inches(0.9),
+                 RGBColor(0x1A, 0x14, 0x06), line_color=GOLD, line_width=1)
         icon_idx = (i * 8) % len(ICONS)
-        add_image(slide, ICONS[icon_idx], x + col_w - Inches(0.58), y + Inches(0.18),
+        add_image(slide, ICONS[icon_idx], x + col_w - Inches(0.58), y + Inches(0.21),
                   Inches(0.48), Inches(0.48))
         add_text_box(slide, prog,
-                     x + Inches(0.1), y + Inches(0.06), col_w - Inches(0.72), Inches(0.36),
-                     font_size=12, bold=True, color=GOLD, align=PP_ALIGN.RIGHT, rtl=True)
+                     x + Inches(0.12), y + Inches(0.07), col_w - Inches(0.74), Inches(0.38),
+                     font_size=13, bold=True, color=GOLD, align=PP_ALIGN.RIGHT, rtl=True)
         add_text_box(slide, desc,
-                     x + Inches(0.1), y + Inches(0.44), col_w - Inches(0.72), Inches(0.38),
-                     font_size=9.5, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
+                     x + Inches(0.12), y + Inches(0.47), col_w - Inches(0.74), Inches(0.38),
+                     font_size=11, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
 
-    req_y = Inches(3.5)
-    add_rect(slide, CONTENT_L + pad, req_y - Pt(2), CONTENT_W - pad * 2, Pt(2), RED)
+    req_y = Inches(3.55)
+    add_rect(slide, PAD, req_y, CONTENT_W, Pt(3), RED)
     add_text_box(slide, "المطلوب من الوزارة",
-                 CONTENT_L + pad, req_y, CONTENT_W - pad * 2, Inches(0.38),
-                 font_size=13, bold=True, color=RED, align=PP_ALIGN.RIGHT, rtl=True)
+                 PAD, req_y + Inches(0.06), CONTENT_W, Inches(0.42),
+                 font_size=15, bold=True, color=RED, align=PP_ALIGN.RIGHT, rtl=True)
 
-    req_w = (CONTENT_W - pad * 2 - gap) / 2
+    req_w = (CONTENT_W - gap) / 2
     for i, req in enumerate(data["requests"]):
-        x = CONTENT_L + pad + i * (req_w + gap)
-        ry = Inches(3.98)
+        x = PAD + i * (req_w + gap)
+        ry = Inches(4.1)
         add_rect(slide, x, ry, req_w, Inches(2.1), RGBColor(0x20, 0x10, 0x10),
                  line_color=RED, line_width=1)
         add_rect(slide, x, ry, req_w, Inches(0.1), RED)
         add_text_box(slide, req["num"],
-                     x + Inches(0.1), ry + Inches(0.12), Inches(0.8), Inches(0.34),
-                     font_size=10, bold=True, color=RED, align=PP_ALIGN.RIGHT, rtl=True)
+                     x + Inches(0.14), ry + Inches(0.14), Inches(0.8), Inches(0.36),
+                     font_size=11, bold=True, color=RED, align=PP_ALIGN.RIGHT, rtl=True)
         add_text_box(slide, req["title"],
-                     x + Inches(0.1), ry + Inches(0.48), req_w - Inches(0.2), Inches(0.42),
-                     font_size=14, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
+                     x + Inches(0.14), ry + Inches(0.52), req_w - Inches(0.28), Inches(0.44),
+                     font_size=16, bold=True, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True)
         add_text_box(slide, req["body"],
-                     x + Inches(0.1), ry + Inches(0.95), req_w - Inches(0.2), Inches(1.05),
-                     font_size=9.5, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
-
-    footer(slide, slide_num, total)
+                     x + Inches(0.14), ry + Inches(1.02), req_w - Inches(0.28), Inches(1.0),
+                     font_size=12, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
 
 
 def slide_closing(slide, data, slide_num, total):
     slide_bg(slide, BLACK)
-    add_image(slide, WOVEN_FULL, 0, 0, W, H)
-    add_image(slide, LOGO, CONTENT_R, 0, LOGO_W, H)
-
-    # Gold left strip + red accent
-    add_rect(slide, 0, 0, Pt(5), H, GOLD)
-    add_rect(slide, Pt(5), H * 0.4, Pt(4), H * 0.2, RED)
+    # Woven right half
+    add_image(slide, WOVEN_FULL, W * 0.5, 0, W * 0.5, H)
+    add_rect(slide, W * 0.5, 0, W * 0.5, H, BLACK)
+    # Gold top + left accent
+    add_rect(slide, 0, 0, W, Pt(5), GOLD)
+    add_rect(slide, 0, Pt(5), Pt(5), H - Pt(5), RED)
 
     add_text_box(slide, data["title"],
-                 Inches(0.3), Inches(1.5), CONTENT_R - Inches(0.4), Inches(1.6),
-                 font_size=80, bold=True, color=WHITE, align=PP_ALIGN.RIGHT,
+                 PAD, Inches(1.3), W - PAD * 2, Inches(1.8),
+                 font_size=82, bold=True, color=WHITE, align=PP_ALIGN.RIGHT,
                  rtl=False, font_name="Montserrat")
 
-    add_rect(slide, Inches(0.3), Inches(3.2), CONTENT_R - Inches(0.4), Pt(3), GOLD)
+    add_rect(slide, PAD, Inches(3.2), W - PAD * 2, Pt(3), GOLD)
 
     add_text_box(slide, data["tagline"],
-                 Inches(0.3), Inches(3.35), CONTENT_R - Inches(0.4), Inches(0.6),
-                 font_size=18, color=GOLD, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
+                 PAD, Inches(3.32), W - PAD * 2, Inches(0.62),
+                 font_size=20, color=GOLD, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
 
     for i, (label, val) in enumerate(data["contact"]):
-        y = Inches(4.2) + i * Inches(0.62)
+        y = Inches(4.18) + i * Inches(0.68)
         icon_idx = 10 + i * 3
-        icon_x = CONTENT_R - Inches(0.62)
-        add_image(slide, ICONS[icon_idx], icon_x, y + Inches(0.07), Inches(0.45), Inches(0.45))
+        icon_x = CONTENT_R - Inches(0.6)
+        add_image(slide, ICONS[icon_idx], icon_x, y + Inches(0.1), Inches(0.5), Inches(0.5))
         add_text_box(slide, f"{label}:  {val}",
-                     Inches(0.3), y, icon_x - Inches(0.4), Inches(0.5),
-                     font_size=12, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
+                     PAD, y, icon_x - PAD - Inches(0.2), Inches(0.55),
+                     font_size=14, color=WHITE, align=PP_ALIGN.RIGHT, rtl=True, font_name="Inter")
 
-    # Narrow woven bar at bottom
-    add_image(slide, WOVEN_BAR, 0, H - Inches(0.44), CONTENT_R, Inches(0.44))
-
+    add_image(slide, WOVEN_BAR, 0, H - Inches(0.42), W, Inches(0.42))
     footer(slide, slide_num, total)
-
 
 # ═══════════════════════════════════════════════════════════════════════════════
 #  MAIN PPTX BUILD
