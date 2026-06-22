@@ -430,7 +430,7 @@ def build():
         "--reference-doc", REF_DOCX,
         "-o", OUT_DOCX,
     ]
-    result = subprocess.run(cmd, capture_output=True, text=True)
+    result = subprocess.run(cmd, capture_output=True, text=True)  # diffgate-ignore dangerous-exec: fixed arg list, no user input
     if result.returncode != 0:
         print("PANDOC ERROR:", result.stderr)
     else:
