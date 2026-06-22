@@ -82,60 +82,126 @@ Produces proposals that match either MBK Education visual system and Egyptian go
 
 ---
 
-## Jahizoon 9-Slide Schema
+## Jahizoon Full Schema (15 slides — Generic_Issue version)
 
 ```
 01  Cover (غلاف)
-    — Initiative title + "مبادرة وطنية" tagline
-    — "من قاعة الدرس إلى سوق العمل: تدريب عملي..."
-    — Ministry logo placeholder + MBK wordmark
-    — "مقترح شراكة · مقدَّم إلى وزارة التضامن الاجتماعي"
+    — "MBK EDUCATION ✕ وزارة التضامن الاجتماعي" co-brand header
+    — "مبادرة وطنية لتأهيل الشباب وتمكينه اقتصاديًا"
+    — Display title: جاهزون (Montserrat ExtraBold, large)
+    — "من قاعة الدرس إلى سوق العمل: تدريب عملي حقيقي داخل الشركات،
+       يُختتم بامتحان مُصوّر يُثبت جاهزية الشاب للعمل."
+    — "مقدَّم إلى وزارة التضامن الاجتماعي · مقترح شراكة"
 
-02  من نحن — جهة شغّلت النموذج بالفعل
-    — MBK Education description
-    — Pilot proof (AAST warehouse exam)
-    — 3 verified bullets
+02  خريطة العرض (Table of Contents)
+    — 6 sections in 2 columns:
+      ٠١ من نحن          ٠٤ المرحلة التجريبية والخطة
+      ٠٢ المشكلة والفرصة  ٠٥ الأثر والفريق والإعلام
+      ٠٣ الحل: كيف يعمل  ٠٦ التوافق مع الوزارة والطلب
 
-03  المشكلة والفرصة — الشهادة وحدها لا تصنع فرصة عمل
-    — Bar chart: 41.5% (graduates) vs 6% (labour force)
-    — 3 employer stats: 78% / 41% / 51%
-    — Source caption
+03  من نحن — جهة شغّلت النموذج بالفعل
+    — MBK Education description (founder: محمود جاد الله)
+    — 3 verified proof bullets (AAST warehouse exam)
+    — Gold italic: «جاهزون» هو هذا النموذج، موسَّعًا وطنيًا بالشراكة مع الوزارة
+    — Photo placeholder: الامتحان العملي لإدارة المخازن
 
-04  لماذا ينجح هذا النموذج — التدريب العملي يصنع التوظيف بشهادة الأدلة
-    — 3 evidence cards: 8/10 / 63% / بقيادة الشركات
-    — World Bank Egypt callout box
+04  المشكلة والفرصة — الشهادة وحدها لا تصنع فرصة عمل
+    — Research consensus callout: "إجماع بحثي مصري: 13 دراسة، 100% تؤكد
+       وجود فجوة مهارات لدى الخريجين — في المهارات السلوكية والإدارية والتطبيقية"
+      (Source: Consensus.app meta-analysis, N=13 Egyptian studies)
+    — Bar chart: 41.5% (خريجو الجامعات) vs 6% (إجمالي القوى العاملة)
+    — 3 employer stat cards: 78% / 41% / 51%
+    — Source caption: CAPMAS الربع الأول ٢٠٢٦؛ استطلاع Nexford، ٢٠٢٦
 
-05  الحل · كيف يعمل — تدريب حقيقي، يُثبَت بالكاميرا
+05  لماذا ينجح هذا النموذج — السبب معروف في مصر والحل هو نموذجنا
+    — 3 cause → solution pairs (root-cause mapping):
+      السبب: مناهج غير محدَّثة وبعيدة عن احتياجات سوق العمل
+      ↓ ماذا يفعل «جاهزون»: منهج مبني على مهام واقعية داخل الشركة، يُصمَّم مع أصحاب العمل
+      السبب: ضعف التنسيق بين الجامعة وأصحاب العمل
+      ↓ ماذا يفعل «جاهزون»: شراكة تشغيل مباشرة مع شركات مضيفة طوال فترة التدريب
+      السبب: غياب التدريب العملي والإرشاد المهني
+      ↓ ماذا يفعل «جاهزون»: شهر تدريب ميداني تحت إشراف + امتحان مُصوَّر
+
+06  الحل · كيف يعمل — تدريب حقيقي، يُثبَت بالكاميرا
+    — 7 skills being built (listed as tags):
+      التواصل · حل المشكلات · التخطيط · إدارة الوقت
+      إدارة المشروعات · العمل الجماعي · التفكير النقدي
     — 3-step cards: 01 التحاق / 02 تدريب / 03 إثبات
-    — 3-party footer: الوزارة / الشركات المضيفة / MBK
+    — 3-party footer: الوزارة (تُمكِّن وتموِّل وترعى) /
+                      الشركات المضيفة (تُدرِّب عينيًا وتوظِّف) /
+                      MBK (تُشغِّل وتنتج وتقيِّم)
 
-06  النتائج المباشرة · المرحلة التجريبية
-    — 4 stat boxes: 1 جامعة / 3 كليات / 2 شركتان / 45 شابًا
-    — Faculty list with icons (إدارة الأعمال / سلاسل الإمداد / القانون)
-    — "شهر واحد من التدريب المنظَّم، يُختتم بامتحان عملي مُصوَّر"
+07  الامتحان المُصوَّر — قلب المبادرة
+    — Concept framing:
+      "ليس امتحانًا ورقيًا. الشاب يؤدّي مهامًا حقيقية أمام لجنة وكاميرا —
+       فيتحوّل التدريب إلى دليل، والدليل إلى قصة."
+    — As assessment: إثبات لا يُجامَل — أداء فعلي / تقييم من خبراء / شهادة يثق بها صاحب العمل
+    — As media: حلقة ختامية مُصوَّرة تُبثّ تلفزيونيًا / رحلة تحوّل الشاب / يجذب الرعاة
+    — Photo placeholder (pilot exam footage)
 
-07  خطة المراحل — من 45 شابًا إلى برنامج وطني
-    — 3 timeline cards (right = active dark):
-      0–6m  قصير المدى: 1 جامعة · 45 شابًا · نموذج مُثبت
-      6–18m متوسط المدى: 4 جامعات · 500 شاب · بيانات توظيف
-      18–36m طويل المدى: 15+ جامعة · 12+ محافظة · 3,000+ شاب سنويًا
-    — Source footnote: 3.6M students, 73 universities
+08  النتائج المباشرة · المرحلة التجريبية
+    — 4 stat boxes: 1 جامعة / 3 كليات / 2 شركتان مضيفتان / 45 شابًا في الدورة
+    — Faculty cards with icons:
+      إدارة الأعمال — الوظائف التجارية والتشغيلية
+      سلاسل الإمداد — المخازن واللوجستيات والمشتريات
+      التسويق — الحملات والمحتوى والمبيعات
+    — "شهر واحد من التدريب المنظَّم، يُختتم بامتحان عملي مُصوَّر وأول دفعة قابلة للقياس"
 
-08  مؤشرات الأداء والأثر — أرقام نلتزم بها ونقيسها
+09  الجدول الزمني للمرحلة التجريبية
+    — 8-week pilot cycle (horizontal timeline):
+      أسبوع ٠   التحضير والشراكات: توقيع الاتفاقات، اختيار الكليات والشركات
+      أسبوع ١–٢ الالتحاق والتأهيل: انضمام الشباب للشركات، بدء التهيئة المهنية
+      أسبوع ٣–٥ التدريب الميداني: مهام واقعية داخل الشركة تحت إشراف ومتابعة
+      أسبوع ٦   الامتحان المُصوَّر: أداء فعلي أمام لجنة وكاميرا — قلب المبادرة
+      أسبوع ٧–٨ التقييم والنشر: منح الشهادات، قياس النتائج، بثّ الحلقة الختامية
+
+10  خطة المراحل — من 45 شابًا إلى برنامج وطني
+    — Growth chart: 45 (تجريبية) → ~500 (توسّع) → +3,000 (وطنية)
+    — 3 timeline cards:
+      قصير المدى  0–6m:   1 جامعة · 3 كليات · شركتان · 45 شابًا / النتيجة: نموذج مُثبت وقابل للتكرار
+      متوسط المدى 6–18m:  4 جامعات · حتى 10 شركات · ~500 شاب / النتيجة: بيانات توظيف مقاسة + سلسلة محتوى
+      طويل المدى  18–36m: 15+ جامعة · 12+ محافظة · 3,000+ سنويًا / النتيجة: برنامج وطني مدمج مع منظومة الوزارة
+    — Source footnote: ~3.6 مليون طالب في التعليم العالي و73 جامعة
+
+11  مؤشرات الأداء والأثر — أرقام نلتزم بها ونقيسها
     — 6-card KPI grid:
-      ≥ 60%  نسبة الجاهزية للتوظيف خلال 6 أشهر
-      ≥ 40%  تحويل التدريب إلى عرض عمل فعلي
-      ≥ 90%  إتمام الشهادة المهارية
-      3,000+ شاب يُدرَّب سنويًا عند التوسّع
-      ≥ 85%  رضا جهات التشغيل عن الكوادر
-      12+    محافظة يصلها البرنامج وطنيًا
-    — Source: CAPMAS + Nexford + WBL reviews
+      ≥ 60%   نسبة الجاهزية للتوظيف خلال 6 أشهر (مقابل 41.5% بطالة اليوم)
+      ≥ 40%   تحويل التدريب إلى عرض عمل فعلي (عبر شبكة الشركات المضيفة)
+      ≥ 90%   إتمام الشهادة المهارية (لكل مشارك في الدورة)
+      3,000+  شاب يُدرَّب سنويًا عند التوسّع (بنهاية المرحلة الثالثة)
+      ≥ 85%   رضا جهات التشغيل عن الكوادر (قياس بعد كل دورة)
+      12+     محافظة يصلها البرنامج وطنيًا (تغطية جغرافية متدرجة)
+    — Source: CAPMAS + Nexford + مراجعات دولية للتعلّم المبني على العمل
 
-09  التوافق مع الوزارة · الطلب
-    — "امتداد طبيعي لبرنامج «فرصة»"
-    — Italic gold tagline: «جاهزون» يخدم هدف الوزارة المعلن: الانتقال من الاتكالية إلى الاستقلال الاقتصادي
-    — 3 alignment bullets with checkmarks
-    — Ask box: "رعاية الوزارة وتمويلها للمرحلة التجريبية، والوصول إلى جامعة شريكة بثلاث كليات، عبر وحدات التضامن بالجامعات"
+12  الفريق والموارد — من يُنفّذ، وبأي موارد
+    — 3-layer resource structure:
+      الموارد البشرية: فريق MBK يصمّم المنهج، يدير التقييم، وينتج التغطية الإعلامية داخليًا
+      الشركاء: الشركات المضيفة والكليات — بيئة عمل حقيقية ومُرشدون، تربط التدريب باحتياج التوظيف
+      من الوزارة: رعاية ووصول وتمويل تشغيلي — الرعاية الرسمية + جامعة شريكة + تمويل المرحلة التجريبية
+
+13  الخطة الإعلامية — من امتحان مُصوَّر إلى قصة وطنية
+    — 3 media phases:
+      ٠١ إنتاج: حلقات وقصص نجاح — توثيق رحلة كل دفعة من متدرّب إلى جاهز
+      ٠٢ بثّ: تلفزيون + منصات تواصل + منصة «ستارت» الرقمية
+      ٠٣ أثر: وعي عام → يجذب رعاة جُددًا → يموّل التوسّع
+    — Cadence note: "حلقة ختامية مُصوَّرة مع كل دورة — محتوى متجدّد يرافق نمو البرنامج"
+
+14  الاتجاه قائم بالفعل — الوزارة تتحرك في هذا الاتجاه ونحن نُكمله
+    — Framing: "«جاهزون» يضيف الطبقة الناقصة: التدريب الميداني داخل الشركات والإثبات العملي المُصوَّر"
+    — 3 existing ministry programmes:
+      ١ برنامج «فرصة» — الانتقال من الاتكالية إلى الاستقلال الاقتصادي للشباب والنساء وذوي الإعاقة
+      ٢ وحدات التضامن الاجتماعي بالجامعات — تأهيل الطلاب مهنيًا وعمليًا ودمجهم بسوق العمل
+      ٣ قمة «ستارت 2026» ومنصتها الرقمية — منصة تعمل على مدار العام للتدريب والتأهيل وربط الفرص
+
+15  التوافق مع الوزارة · الطلب — امتداد طبيعي لمنظومة الوزارة
+    — Gold italic tagline: «جاهزون» يخدم هدف الوزارة المعلن: الانتقال من الاتكالية إلى الاستقلال
+       الاقتصادي — من بوابة الشباب الجامعي
+    — 3 alignment bullets with checkmarks:
+      تمكين اقتصادي قابل للقياس
+      متوافق مع رؤية مصر 2030
+      يندمج مع «ستارت» ووحدات التضامن — يبني على منظومة قائمة، ولا يبدأ من الصفر
+    — Ask box: "رعاية الوزارة وتمويلها للمرحلة التجريبية، والوصول إلى جامعة شريكة بثلاث كليات،
+       عبر وحدات التضامن بالجامعات"
     — Co-branding footer (mirrors cover)
 ```
 
@@ -143,20 +209,37 @@ Produces proposals that match either MBK Education visual system and Egyptian go
 
 ## Confirmed Statistics Reference
 
-All figures for جاهزون proposals. Source every stat — do not paraphrase the source label.
+All figures for جاهزون proposals. Source every stat exactly as shown — do not paraphrase.
 
-| Stat | Figure | Source |
+| Stat | Figure | Arabic source label |
 |---|---|---|
 | Graduate unemployment | **41.5%** | CAPMAS، الربع الأول ٢٠٢٦ |
 | Overall labour force unemployment | **6%** | CAPMAS، الربع الأول ٢٠٢٦ |
-| Employers can't find required skills | **78%** | استطالع Nexford لأصحاب العمل في مصر، ٢٠٢٦ |
-| Employers who call it a major hiring challenge | **41%** | استطالع Nexford، ٢٠٢٦ |
-| Employers willing to fund training | **51%** | استطالع Nexford، ٢٠٢٦ |
+| Employers can't find required skills | **78%** | استطلاع Nexford لأصحاب العمل في مصر، ٢٠٢٦ |
+| Employers who call it a major hiring challenge | **41%** | استطلاع Nexford، ٢٠٢٦ |
+| Employers willing to fund training | **51%** | استطلاع Nexford، ٢٠٢٦ |
 | Employers offering jobs to interns post-training | **8 من 10** | مراجعات دولية للتعلّم المبني على العمل |
 | Trainees with required behavioural skills | **63%** | مراجعات دولية |
-| Students in higher education (current) | **3.6M** | المجلس الأعلى للجامعات / التعليم العالي |
+| Egyptian studies confirming skills mismatch | **13 من 13 (100%)** | Consensus.app meta-analysis, N=13 |
+| Students in higher education (current) | **~3.6M** | المجلس الأعلى للجامعات / التعليم العالي |
 | Universities nationwide | **73** | المجلس الأعلى للجامعات |
-| Pilot cohort size | **45 شابًا** | — |
+| Pilot cohort size | **45 شابًا** | MBK Education تجربة AAST |
+
+## Academic Evidence Layer
+
+The Consensus.app meta-analysis (N=13 Egyptian studies) provides peer-reviewed backing for the problem slide. Key findings for use in proposals or research notes:
+
+- **Consensus**: 100% of 13 Egyptian studies confirm graduate skills mismatch (Ahmed 2020; Nassef 2016; Abdou & Mostafa 2017; Ghimire et al. 2022; Ahmed 2026)
+- **Root causes** (from peer review): outdated curricula / weak university-employer coordination / limited practical exposure
+- **Sectors documented**: Agriculture, Communication, Hospitality, Architecture, Computer Engineering
+- **Most cited missing skills**: leadership, planning, communication, problem-solving, time management, project management, critical thinking, teamwork
+- **Key citations for proposal footnotes**:
+  - Ghimire et al., 2022 — employer ratings vs. student self-ratings gap (Agriculture)
+  - Nassef, 2016 — system-level barriers in Egyptian HE (Computer Engineering)
+  - Ahmed, 2026 — SSRN: "Employment Gap in Egypt: Hidden Causes and Necessary Solutions"
+  - Bassyouny, 2024 — stagnant programs, communication sector
+
+When asked to add academic depth to a proposal, cite these as: `(Ghimire et al., 2022; Ahmed, 2020; Nassef, 2016)` in footnotes — do not embed full citations in body text.
 
 ---
 
