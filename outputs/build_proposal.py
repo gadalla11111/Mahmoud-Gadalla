@@ -1447,10 +1447,106 @@ def doc_bullet(doc, text):
     return p
 
 
+def _arabic_rtl_template():
+    """Return bytes of a minimal DOCX whose default style is Arabic RTL."""
+    import zipfile, io
+    W_NS = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'
+    PKG_NS = 'http://schemas.openxmlformats.org/package/2006/relationships'
+    OD_NS = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships'
+
+    content_types = (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
+        '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>'
+        '<Default Extension="xml" ContentType="application/xml"/>'
+        '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>'
+        '<Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>'
+        '<Override PartName="/word/settings.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml"/>'
+        '<Override PartName="/word/fontTable.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml"/>'
+        '</Types>'
+    )
+    rels = (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+        '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>'
+        '</Relationships>'
+    )
+    word_rels = (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+        '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>'
+        '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings" Target="settings.xml"/>'
+        '<Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable" Target="fontTable.xml"/>'
+        '</Relationships>'
+    )
+    settings = (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        '<w:settings xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
+        '<w:bidi/>'
+        '</w:settings>'
+    )
+    styles = (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        '<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"'
+        ' xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">'
+        '<w:docDefaults>'
+        '<w:rPrDefault><w:rPr>'
+        '<w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:cs="Arial"/>'
+        '<w:sz w:val="22"/><w:szCs w:val="22"/>'
+        '<w:lang w:val="en-US" w:bidi="ar-SA"/>'
+        '</w:rPr></w:rPrDefault>'
+        '<w:pPrDefault><w:pPr>'
+        '<w:bidi/><w:jc w:val="right"/>'
+        '</w:pPr></w:pPrDefault>'
+        '</w:docDefaults>'
+        '<w:style w:type="paragraph" w:default="1" w:styleId="Normal">'
+        '<w:name w:val="Normal"/>'
+        '<w:pPr><w:bidi/><w:jc w:val="right"/></w:pPr>'
+        '<w:rPr><w:rtl/><w:lang w:bidi="ar-SA"/></w:rPr>'
+        '</w:style>'
+        '<w:style w:type="paragraph" w:styleId="ListBullet">'
+        '<w:name w:val="List Bullet"/>'
+        '<w:basedOn w:val="Normal"/>'
+        '<w:pPr><w:bidi/><w:jc w:val="right"/>'
+        '<w:numPr><w:ilvl w:val="0"/><w:numId w:val="0"/></w:numPr>'
+        '</w:pPr>'
+        '<w:rPr><w:rtl/><w:lang w:bidi="ar-SA"/></w:rPr>'
+        '</w:style>'
+        '</w:styles>'
+    )
+    document = (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
+        '<w:body>'
+        '<w:p><w:pPr><w:bidi/><w:jc w:val="right"/></w:pPr></w:p>'
+        '<w:sectPr><w:bidi/>'
+        '<w:pgSz w:w="12240" w:h="15840"/>'
+        '<w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440"/>'
+        '</w:sectPr>'
+        '</w:body>'
+        '</w:document>'
+    )
+    font_table = (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        '<w:fonts xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
+        '<w:font w:name="Arial"><w:charset w:val="00"/></w:font>'
+        '</w:fonts>'
+    )
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, 'w', zipfile.ZIP_DEFLATED) as z:
+        z.writestr('[Content_Types].xml', content_types)
+        z.writestr('_rels/.rels', rels)
+        z.writestr('word/_rels/document.xml.rels', word_rels)
+        z.writestr('word/document.xml', document)
+        z.writestr('word/styles.xml', styles)
+        z.writestr('word/settings.xml', settings)
+        z.writestr('word/fontTable.xml', font_table)
+    buf.seek(0)
+    return buf
+
+
 def build_docx(output_path):
-    doc = Document()
-    # Page background approximation via page color
-    _init_doc_rtl(doc)
+    doc = Document(_arabic_rtl_template())
     section = doc.sections[0]
     section.page_width = DInches(8.5)
     section.page_height = DInches(11)
