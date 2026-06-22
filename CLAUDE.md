@@ -35,6 +35,7 @@
 | Deep delegation via agent tree | `anthropic_skills/nested-subagents` |
 | Arabic ministry proposal (MERIDIAN brand) | `anthropic_skills/ministry-proposal` |
 | Triple-source fact verification / QA grid | `anthropic_skills/fact-checker` |
+| Audit instruction placement (CLAUDE.md vs hooks vs skills) | `anthropic_skills/steering-lint` |
 
 ## Environment
 
