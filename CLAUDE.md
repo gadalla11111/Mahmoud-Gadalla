@@ -12,30 +12,85 @@
 
 ## Skill Routing
 
+Skills are applied **automatically** based on task context — no explicit invocation needed. When a task matches a skill's domain, load and follow it.
+
+### Memory & Session
 | Task | Skill |
 |---|---|
 | Consolidate/audit knowledge directories | `anthropic_skills/engram/consolidate` |
 | Session briefing / catch me up | `anthropic_skills/engram/briefing` |
 | Checkpoint working memory | `anthropic_skills/engram/working` |
+
+### Code Quality & Development
+| Task | Skill |
+|---|---|
+| Build apps with Claude API / SDK | `anthropic_skills/claude-api` |
+| Structured feature development (SPARC) | `anthropic_skills/sparc` |
+| Architecture Decision Records | `anthropic_skills/adr` |
+| Test-driven development | `anthropic_skills/tdd` |
+| Debugging | `anthropic_skills/debug` |
+| Assess impact of a change | `anthropic_skills/change-impact` |
+| Karpathy-style coding principles | `anthropic_skills/karpathy-guidelines` |
+| MCP server creation | `anthropic_skills/mcp-builder` |
+| Inspect/debug MCP servers | `anthropic_skills/mcp-inspector` |
+| Web app test automation | `anthropic_skills/webapp-testing` |
+
+### Document & Content Generation
+| Task | Skill |
+|---|---|
+| Word documents | `anthropic_skills/docx` |
+| PDF documents | `anthropic_skills/pdf` |
+| PowerPoint | `anthropic_skills/pptx` |
+| Excel | `anthropic_skills/xlsx` |
+| Collaborative document writing | `anthropic_skills/doc-coauthoring` |
+| Internal communications | `anthropic_skills/internal-comms` |
+| Product requirement docs | `anthropic_skills/prd-generator` |
+| Session/work handoff notes | `anthropic_skills/handoff` |
+
+### Research & Verification
+| Task | Skill |
+|---|---|
+| Triple-source fact verification / QA grid | `anthropic_skills/fact-checker` |
+| Deep multi-step research | `anthropic_skills/deep-research` |
+| Exhaustive multi-source search | `anthropic_skills/ultra-search` |
+| News & current events research | `anthropic_skills/news-research` |
+| Substantiate claims | `anthropic_skills/prove-claims` |
+
+### Design & Frontend
+| Task | Skill |
+|---|---|
+| Frontend/UI artifacts | `anthropic_skills/frontend-design` |
+| General design workflows | `anthropic_skills/design` |
+| Brand guidelines | `anthropic_skills/brand-guidelines` |
+| Canvas-based design | `anthropic_skills/canvas-design` |
+| Theme generation | `anthropic_skills/theme-factory` |
+| Generative/algorithmic art | `anthropic_skills/algorithmic-art` |
+| Web artifact construction | `anthropic_skills/web-artifacts-builder` |
+| Animated GIFs for Slack | `anthropic_skills/slack-gif-creator` |
+
+### Orchestration & Meta
+| Task | Skill |
+|---|---|
+| Route any task to the right skill | `anthropic_skills/orchestrator` |
+| Deep delegation via agent tree | `anthropic_skills/nested-subagents` |
+| Task queue management | `anthropic_skills/queue` |
+| Create a new skill | `anthropic_skills/skill-creator` |
+
+### Workflow & Process
+| Task | Skill |
+|---|---|
 | Think before coding (find shortcuts) | `anthropic_skills/lazy-cat/think-twice` |
 | Surgical edits (write only what's asked) | `anthropic_skills/lazy-cat/surgical` |
 | Clarify intent before agent acts | `anthropic_skills/promptize/promptize` |
 | Estimate task cost | `anthropic_skills/sipcode/estimate` |
 | Audit session token spend | `anthropic_skills/sipcode/why` |
-| Frontend/UI artifacts | `anthropic_skills/frontend-design` |
-| Word documents | `anthropic_skills/docx` |
-| PDF documents | `anthropic_skills/pdf` |
-| PowerPoint | `anthropic_skills/pptx` |
-| Excel | `anthropic_skills/xlsx` |
-| MCP server creation | `anthropic_skills/mcp-builder` |
-| Brand guidelines | `anthropic_skills/brand-guidelines` |
-| Route any task to the right skill | `anthropic_skills/orchestrator` |
-| Structured feature development (SPARC) | `anthropic_skills/sparc` |
-| Architecture Decision Records | `anthropic_skills/adr` |
-| Deep delegation via agent tree | `anthropic_skills/nested-subagents` |
-| Arabic ministry proposal (MERIDIAN brand) | `anthropic_skills/ministry-proposal` |
-| Triple-source fact verification / QA grid | `anthropic_skills/fact-checker` |
+| Audit CLAUDE.md quality | `anthropic_skills/claude-md-audit` |
 | Audit instruction placement (CLAUDE.md vs hooks vs skills) | `anthropic_skills/steering-lint` |
+
+### Domain-Specific
+| Task | Skill |
+|---|---|
+| Arabic ministry proposal (MERIDIAN/MBK brand) | `anthropic_skills/ministry-proposal` |
 
 ## Environment
 
