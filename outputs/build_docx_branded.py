@@ -138,6 +138,195 @@ def add_page_break(doc):
     br.set(qn('w:type'), 'page')
     r._r.append(br)
 
+# ── Visualization helpers ──────────────────────────────────────────────────────
+
+def stat_cards(doc, cards):
+    """
+    cards: list of (big_number, label, source) — displayed as colored cards in a row.
+    Black background, Gold number, white label.
+    """
+    n = len(cards)
+    card_w = PAGE_W // n
+    tbl = doc.add_table(rows=2, cols=n)
+    _table_bidi(tbl)
+    tblPr = tbl._tbl.find(qn('w:tblPr'))
+    tw = _ensure(tblPr, 'w:tblW')
+    tw.set(qn('w:w'), str(PAGE_W)); tw.set(qn('w:type'), 'dxa')
+    tblGrid = OxmlElement('w:tblGrid')
+    for _ in cards:
+        gc = OxmlElement('w:gridCol'); gc.set(qn('w:w'), str(card_w)); tblGrid.append(gc)
+    tbl._tbl.insert(1, tblGrid)
+
+    for i, (num, label, src) in enumerate(cards):
+        # Row 0: big number on black background
+        c0 = tbl.rows[0].cells[i]
+        _set_cell_shading(c0, BLACK)
+        _ensure(c0._tc.get_or_add_tcPr(), 'w:tcMar')
+        p0 = c0.paragraphs[0]; p0.clear()
+        r0 = p0.add_run(num)
+        r0.bold = True; r0.font.size = Pt(28)
+        r0.font.color.rgb = RGBColor.from_string(GOLD)
+        _set_para_rtl(p0); _set_run_rtl(r0)
+
+        # Row 1: label + source on dark gray
+        c1 = tbl.rows[1].cells[i]
+        _set_cell_shading(c1, "1A1A1A")
+        p1 = c1.paragraphs[0]; p1.clear()
+        r1 = p1.add_run(label)
+        r1.bold = True; r1.font.size = Pt(10)
+        r1.font.color.rgb = RGBColor.from_string(WHITE)
+        _set_para_rtl(p1); _set_run_rtl(r1)
+        p2 = c1.add_paragraph()
+        r2 = p2.add_run(src)
+        r2.font.size = Pt(8); r2.italic = True
+        r2.font.color.rgb = RGBColor.from_string(GOLD)
+        _set_para_rtl(p2); _set_run_rtl(r2)
+
+    doc.add_paragraph()
+    return tbl
+
+
+def budget_bars(doc, items):
+    """
+    Horizontal bar chart using Unicode blocks.
+    items: list of (label, amount_str, pct_str) where pct_str like "33.3%"
+    """
+    BAR_CHARS = 20
+
+    def bar(pct_str):
+        pct = float(pct_str.rstrip('%'))
+        filled = round(pct / 100 * BAR_CHARS)
+        return "█" * filled + "░" * (BAR_CHARS - filled)
+
+    tbl = doc.add_table(rows=0, cols=4)
+    tbl.style = 'Table Grid'
+    _table_bidi(tbl)
+    col_widths = [3800, 2400, 1600, 1226]
+    tblGrid = OxmlElement('w:tblGrid')
+    for w in col_widths:
+        gc = OxmlElement('w:gridCol'); gc.set(qn('w:w'), str(w)); tblGrid.append(gc)
+    tbl._tbl.insert(1, tblGrid)
+    tblPr = tbl._tbl.find(qn('w:tblPr'))
+    tw = _ensure(tblPr, 'w:tblW')
+    tw.set(qn('w:w'), str(sum(col_widths))); tw.set(qn('w:type'), 'dxa')
+
+    # Header
+    hr = tbl.add_row()
+    for i, (hdr, col) in enumerate(zip(["البند", "النسبة المئوية", "المبلغ (جنيه)", "%"], col_widths)):
+        c = hr.cells[i]; _set_cell_shading(c, BLACK)
+        p = c.paragraphs[0]; p.clear()
+        r = p.add_run(hdr); r.bold = True; r.font.size = Pt(9)
+        r.font.color.rgb = RGBColor.from_string(GOLD)
+        _set_para_rtl(p); _set_run_rtl(r)
+
+    for ri, (label, amount, pct) in enumerate(items):
+        fill = LGRAY if ri % 2 == 0 else WHITE
+        row = tbl.add_row()
+        data = [label, bar(pct), amount, pct]
+        colors = [BLACK, GOLD if ri % 2 == 0 else "888888", BLACK, RED]
+        for i, (txt, clr) in enumerate(zip(data, colors)):
+            c = row.cells[i]; _set_cell_shading(c, fill)
+            p = c.paragraphs[0]; p.clear()
+            # bar column: use Courier New for block chars
+            r = p.add_run(txt); r.font.size = Pt(9 if i != 1 else 8)
+            r.font.color.rgb = RGBColor.from_string(clr)
+            if i == 1:
+                r.font.name = 'Courier New'
+            _set_para_rtl(p); _set_run_rtl(r)
+
+    doc.add_paragraph()
+    return tbl
+
+
+def kpi_cards(doc, kpis):
+    """
+    2×N grid of KPI metric cards.
+    kpis: list of (value, label, timing)
+    """
+    # Lay out in pairs as rows
+    pairs = [kpis[i:i+2] for i in range(0, len(kpis), 2)]
+    card_w = PAGE_W // 2
+
+    for pair in pairs:
+        tbl = doc.add_table(rows=2, cols=len(pair))
+        _table_bidi(tbl)
+        tblPr = tbl._tbl.find(qn('w:tblPr'))
+        tw = _ensure(tblPr, 'w:tblW')
+        tw.set(qn('w:w'), str(PAGE_W)); tw.set(qn('w:type'), 'dxa')
+        tblGrid = OxmlElement('w:tblGrid')
+        for _ in pair:
+            gc = OxmlElement('w:gridCol'); gc.set(qn('w:w'), str(card_w)); tblGrid.append(gc)
+        tbl._tbl.insert(1, tblGrid)
+
+        for i, (val, label, timing) in enumerate(pair):
+            c0 = tbl.rows[0].cells[i]
+            _set_cell_shading(c0, RED)
+            p0 = c0.paragraphs[0]; p0.clear()
+            r0 = p0.add_run(val); r0.bold = True; r0.font.size = Pt(24)
+            r0.font.color.rgb = RGBColor.from_string(WHITE)
+            _set_para_rtl(p0); _set_run_rtl(r0)
+
+            c1 = tbl.rows[1].cells[i]
+            _set_cell_shading(c1, LGRAY)
+            p1 = c1.paragraphs[0]; p1.clear()
+            r1 = p1.add_run(label); r1.bold = True; r1.font.size = Pt(11)
+            r1.font.color.rgb = RGBColor.from_string(BLACK)
+            _set_para_rtl(p1); _set_run_rtl(r1)
+            p2 = c1.add_paragraph(); r2 = p2.add_run(timing)
+            r2.font.size = Pt(9); r2.italic = True
+            r2.font.color.rgb = RGBColor.from_string(RED)
+            _set_para_rtl(p2); _set_run_rtl(r2)
+
+        doc.add_paragraph()
+
+
+def phase_cards(doc, phases):
+    """
+    3 phase cards side-by-side.
+    phases: list of (num, name, duration, count, points_str)
+    """
+    n = len(phases)
+    card_w = PAGE_W // n
+    FILLS = [BLACK, "1A1A1A", "2A2A2A"]  # slight gradient of dark
+    tbl = doc.add_table(rows=3, cols=n)
+    _table_bidi(tbl)
+    tblPr = tbl._tbl.find(qn('w:tblPr'))
+    tw = _ensure(tblPr, 'w:tblW')
+    tw.set(qn('w:w'), str(PAGE_W)); tw.set(qn('w:type'), 'dxa')
+    tblGrid = OxmlElement('w:tblGrid')
+    for _ in phases:
+        gc = OxmlElement('w:gridCol'); gc.set(qn('w:w'), str(card_w)); tblGrid.append(gc)
+    tbl._tbl.insert(1, tblGrid)
+
+    for i, (num, name, duration, count, points) in enumerate(phases):
+        # Row 0: phase number (gold on red)
+        c0 = tbl.rows[0].cells[i]; _set_cell_shading(c0, RED)
+        p0 = c0.paragraphs[0]; p0.clear()
+        r0 = p0.add_run(f"{num}  {name}"); r0.bold = True; r0.font.size = Pt(13)
+        r0.font.color.rgb = RGBColor.from_string(WHITE)
+        _set_para_rtl(p0); _set_run_rtl(r0)
+
+        # Row 1: duration + count (gold on black)
+        c1 = tbl.rows[1].cells[i]; _set_cell_shading(c1, BLACK)
+        p1 = c1.paragraphs[0]; p1.clear()
+        r1 = p1.add_run(count); r1.bold = True; r1.font.size = Pt(16)
+        r1.font.color.rgb = RGBColor.from_string(GOLD)
+        _set_para_rtl(p1); _set_run_rtl(r1)
+        p1b = c1.add_paragraph(); r1b = p1b.add_run(duration)
+        r1b.font.size = Pt(9); r1b.font.color.rgb = RGBColor.from_string(WHITE)
+        _set_para_rtl(p1b); _set_run_rtl(r1b)
+
+        # Row 2: bullet points (light on very dark)
+        c2 = tbl.rows[2].cells[i]; _set_cell_shading(c2, "111111")
+        p2 = c2.paragraphs[0]; p2.clear()
+        r2 = p2.add_run(points); r2.font.size = Pt(9)
+        r2.font.color.rgb = RGBColor.from_string("DDDDDD")
+        _set_para_rtl(p2); _set_run_rtl(r2)
+
+    doc.add_paragraph()
+    return tbl
+
+
 def branded_table(doc, headers, rows, col_widths, header_bg=BLACK):
     """
     RTL-enabled branded table.
@@ -315,15 +504,11 @@ def build():
          "التكلفة على الوزارة: 3.6 مليون جنيه للمرحلة التجريبية (300 متدرب / 10 أشهر). "
          "العائد المتوقع: 255 متدرباً موظفاً خلال 90 يوماً من إتمام البرنامج.")
 
-    branded_table(doc,
-        headers=["المؤشر", "القيمة", "المصدر"],
-        col_widths=[4000, 1500, 3526],
-        rows=[
-            ("معدل بطالة الشباب — مصر 2025",      "13.2%",  "CAPMAS: نشرة سوق العمل Q1 2025"),
-            ("بطالة الفئة 20–24 سنة",              "16.9%",  "CAPMAS: نشرة سوق العمل Q1 2025"),
-            ("بطالة الشابات — الأعلى منذ 2015",   "33.8%",  "CAPMAS: نشرة سوق العمل Q1 2025"),
-        ]
-    )
+    stat_cards(doc, [
+        ("13.2%", "معدل بطالة الشباب — مصر 2025",     "CAPMAS Q1 2025"),
+        ("16.9%", "بطالة الفئة 20–24 سنة",             "CAPMAS Q1 2025"),
+        ("33.8%", "بطالة الشابات — الأعلى منذ 2015",  "CAPMAS Q1 2025"),
+    ])
     ruler(doc)
 
     # ── 01 PROBLEM ────────────────────────────────────────────────────────────
@@ -332,6 +517,11 @@ def build():
     h2(doc, "الشهادة وحدها لا تصنع فرصة عمل", RED)
     h3(doc, "الأرقام تحدد الأزمة بدقة")
 
+    stat_cards(doc, [
+        ("1.2M",  "شاب مصري عاطل رغم المؤهلات",               "CAPMAS 2025"),
+        ("72%",   "أصحاب عمل: الخريجون غير مؤهلين عملياً",    "CAPMAS 2025"),
+        ("70%",   "أسباب الفشل: نقص المهارات لا نقص الفرص",   "ILO 2024"),
+    ])
     branded_table(doc,
         headers=["الدلالة", "الرقم", "المصدر"],
         col_widths=[4500, 1200, 3326],
@@ -427,34 +617,24 @@ def build():
     h1(doc, "04 · الخطة والميزانية", GOLD)
     h2(doc, "مسار توسع متدرج بأرقام دقيقة", RED)
     h3(doc, "مسار التوسع المتدرج")
-
-    branded_table(doc,
-        headers=["المرحلة", "الفترة", "العدد", "أبرز الخطوات"],
-        col_widths=[2200, 1800, 1500, 3526],
-        rows=[
-            ("01 — المرحلة التجريبية", "يناير–أكتوبر ٢٠٢٦", "300 متدرب",
-             "القاهرة · الإسكندرية · الجيزة | 12 مدرباً | تقرير تقييم مستقل"),
-            ("02 — مرحلة التوسع",     "يناير–ديسمبر ٢٠٢٧", "1,500 متدرب",
-             "10 مراكز في 6 محافظات | المسار النسائي | ربط ببرنامج ستارت 2026"),
-            ("03 — الانطلاق الوطني",  "٢٠٢٨–٢٠٢٩",          "5,000+ / سنة",
-             "27 محافظة — 31 وحدة جامعية | شبكة 100+ صاحب عمل | تمويل ذاتي"),
-        ]
-    )
+    phase_cards(doc, [
+        ("01", "المرحلة التجريبية", "يناير–أكتوبر ٢٠٢٦", "300 متدرب",
+         "القاهرة · الإسكندرية · الجيزة\n12 مدرباً معتمداً\nتقرير تقييم مستقل"),
+        ("02", "مرحلة التوسع",     "يناير–ديسمبر ٢٠٢٧", "1,500 متدرب",
+         "10 مراكز في 6 محافظات\nالمسار النسائي المخصص\nربط ببرنامج ستارت 2026"),
+        ("03", "الانطلاق الوطني",  "٢٠٢٨–٢٠٢٩",          "+5,000 / سنة",
+         "27 محافظة — 31 وحدة جامعية\nشبكة 100+ صاحب عمل\nتمويل ذاتي"),
+    ])
 
     h3(doc, "الميزانية التفصيلية — المرحلة الأولى (300 متدرب · 3 مراكز · 10 أشهر)")
-    branded_table(doc,
-        headers=["البند", "التكلفة (جنيه)", "النسبة"],
-        col_widths=[5000, 2300, 1726],
-        rows=[
-            ("تطوير المناهج وإعداد المواد التدريبية",          "450,000",   "12.5%"),
-            ("رواتب المدربين (12 مدرباً × 10 أشهر)",           "1,200,000", "33.3%"),
-            ("إيجار وتجهيز المراكز (3 مراكز × 10 أشهر)",       "900,000",   "25.0%"),
-            ("التقييم المستقل وإعداد التقارير",                "250,000",   "6.9%"),
-            ("مستلزمات ودعم المتدربين (300 × 500 جنيه)",        "150,000",   "4.2%"),
-            ("إدارة المشروع والمصاريف التشغيلية (18%)",         "650,000",   "18.1%"),
-            ("الإجمالي",                                        "3,600,000", "100%"),
-        ]
-    )
+    budget_bars(doc, [
+        ("تطوير المناهج وإعداد المواد التدريبية",          "450,000",   "12.5%"),
+        ("رواتب المدربين (12 مدرباً × 10 أشهر)",           "1,200,000", "33.3%"),
+        ("إيجار وتجهيز المراكز (3 مراكز × 10 أشهر)",       "900,000",   "25.0%"),
+        ("التقييم المستقل وإعداد التقارير",                "250,000",   "6.9%"),
+        ("مستلزمات ودعم المتدربين (300 × 500 جنيه)",        "150,000",   "4.2%"),
+        ("إدارة المشروع والمصاريف التشغيلية",               "650,000",   "18.1%"),
+    ])
 
     para(doc, "التكلفة لكل متدرب: 12,000 جنيه", bold=True)
     para(doc,
@@ -469,17 +649,12 @@ def build():
     h1(doc, "05 · المؤشرات والمتابعة", GOLD)
     h2(doc, "التزامات قابلة للقياس + بند استرداد", RED)
     h3(doc, "التزاماتنا القابلة للقياس")
-
-    branded_table(doc,
-        headers=["المؤشر", "الهدف", "التوقيت"],
-        col_widths=[3500, 1800, 3726],
-        rows=[
-            ("نسبة التوظيف الفعال",    "85%+",  "خلال 90 يوماً من إتمام التدريب"),
-            ("رضا المتدربين",          "4.8/5", "تقييم مستقل بعد إتمام البرنامج"),
-            ("رضا أصحاب العمل",        "96%+",  "قياس بعد 6 أشهر من التوظيف"),
-            ("تحسن معدل التوظيف",      "+52%",  "فوق المتوسط مقارنةً بالتدريب التقليدي"),
-        ]
-    )
+    kpi_cards(doc, [
+        ("85%+",  "نسبة التوظيف الفعال",    "خلال 90 يوماً من إتمام التدريب"),
+        ("4.8/5", "رضا المتدربين",           "تقييم مستقل بعد إتمام البرنامج"),
+        ("96%+",  "رضا أصحاب العمل",        "قياس بعد 6 أشهر من التوظيف"),
+        ("+52%",  "تحسن معدل التوظيف",      "فوق المتوسط مقارنةً بالتدريب التقليدي"),
+    ])
 
     for b in [
         "لوحة بيانات حية للوزارة تُحدَّث شهرياً (Google Looker Studio)",
