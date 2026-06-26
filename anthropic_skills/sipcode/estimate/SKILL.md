@@ -1,5 +1,14 @@
 ---
 description: Predict the dollar cost of a coding task across Opus 4.7, Sonnet 4.6, and Haiku 4.5 BEFORE the user runs it. Pure heuristic + historical-anchor math, zero LLM calls. Use when the user asks "how much will X cost?", "is this task worth doing on Opus?", "estimate the refactor", or any pre-flight pricing question.
+auto-trigger:
+  - '"how much will X cost", "estimate the cost", "is this task worth doing on Opus"'
+  - pre-flight pricing question before starting a task
+  - user unsure which model to use for a task
+  - any L or XL task chain before committing to run it
+do-not-trigger:
+  - post-session forensics (use sipcode/why)
+  - benchmark verification (use sipcode/benchmark)
+  - before/after savings comparison (use sipcode/impact)
 ---
 
 # Sipcode — Estimate (pre-flight cost prediction)

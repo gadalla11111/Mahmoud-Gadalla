@@ -1,5 +1,13 @@
 ---
 description: Forensic audit of the user's most recent Claude Code session. Returns total spend, output ratio, duplicate file reads, idle context after auto-compact, top expensive tool calls, and an estimate of what Sipcode would have RECOVERED if optimizers were active. Use when the user asks "where did my tokens go?", "audit my last session", "why was that session so expensive?", or any forensic question about a past Claude Code session.
+auto-trigger:
+  - '"where did my tokens go", "audit my last session", "why was that so expensive"'
+  - forensic question about a past Claude Code session
+  - user notices unusually high token spend after a session
+do-not-trigger:
+  - pre-flight cost estimate before a task (use sipcode/estimate)
+  - before/after savings comparison (use sipcode/impact)
+  - benchmark reproducibility (use sipcode/benchmark)
 ---
 
 # Sipcode — Why (session forensics)
