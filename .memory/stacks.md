@@ -1,5 +1,5 @@
 # Skill Stacks — Knowledge Checkpoint
-**Last updated**: 2026-06-26 (rev 11)
+**Last updated**: 2026-06-26 (rev 12) — all 51 skills now placed in at least one stack
 
 ---
 
@@ -705,6 +705,46 @@ tdd → claude-api → ultracode → change-impact
 
 ---
 
+## Cost / Token Economics Stacks
+
+**Full lifecycle**
+```
+sipcode/estimate → [run task] → sipcode/why → sipcode/impact → sipcode/benchmark
+```
+
+**Pre-flight cost prediction**
+```
+sipcode/estimate → [task]
+```
+- Predict cost across Opus / Sonnet / Haiku before committing
+
+**Post-session forensics**
+```
+sipcode/why
+```
+- Forensic audit of where tokens actually went in one session
+
+**Prove savings (A/B)**
+```
+sipcode/impact
+```
+- Before/after comparison on the user's own session data
+- Honesty-gated: `delta: null` when comparison windows aren't comparable
+
+**Verify the headline claim**
+```
+sipcode/benchmark
+```
+- Reproduce the headline savings number on demand
+
+**Key rules**
+- `impact` refuses to invent a savings number when windows are unfair — respect the integrity contract
+- `benchmark` is the only one that *proves* the claim; `why` only diagnoses one session
+- Never extrapolate single-session savings across many sessions
+- Cross-reference: cost-hygiene shortcuts (`estimate → task → why`) live in Workflow + Orchestration stacks
+
+---
+
 ## Cross-Domain Complementary Pairs
 
 | Pair | Why |
@@ -718,6 +758,7 @@ tdd → claude-api → ultracode → change-impact
 | `design` + `theme-factory` | visual design feeds design tokens |
 | `prd-generator` + `sparc` | PRD feeds SPARC spec phase |
 | `sipcode/estimate` + `sipcode/why` | pre-flight then post-session forensics |
+| `sipcode/impact` + `sipcode/benchmark` | prove savings, then reproduce the claim |
 | `engram/working` + `engram/briefing` | checkpoint on pause, briefing on return |
 | `orchestrator` + `nested-subagents` | route then delegate |
 | `think-twice` + `surgical` | think minimally, act minimally |
