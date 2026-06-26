@@ -158,6 +158,10 @@
 
 ## Recent Session Work (2026-06-26)
 - Built `ministry-proposal`, `fact-checker`, `steering-lint`, `ultracode` skills
-- Added `auto-trigger` / `do-not-trigger` to all 44 skills
+- Added `auto-trigger` / `do-not-trigger` to all skills (originally 44)
 - Fixed flake8 F824 in `claude_agent_sdk/utils/agent_visualizer.py`
-- All merged to main via PR #4, PR #6, PR #7
+- Created `.memory/stacks.md` — ~16 domain stack guides mapping all 68 skills (rev 19)
+- Installed 24 vendor skills from official repos: GitHub CI trio (openai/skills),
+  Sentry suite ×5 (getsentry), Neon ×2, Terraform ×3 (hashicorp), shadcn,
+  Stripe, Expo ×2 (re-synced verbatim from expo/skills)
+- Library grew 44 → 68 skills; all merged to main via PRs #4–#32
