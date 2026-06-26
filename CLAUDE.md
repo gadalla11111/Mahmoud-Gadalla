@@ -81,6 +81,7 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Generative/algorithmic art | `anthropic_skills/algorithmic-art` |
 | Web artifact construction | `anthropic_skills/web-artifacts-builder` |
 | Animated GIFs for Slack | `anthropic_skills/slack-gif-creator` |
+| shadcn/ui components (components.json projects) | `anthropic_skills/shadcn` |
 
 ### Orchestration & Meta
 | Task | Skill |

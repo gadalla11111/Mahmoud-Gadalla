@@ -5,8 +5,9 @@
 ---
 
 ## Library Stats
-- **Total skills**: 64 (57 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
-- **Newest**: Terraform IaC trio (style-guide, test, stacks) under anthropic_skills/terraform/ — from hashicorp/agent-skills
+- **Total skills**: 65 (58 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
+- **Newest**: shadcn (shadcn/ui component management) under anthropic_skills/shadcn/ — from shadcn-ui/ui
+- **Prior**: Terraform IaC trio (style-guide, test, stacks) under anthropic_skills/terraform/ — from hashicorp/agent-skills
 - **Prior**: Neon Postgres (2: neon-postgres, neon-postgres-egress-optimizer) under anthropic_skills/neon/
 - **Prior**: Sentry observability suite (5) under anthropic_skills/sentry/ — requires Sentry MCP
 - **Prior**: gh-fix-ci, gh-address-comments, yeet (GitHub CI trio, from openai/skills .curated, adapted for github MCP tools)
@@ -84,6 +85,7 @@
 | algorithmic-art | `algorithmic-art` | "generative art", "p5.js", "flow field", code-driven visual output |
 | web-artifacts-builder | `web-artifacts-builder` | Self-contained HTML artifact, single-file interactive tool/demo |
 | slack-gif-creator | `slack-gif-creator` | "gif for Slack", animated gif, short looping team communication |
+| shadcn | `shadcn` | add/compose shadcn/ui components, projects with components.json, Tailwind v4 |
 
 ### Orchestration & Meta
 | Skill | Path | Auto-triggers on |
