@@ -1,5 +1,13 @@
 ---
 description: A/B compare the user's actual token spend before and after they installed Sipcode's optimizers — on their own session data. The honesty-first savings verifier. Use when the user asks "is sipcode actually saving me tokens?", "show me the impact", "prove sipcode is working", or any variant of "is this thing worth running?"
+auto-trigger:
+  - '"is sipcode saving me tokens", "show me the impact", "prove sipcode is working"'
+  - user wants before/after A/B comparison of actual session spend
+  - '"is this thing worth running"'
+do-not-trigger:
+  - pre-flight cost estimate (use sipcode/estimate)
+  - single session forensics (use sipcode/why)
+  - benchmark reproducibility test (use sipcode/benchmark)
 ---
 
 # Sipcode — Impact (the savings verifier)

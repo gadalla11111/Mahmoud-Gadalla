@@ -1,5 +1,13 @@
 ---
 description: Run the published 20-task Sipcode benchmark on the user's machine and report measured median savings (target 62.6%). Reproducible, locked corpus. Use when the user asks "what's the proof?", "how much does sipcode actually save?", "run the benchmark", or wants to verify the headline savings claim themselves.
+auto-trigger:
+  - '"what is the proof", "how much does sipcode save", "run the benchmark"'
+  - user wants to verify sipcode headline savings claim independently
+  - '"npx sipcode benchmark"'
+do-not-trigger:
+  - pre-flight cost estimation (use sipcode/estimate)
+  - live session forensics (use sipcode/why)
+  - before/after savings comparison (use sipcode/impact)
 ---
 
 # Sipcode — Benchmark (the reproducibility proof)
