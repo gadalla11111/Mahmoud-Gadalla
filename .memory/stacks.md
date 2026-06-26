@@ -1,5 +1,5 @@
 # Skill Stacks — Knowledge Checkpoint
-**Last updated**: 2026-06-26 (rev 5)
+**Last updated**: 2026-06-26 (rev 6)
 
 ---
 
@@ -359,6 +359,58 @@ creating-financial-models → fact-checker → xlsx → doc-coauthoring
 - `analyzing-financial-statements` before `creating-financial-models` — understand history before projecting
 - `deep-research` before analysis on any unfamiliar company or sector
 - `xlsx` is the canonical output for financial models
+
+---
+
+## Ministry Proposal Stacks
+
+**Core (always)**
+```
+deep-research → fact-checker → ministry-proposal → pptx
+```
+- fact-checker is a hard gate — no slide gets a stat without 3 independent sources
+
+**Full proposal from scratch**
+```
+deep-research → ultra-search → fact-checker → ministry-proposal → design → pptx
+```
+- design applies visual system after content is locked
+
+**Verifying existing claims**
+```
+fact-checker → prove-claims → ministry-proposal
+```
+- Run before finalizing any slide that cites figures
+
+**Data-backed slides**
+```
+analyzing-financial-statements → fact-checker → ministry-proposal → pptx
+```
+
+**Arabic language quality**
+```
+ministry-proposal → fact-checker → internal-comms
+```
+- internal-comms: review tone and register for formal Arabic فصحى
+
+**Branded output**
+```
+ministry-proposal → applying-brand-guidelines → pptx
+```
+- MERIDIAN: `#0E0E0E` black dominant (MY4 Education)
+- Jahizoon: `#1C2B45` navy dominant (MBK Education)
+
+**Handoff between sessions**
+```
+engram/briefing → ministry-proposal → fact-checker → engram/working
+```
+
+**Hard rules**
+- `fact-checker` is non-negotiable — proposals cannot be finalized without it
+- Pre-verified: 41.5% graduate unemployment (CAPMAS Q1 2026) — safe to use
+- ⚠️ Nexford figures (78%/41%/51%) — single-sourced, need 2nd source before any slide
+- `deep-research` before `ministry-proposal` — never draft slides on unverified material
+- Visual system must match the client: MERIDIAN ≠ Jahizoon
 
 ---
 
