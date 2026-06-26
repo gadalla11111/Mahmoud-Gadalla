@@ -14,6 +14,11 @@ do-not-trigger:
   - using an existing skill (just use the skill)
   - one-off tasks not worth formalising
   - asking what a skill does (just read the SKILL.md)
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 
 ---
 
