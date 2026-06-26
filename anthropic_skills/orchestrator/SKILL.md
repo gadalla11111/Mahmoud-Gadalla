@@ -2,7 +2,7 @@
 name: orchestrator
 description: >
   Meta-skill that reads the incoming task, selects the right skill(s) from the
-  76-skill library, resolves conflicts when multiple skills match, chains them in
+  81-skill library, resolves conflicts when multiple skills match, chains them in
   the correct order, and applies quality gates — all while minimising token spend.
   Use whenever a task could benefit from a structured skill but the user has not
   named one. Trigger on: "best way to", "help me with", "what skill should I use",
@@ -31,7 +31,7 @@ health:
 
 # Orchestrator
 
-One entry point for the full 76-skill library. Classify the task → resolve conflicts → select the minimum viable chain → execute with quality gates → report.
+One entry point for the full 81-skill library. Classify the task → resolve conflicts → select the minimum viable chain → execute with quality gates → report.
 
 ---
 
@@ -132,6 +132,7 @@ When two or more skills match, apply these tiebreakers in order:
 | Team announcement / internal memo / all-hands / incident comms | `internal-comms` | S |
 | "write a PRD" / product requirements / pre-engineering feature spec | `prd-generator` | M |
 | "handoff notes" / "what did we accomplish" / context switch | `handoff` | S |
+| "make this sound human" / strip AI writing tells / "reads like ChatGPT" | `humanizer` | S |
 | University course / syllabus / learning outcomes / exam / rubric / grading | `curriculum-builder` | M |
 
 ### Research & Verification
@@ -143,6 +144,7 @@ When two or more skills match, apply these tiebreakers in order:
 | Exhaustive search / prior searches insufficient / competitive research | `ultra-search` | L |
 | "latest news" / current events / time-sensitive information | `news-research` | M |
 | "substantiate this" / single-claim verification / "evidence for" | `prove-claims` | S |
+| GEO / "SEO for AI search" / get cited by ChatGPT/Perplexity/AI Overviews | `claude-seo` | M |
 
 ### Design & Frontend
 
@@ -153,6 +155,7 @@ When two or more skills match, apply these tiebreakers in order:
 | Brand consistency / "is this on-brand" / Anthropic visual identity | `brand-guidelines` | S |
 | Static art / poster / print / .pdf/.png artwork | `canvas-design` | M |
 | Slide deck narrative + visual structure / "design my presentation" | `presentation-architect` | M |
+| Write HTML and render it to MP4/GIF/WebM video | `hyperframes` | M |
 | "create a theme" / colour palette / design tokens / component theming | `theme-factory` | M |
 | "generative art" / p5.js / flow field / code-driven visual output | `algorithmic-art` | M |
 | Self-contained HTML artifact / single-file interactive tool/demo | `web-artifacts-builder` | M |
@@ -172,6 +175,7 @@ When two or more skills match, apply these tiebreakers in order:
 | Task too large for single turn / parallelisable subtasks / multi-domain delegation | `nested-subagents` | M |
 | "add to queue" / backlog management / multi-step incremental project | `queue` | S |
 | "create a new skill" / "add skill for X" / formalise recurring workflow | `skill-creator` | M |
+| "is there a skill for X" / find & install a skill / discover capability | `find-skills` | S |
 
 ### Workflow & Process
 
@@ -182,6 +186,7 @@ When two or more skills match, apply these tiebreakers in order:
 | Ambiguous/multi-interpretation request / missing context changes approach | `promptize/promptize` | XS |
 | "estimate cost" / "how many tokens" / pre-flight model selection | `sipcode/estimate` | XS |
 | "where did my tokens go" / post-session forensics | `sipcode/why` | XS |
+| "compress this prompt" / "cut the tokens" / trim model-facing context | `caveman` | XS |
 | Before/after savings comparison / "is sipcode helping" | `sipcode/impact` | XS |
 | "run the benchmark" / verify sipcode savings claim | `sipcode/benchmark` | XS |
 | "audit CLAUDE.md" / large/conflicting instructions / new project onboarding | `claude-md-audit` | S |
