@@ -1,5 +1,5 @@
 # Skill Stacks — Knowledge Checkpoint
-**Last updated**: 2026-06-26 (rev 6)
+**Last updated**: 2026-06-26 (rev 7)
 
 ---
 
@@ -411,6 +411,68 @@ engram/briefing → ministry-proposal → fact-checker → engram/working
 - ⚠️ Nexford figures (78%/41%/51%) — single-sourced, need 2nd source before any slide
 - `deep-research` before `ministry-proposal` — never draft slides on unverified material
 - Visual system must match the client: MERIDIAN ≠ Jahizoon
+
+---
+
+## Brand Stacks
+
+**Core (always)**
+```
+think-twice → applying-brand-guidelines → fact-checker
+```
+- Confirm which brand system applies before touching anything
+
+**Brand compliance on documents**
+```
+[format skill] → applying-brand-guidelines → fact-checker
+```
+- Apply brand after content is written, verify before delivery
+
+**UI/frontend brand consistency**
+```
+frontend-design → brand-guidelines → applying-brand-guidelines
+```
+- brand-guidelines: general principles during build
+- applying-brand-guidelines: Acme Corp–specific compliance check after build
+
+**Design systems**
+```
+theme-factory → applying-brand-guidelines → brand-guidelines
+```
+
+**Branded financial deliverables**
+```
+[finance skill] → fact-checker → applying-brand-guidelines → xlsx / pdf / docx
+```
+- Numbers verified first, brand applied last
+
+**Branded ministry proposals**
+```
+ministry-proposal → applying-brand-guidelines → pptx
+```
+- MERIDIAN: `#0E0E0E` black dominant (MY4 Education)
+- Jahizoon: `#1C2B45` navy dominant (MBK Education)
+
+**New brand assets**
+```
+design → theme-factory → applying-brand-guidelines
+```
+
+**Internal branded communications**
+```
+internal-comms → applying-brand-guidelines → fact-checker
+```
+
+**Branded presentations**
+```
+design → pptx → applying-brand-guidelines → fact-checker
+```
+
+**Key rules**
+- `applying-brand-guidelines` triggers on any Acme Corp document — no exceptions
+- Always confirm which brand system applies before designing (Acme ≠ MERIDIAN ≠ Jahizoon)
+- Brand check comes after content is locked, before delivery
+- `fact-checker` always follows brand check if the doc has any cited claims
 
 ---
 
