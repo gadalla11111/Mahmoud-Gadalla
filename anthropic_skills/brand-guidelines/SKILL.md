@@ -4,7 +4,9 @@ description: Applies Anthropic's official brand colors and typography to any sor
 license: Complete terms in LICENSE.txt
 auto-trigger:
   - applying or checking brand consistency
-  - "is this on-brand", "use our brand colours", "brand voice"
+  - "is this on-brand"
+  - "use our brand colours"
+  - "brand voice"
   - visual identity work for a known brand system
   - generating brand assets (logos, colour palettes, typography pairings)
 do-not-trigger:

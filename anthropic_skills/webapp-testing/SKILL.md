@@ -4,7 +4,9 @@ description: Toolkit for interacting with and testing local web applications usi
 license: Complete terms in LICENSE.txt
 auto-trigger:
   - automated browser / UI testing with Playwright or similar
-  - "test the UI", "end-to-end test", "browser automation"
+  - "test the UI"
+  - "end-to-end test"
+  - "browser automation"
   - verifying a web feature works in a real browser
   - regression test suite for a web app
 do-not-trigger:

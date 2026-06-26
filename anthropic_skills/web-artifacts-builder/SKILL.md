@@ -5,7 +5,8 @@ license: Complete terms in LICENSE.txt
 auto-trigger:
   - self-contained HTML artifact (single file, no server)
   - interactive web demo, tool, or visualisation as a standalone file
-  - "build me an HTML tool", "create a web artifact"
+  - "build me an HTML tool"
+  - "create a web artifact"
 do-not-trigger:
   - multi-file web apps (use frontend-design)
   - server-side code

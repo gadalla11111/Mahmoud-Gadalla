@@ -3,7 +3,11 @@ name: algorithmic-art
 description: Creating algorithmic art using p5.js with seeded randomness and interactive parameter exploration. Use this when users request creating art using code, generative art, algorithmic art, flow fields, or particle systems. Create original algorithmic art rather than copying existing artists' work to avoid copyright violations.
 license: Complete terms in LICENSE.txt
 auto-trigger:
-  - "generative art", "algorithmic art", "p5.js", "flow field", "particle system"
+  - "generative art"
+  - "algorithmic art"
+  - "p5.js"
+  - "flow field"
+  - "particle system"
   - user asks to create art using code
   - visual creative output driven by mathematical or computational process
 do-not-trigger:
