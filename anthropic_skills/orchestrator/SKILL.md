@@ -2,7 +2,7 @@
 name: orchestrator
 description: >
   Meta-skill that reads the incoming task, selects the right skill(s) from the
-  83-skill library, resolves conflicts when multiple skills match, chains them in
+  84-skill library, resolves conflicts when multiple skills match, chains them in
   the correct order, and applies quality gates — all while minimising token spend.
   Use whenever a task could benefit from a structured skill but the user has not
   named one. Trigger on: "best way to", "help me with", "what skill should I use",
@@ -31,7 +31,7 @@ health:
 
 # Orchestrator
 
-One entry point for the full 83-skill library. Classify the task → resolve conflicts → select the minimum viable chain → execute with quality gates → report.
+One entry point for the full 84-skill library. Classify the task → resolve conflicts → select the minimum viable chain → execute with quality gates → report.
 
 ---
 
@@ -175,6 +175,7 @@ When two or more skills match, apply these tiebreakers in order:
 | Task too large for single turn / parallelisable subtasks / multi-domain delegation | `nested-subagents` | M |
 | "add to queue" / backlog management / multi-step incremental project | `queue` | S |
 | "create a new skill" / "add skill for X" / formalise recurring workflow | `skill-creator` | M |
+| "audit the library" / "maintain the skills" / library health / drift check | `library-maintainer` | S |
 | "is there a skill for X" / find & install a skill / discover capability | `find-skills` | S |
 
 ### Workflow & Process
