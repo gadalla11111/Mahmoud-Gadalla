@@ -1,5 +1,5 @@
 # Skill Stacks — Knowledge Checkpoint
-**Last updated**: 2026-06-26 (rev 2)
+**Last updated**: 2026-06-26 (rev 3)
 
 ---
 
@@ -196,6 +196,53 @@ handoff → docx / pdf
 ```
 surgical + [format skill]
 ```
+
+---
+
+## Orchestration Stacks
+
+**Core (always)**
+```
+promptize → orchestrator → nested-subagents
+```
+
+**Large ambiguous tasks**
+```
+promptize → orchestrator → nested-subagents → handoff
+```
+
+**Queue / backlog management**
+```
+queue → orchestrator
+```
+
+**Cost-aware orchestration**
+```
+sipcode/estimate → orchestrator → nested-subagents → sipcode/why
+```
+- Estimate before spinning up agent trees — costs compound fast
+
+**Creating new workflows**
+```
+skill-creator → orchestrator
+```
+- skill-creator formalises recurring workflow; orchestrator routes it automatically next time
+
+**Session management**
+```
+engram/briefing → orchestrator → engram/working
+```
+
+**ADR-driven orchestration**
+```
+adr → orchestrator → nested-subagents → change-impact
+```
+
+**Key rules**
+- `orchestrator` before any request spanning 2+ skill domains
+- `nested-subagents` only when subtasks are genuinely parallelisable
+- `promptize` whenever intent is ambiguous — wrong routing wastes the whole chain
+- `sipcode/estimate` before any L/XL agent tree
 
 ---
 
