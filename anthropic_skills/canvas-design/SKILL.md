@@ -1,15 +1,21 @@
 ---
 name: canvas-design
-description: Create beautiful visual art in .png and .pdf documents using design philosophy. You should use this skill when the user asks to create a poster, piece of art, design, or other static piece. Create original visual designs, never copying existing artists' work to avoid copyright violations.
+description: Create beautiful static visual art in .png and .pdf documents using a design-philosophy-first method. Use when the user asks to create a poster, piece of art, print design, or other static visual piece. Outputs a philosophy .md plus a .pdf/.png artifact. Create original visual designs, never copying existing artists' work to avoid copyright violations.
 license: Complete terms in LICENSE.txt
 auto-trigger:
-  - HTML canvas drawing or animation
-  - Fabric.js, Konva, or raw canvas API work
-  - interactive canvas-based UI (drawing tools, whiteboards, diagrams)
+  - "create a poster", "make a print design", "a piece of art"
+  - static visual artwork output as .pdf or .png
+  - philosophy-driven aesthetic composition (not a UI, not code)
 do-not-trigger:
-  - SVG-only work
-  - CSS-only animations
-  - video editing
+  - interactive HTML canvas / Fabric.js / Konva work (use frontend-design or web-artifacts-builder)
+  - web UI, components, or app interfaces (use frontend-design)
+  - generative/algorithmic art with p5.js (use algorithmic-art)
+  - applying a preset theme to slides/docs (use theme-factory)
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 
 ---
 
