@@ -1,5 +1,5 @@
 # Skill Stacks — Knowledge Checkpoint
-**Last updated**: 2026-06-26 (rev 9)
+**Last updated**: 2026-06-26 (rev 10)
 
 ---
 
@@ -575,6 +575,63 @@ ultracode → change-impact → tdd → handoff
 - `claude-api` always — don't guess SDK patterns for tool use or streaming
 - `sipcode/estimate` before any L/XL agent chain — costs compound per loop iteration
 - Managed agents need `mcp-builder` — tools must be MCP-exposed
+
+---
+
+## Security Stacks
+
+**Core (always)**
+```
+think-twice → ultracode → tdd → change-impact
+```
+- ultracode Phase 0 (Think) mandatory — security tasks never skip threat modelling
+
+**Vulnerability investigation**
+```
+debug → change-impact → ultracode (quick-mode) → tdd
+```
+- debug: root cause and exploit path first, fix second
+
+**Security-sensitive new features**
+```
+adr → sparc → ultracode → tdd → change-impact
+```
+- adr: record auth model, data boundary, trust level decisions
+
+**Dependency / supply chain review**
+```
+deep-research → prove-claims → change-impact
+```
+- deep-research: CVE lookup, dependency audit, upstream reputation
+
+**Secret scanning / credential hygiene**
+```
+ultracode (quick-mode) → change-impact
+```
+- Remove secrets, rotate credentials, audit git history
+
+**Security audit of existing code**
+```
+debug → change-impact → adr → ultracode → tdd
+```
+
+**API security (auth, rate limiting, input validation)**
+```
+adr → sparc → claude-api → ultracode → tdd
+```
+
+**Incident response**
+```
+debug → internal-comms → change-impact → ultracode (quick-mode) → handoff
+```
+- internal-comms: incident communication while fix is in progress
+
+**Hard rules**
+- Never skip Phase 0 (Think) on security tasks — ultracode enforces this
+- `change-impact` before AND after any security fix — attack surface can shift
+- `adr` for any decision that affects trust boundaries or data access
+- No security fix ships without `tdd` — untested patches create new vulnerabilities
+- Never commit `.env` or credentials — DiffGate blocks it but don't rely on it
 
 ---
 
