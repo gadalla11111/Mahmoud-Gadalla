@@ -48,6 +48,7 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Write Terraform HCL (style conventions) | `anthropic_skills/terraform/terraform-style-guide` |
 | Write/run Terraform tests (.tftest.hcl) | `anthropic_skills/terraform/terraform-test` |
 | Terraform Stacks (multi-env/region infra) | `anthropic_skills/terraform/terraform-stacks` |
+| Stripe payments/billing integration | `anthropic_skills/stripe` |
 
 ### Document & Content Generation
 | Task | Skill |
