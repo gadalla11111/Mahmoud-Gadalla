@@ -19,6 +19,11 @@ do-not-trigger:
   - quick single-turn exchanges
   - sub-100-token tasks
 
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 ---
 
 # Sipcode — Token Economics Toolkit
