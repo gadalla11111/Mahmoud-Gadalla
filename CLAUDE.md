@@ -51,6 +51,9 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Stripe payments/billing integration | `anthropic_skills/stripe` |
 | Build/ship Expo apps (EAS Build, stores) | `anthropic_skills/expo/expo-deployment` |
 | Expo Router app UI (screens, navigation) | `anthropic_skills/expo/expo-building-native-ui` |
+| Static analysis scan (Semgrep) | `anthropic_skills/trailofbits/semgrep` |
+| Deep taint analysis (CodeQL) | `anthropic_skills/trailofbits/codeql` |
+| API misuse / footgun design review | `anthropic_skills/trailofbits/sharp-edges` |
 
 ### Document & Content Generation
 | Task | Skill |

@@ -1,5 +1,5 @@
 # Skill Stacks — Knowledge Checkpoint
-**Last updated**: 2026-06-26 (rev 19) — added Expo mobile (68 skills total)
+**Last updated**: 2026-06-26 (rev 20) — added Trail of Bits security (71 skills total)
 
 ---
 
@@ -593,11 +593,25 @@ think-twice → ultracode → tdd → change-impact
 ```
 - ultracode Phase 0 (Think) mandatory — security tasks never skip threat modelling
 
+**Static analysis scan (Trail of Bits)**
+```
+semgrep → codeql → sentry-fix-issues
+```
+- semgrep: fast multi-language pattern scan (third-party rulesets mandatory, --metrics=off)
+- codeql: deep interprocedural taint where patterns aren't enough
+- Both have a hard approval gate before scanning
+
+**API / interface misuse review**
+```
+sharp-edges → adr → ultracode
+```
+- sharp-edges: find footgun designs (dangerous defaults, stringly-typed security)
+
 **Vulnerability investigation**
 ```
-debug → change-impact → ultracode (quick-mode) → tdd
+semgrep/codeql → debug → change-impact → ultracode (quick-mode) → tdd
 ```
-- debug: root cause and exploit path first, fix second
+- static analysis surfaces the candidate, debug confirms the exploit path, fix second
 
 **Security-sensitive new features**
 ```
@@ -639,6 +653,8 @@ debug → internal-comms → change-impact → ultracode (quick-mode) → handof
 - `adr` for any decision that affects trust boundaries or data access
 - No security fix ships without `tdd` — untested patches create new vulnerabilities
 - Never commit `.env` or credentials — DiffGate blocks it but don't rely on it
+- Static-analysis scans (`semgrep`/`codeql`) have a hard approval gate — present the plan, then wait
+- `semgrep` requires third-party rulesets (Trail of Bits/0xdea/Decurity) + `--metrics=off`
 
 ---
 
@@ -1001,3 +1017,5 @@ expo-building-native-ui → stripe-best-practices → neon-postgres → expo-dep
 | `stripe-best-practices` + `shadcn` | payments backend + checkout UI |
 | `expo-building-native-ui` + `expo-deployment` | build the app, then ship it via EAS |
 | `expo-deployment` + `sentry-setup-ai-monitoring` | ship + monitor the mobile app |
+| `semgrep` + `codeql` | fast pattern scan, then deep taint analysis |
+| `sharp-edges` + `adr` | flag footgun API, record the trust-boundary decision |
