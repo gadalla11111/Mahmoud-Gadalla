@@ -5,8 +5,9 @@
 ---
 
 ## Library Stats
-- **Total skills**: 81 (74 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
-- **Newest**: Claude Stack set (5: hyperframes, claude-seo, find-skills, humanizer, caveman) — first-party, completes the reference 'My Claude Stack' Skills column; see MY_CLAUDE_STACK.md
+- **Total skills**: 83 (76 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
+- **Newest**: Stack support (2: legal-practice, social-content) — skill-equivalents for the reference Plugins column; plus `stack/` config templates (MCP + plugins) — see stack/STACK_SETUP.md
+- **Prior**: Claude Stack set (5: hyperframes, claude-seo, find-skills, humanizer, caveman) — completes the reference Skills column; see MY_CLAUDE_STACK.md
 - **Prior**: Marketing & Education (5: brand-framework, linkedin-branding, social-audit, curriculum-builder, presentation-architect) — from 2026 web research
 - **Prior**: Trail of Bits security (3: semgrep, codeql, sharp-edges) under anthropic_skills/trailofbits/ — from trailofbits/skills; reinforces the Security stack
 - **Prior**: Expo mobile (2: expo-deployment, expo-building-native-ui) — re-synced verbatim from expo/skills (plugins/expo/skills/); note: Expo RN UI uses inline styles, CSS/Tailwind unsupported
@@ -133,6 +134,7 @@
 | brand-framework | `brand-framework` | Brand strategy/positioning, brand pyramid, value proposition, rebrand (strategy, not visuals) |
 | linkedin-branding | `linkedin-branding` | LinkedIn strategy, personal brand, thought leadership, content calendar (4-axis + 5-3-2) |
 | social-audit | `social-audit` | Social media audit, channel benchmark vs competitors, prioritized recommendations |
+| social-content | `social-content` | Multi-platform content creation — posts, reel scripts, captions, calendar |
 
 **Brand routing**: `brand-framework` = strategy/positioning · `brand-guidelines`/`applying-brand-guidelines` = applying an existing visual identity · `ministry-proposal` = MERIDIAN/Jahizoon ministry brand.
 
@@ -140,6 +142,7 @@
 | Skill | Path | Auto-triggers on |
 |---|---|---|
 | **ministry-proposal** | `ministry-proposal` | Arabic ministry doc (وزارة), MBK/Jahizoon/MERIDIAN brand, 15-slide schema |
+| legal-practice | `legal-practice` | Draft/review/explain contracts, NDAs, policies, ToS — risk-flagged (not legal advice) |
 
 ### Finance & Brand (skills/custom_skills/)
 | Skill | Path | Auto-triggers on |

@@ -100,6 +100,7 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Brand strategy / positioning / brand pyramid / value proposition | `anthropic_skills/brand-framework` |
 | LinkedIn / personal branding / content calendar / thought leadership | `anthropic_skills/linkedin-branding` |
 | Social media audit / channel benchmark / recommendations | `anthropic_skills/social-audit` |
+| Social content creation (posts, reels, captions, calendar) | `anthropic_skills/social-content` |
 
 ### Orchestration & Meta
 | Task | Skill |
@@ -126,6 +127,7 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Task | Skill |
 |---|---|
 | Arabic ministry proposal (MERIDIAN/MBK brand) | `anthropic_skills/ministry-proposal` |
+| Legal drafting/review (contracts, NDAs, policies, ToS) | `anthropic_skills/legal-practice` |
 
 ### Finance & Brand (skills/custom_skills/)
 | Task | Skill |
