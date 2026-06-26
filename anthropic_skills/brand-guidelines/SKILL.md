@@ -2,6 +2,15 @@
 name: brand-guidelines
 description: Applies Anthropic's official brand colors and typography to any sort of artifact that may benefit from having Anthropic's look-and-feel. Use it when brand colors or style guidelines, visual formatting, or company design standards apply.
 license: Complete terms in LICENSE.txt
+auto-trigger:
+  - applying or checking brand consistency
+  - "is this on-brand", "use our brand colours", "brand voice"
+  - visual identity work for a known brand system
+  - generating brand assets (logos, colour palettes, typography pairings)
+do-not-trigger:
+  - generic design with no named brand
+  - competitor brand analysis
+
 ---
 
 # Anthropic Brand Styling

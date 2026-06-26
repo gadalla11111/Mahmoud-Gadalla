@@ -8,6 +8,14 @@ description: >
   WebFetch for code retrieval, WebSearch for community validation.
 allowed-tools: [WebSearch, WebFetch, Read, Write, Bash]
 argument-hint: "[GitHub URL of MCP server repository]"
+auto-trigger:
+  - "debug MCP", "MCP server not working", "tool not showing up"
+  - diagnosing MCP connection or schema issues
+  - testing an MCP server's responses
+do-not-trigger:
+  - building a new MCP server (use mcp-builder)
+  - general debugging
+
 ---
 
 # MCP Inspector

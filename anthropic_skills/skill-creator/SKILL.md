@@ -1,6 +1,14 @@
 ---
 name: skill-creator
 description: Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, edit, or optimize an existing skill, run evals to test a skill, benchmark skill performance with variance analysis, or optimize a skill's description for better triggering accuracy.
+auto-trigger:
+  - "create a new skill", "add skill for X", "I need a skill that does Y"
+  - formalising a recurring workflow into a reusable SKILL.md
+  - porting an external skill into this library
+do-not-trigger:
+  - using an existing skill
+  - one-off tasks not worth formalising
+
 ---
 
 # Skill Creator

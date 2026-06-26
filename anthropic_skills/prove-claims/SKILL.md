@@ -9,6 +9,14 @@ description: >
   of unrelated claims.
 allowed-tools: [Read, Bash, Grep, Glob, Write]
 argument-hint: "[claim source file or description]"
+auto-trigger:
+  - "substantiate this", "source this claim", "back this up with evidence"
+  - single-claim verification needing sourced evidence
+  - checking one specific assertion before using it
+do-not-trigger:
+  - multi-claim documents (use fact-checker)
+  - creative writing
+
 ---
 
 # Prove Claims

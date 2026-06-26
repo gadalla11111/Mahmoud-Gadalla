@@ -9,6 +9,14 @@ description: >
   leave / defer / block), not a vague "looks fine".
 allowed-tools: [Read, Glob, Grep, Bash, Write]
 argument-hint: "[change description or diff path]"
+auto-trigger:
+  - before merging or shipping a change
+  - "what does this break", "what depends on X", "impact of removing Y"
+  - refactoring a shared module or public API
+  - any change touching more than 3 files
+do-not-trigger:
+  - greenfield code with no existing dependents
+
 ---
 
 # Change Impact

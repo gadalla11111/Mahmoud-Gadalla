@@ -8,6 +8,16 @@ description: >
   implement", "sparc refine", "sparc complete", "use sparc for".
 allowed-tools: [Read, Write, Edit, Bash, Grep, Glob]
 argument-hint: "<feature-description> [--phase spec|implement|refine|complete]"
+auto-trigger:
+  - new feature with complex or uncertain requirements
+  - "sparc spec / implement / refine / complete"
+  - architectural change needing structured phases
+  - task where rework risk is high without upfront specification
+do-not-trigger:
+  - simple fixes
+  - docs-only
+  - config-only changes
+
 ---
 
 # SPARC Methodology

@@ -5,6 +5,14 @@ description: >
   from Anthropic brand compliance to generative art to web UI to slide themes.
   Invoke this skill whenever a visual design question arises; it routes to the
   right sub-skill based on the output medium and creative latitude requested.
+auto-trigger:
+  - visual design task without a specific named tool
+  - layout, typography, colour, or composition decisions
+  - "design this page", "make this look good", "visual hierarchy"
+do-not-trigger:
+  - code-only tasks
+  - purely textual content generation
+
 ---
 
 # Design — Unified Routing Skill

@@ -7,6 +7,15 @@ description: >
   clarification before starting and user-approval of the plan before executing.
   Requires: WebSearch and WebFetch tools (or Brave/Tavily MCP if available).
 allowed-tools: [WebSearch, WebFetch, Bash, Read, Write]
+auto-trigger:
+  - complex multi-step research question spanning many sources
+  - "research X thoroughly", "give me a comprehensive overview of"
+  - due-diligence research for a business or technical decision
+  - literature review or technology survey
+do-not-trigger:
+  - quick one-source lookup
+  - factual questions answerable from memory
+
 ---
 
 # Deep Research

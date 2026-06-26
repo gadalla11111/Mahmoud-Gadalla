@@ -10,6 +10,14 @@ description: >
   already named a specific skill to invoke.
 allowed-tools: [Read, Glob, Grep, Bash, Task]
 argument-hint: "<task description>"
+auto-trigger:
+  - ambiguous request spanning multiple skill domains
+  - user asks 'what should I do about X' without specifying approach
+  - task requires sequencing two or more skills
+  - unclear which single skill applies
+do-not-trigger:
+  - tasks clearly handled by one specific skill
+
 ---
 
 # Orchestrator

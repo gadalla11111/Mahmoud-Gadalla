@@ -2,6 +2,16 @@
 name: frontend-design
 description: Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Helps with aesthetic direction, typography, and making choices that don't read as templated defaults.
 license: Complete terms in LICENSE.txt
+auto-trigger:
+  - UI component, React / Vue / Svelte / HTML page, or dashboard
+  - responsive web layout, form, or interactive widget
+  - "build me a UI for", "create a component", "design this screen"
+  - Tailwind, CSS, shadcn, or any frontend framework work
+do-not-trigger:
+  - backend-only code
+  - CLI tools
+  - data pipelines
+
 ---
 
 # Frontend Design

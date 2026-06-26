@@ -10,6 +10,15 @@ description: >
   "مقترح", "جاهزون", "MERIDIAN proposal".
 allowed-tools: [Read, Write, Edit, Bash, Glob, Grep]
 argument-hint: "<initiative-title> [--brand meridian|jahizoon] [--phase draft|review|finalize]"
+auto-trigger:
+  - Arabic ministry proposal or official document (وزارة)
+  - MBK Education / Jahizoon / MERIDIAN brand content
+  - Egyptian ministry-aligned programme narrative
+  - proposal following the 15-slide Jahizoon schema
+do-not-trigger:
+  - generic Arabic writing
+  - non-ministry English documents
+
 ---
 
 # Ministry Proposal Skill
