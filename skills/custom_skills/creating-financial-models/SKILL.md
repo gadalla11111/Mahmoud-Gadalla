@@ -1,6 +1,16 @@
 ---
 name: creating-financial-models
 description: This skill provides an advanced financial modeling suite with DCF analysis, sensitivity testing, Monte Carlo simulations, and scenario planning for investment decisions
+auto-trigger:
+  - DCF, valuation, or financial model request
+  - "build a model", "DCF analysis", "Monte Carlo", "sensitivity analysis", "scenario planning"
+  - M&A, LBO, project finance, or acquisition valuation
+  - investment decision requiring probability-weighted scenario analysis
+  - WACC, terminal value, or enterprise value calculation
+do-not-trigger:
+  - historical ratio analysis on existing statements (use analyzing-financial-statements)
+  - simple single-number calculations (e.g. "what is 15% of $200")
+  - budget vs actuals reporting
 ---
 
 # Financial Modeling Suite

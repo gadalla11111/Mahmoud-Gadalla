@@ -93,6 +93,13 @@ Skills are applied **automatically** based on task context — no explicit invoc
 |---|---|
 | Arabic ministry proposal (MERIDIAN/MBK brand) | `anthropic_skills/ministry-proposal` |
 
+### Finance & Brand (skills/custom_skills/)
+| Task | Skill |
+|---|---|
+| Financial ratio analysis (ROE, P/E, liquidity, leverage) | `skills/custom_skills/analyzing-financial-statements` |
+| Financial modelling (DCF, Monte Carlo, M&A, LBO, scenarios) | `skills/custom_skills/creating-financial-models` |
+| Acme Corporation brand compliance on any document | `skills/custom_skills/applying-brand-guidelines` |
+
 ## Environment
 
 ```bash

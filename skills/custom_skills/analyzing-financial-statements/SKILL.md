@@ -1,6 +1,16 @@
 ---
 name: analyzing-financial-statements
 description: This skill calculates key financial ratios and metrics from financial statement data for investment analysis
+auto-trigger:
+  - financial statement analysis (income statement, balance sheet, cash flow)
+  - "calculate ratios", "financial ratios", "analyze this company", "P/E ratio", "ROE", "EBITDA"
+  - investment analysis or equity research on a company
+  - liquidity, leverage, profitability, or valuation ratio questions
+  - user provides financial data (CSV, JSON, Excel) and asks for analysis
+do-not-trigger:
+  - general accounting questions with no financial data provided
+  - non-financial ratio calculations
+  - budget planning or forecasting (use creating-financial-models)
 ---
 
 # Financial Ratio Calculator Skill
