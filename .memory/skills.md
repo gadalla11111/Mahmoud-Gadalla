@@ -5,7 +5,7 @@
 ---
 
 ## Library Stats
-- **Total skills**: 83 (76 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
+- **Total skills**: 84 (77 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
 - **Newest**: Stack support (2: legal-practice, social-content) — skill-equivalents for the reference Plugins column; plus `stack/` config templates (MCP + plugins) — see stack/STACK_SETUP.md
 - **Prior**: Claude Stack set (5: hyperframes, claude-seo, find-skills, humanizer, caveman) — completes the reference Skills column; see MY_CLAUDE_STACK.md
 - **Prior**: Marketing & Education (5: brand-framework, linkedin-branding, social-audit, curriculum-builder, presentation-architect) — from 2026 web research
@@ -111,6 +111,7 @@
 | nested-subagents | `nested-subagents` | Task too large for single turn, parallelisable subtasks, multi-domain delegation |
 | queue | `queue` | "add to queue", backlog management, multi-step incremental project |
 | skill-creator | `skill-creator` | "create a new skill", "add skill for X", formalise recurring workflow |
+| library-maintainer | `library-maintainer` | "audit the library", maintenance loop — overview/evaluate/evolve/merge; drives misc/library_audit.py |
 | find-skills | `find-skills` | "is there a skill for X", discover & install a skill (local or external) |
 
 ### Workflow & Process

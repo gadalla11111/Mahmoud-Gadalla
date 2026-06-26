@@ -109,6 +109,7 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Deep delegation via agent tree | `anthropic_skills/nested-subagents` |
 | Task queue management | `anthropic_skills/queue` |
 | Create a new skill | `anthropic_skills/skill-creator` |
+| Audit & maintain the skill library (loop) | `anthropic_skills/library-maintainer` |
 | Find & install a skill (discover capability) | `anthropic_skills/find-skills` |
 
 ### Workflow & Process
