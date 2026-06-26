@@ -1,5 +1,5 @@
 # Skill Stacks — Knowledge Checkpoint
-**Last updated**: 2026-06-26 (rev 8)
+**Last updated**: 2026-06-26 (rev 9)
 
 ---
 
@@ -519,6 +519,62 @@ ultracode → change-impact → mcp-inspector → handoff
 - `adr` before any MCP server that exposes shared infrastructure
 - `tdd` for every tool — tool schemas are contracts, test them like APIs
 - `claude-api` if Claude is the MCP client — don't guess SDK patterns
+
+---
+
+## Agent Stacks
+
+**Core (always)**
+```
+think-twice → sparc → claude-api → ultracode → tdd
+```
+- think-twice: confirm agent is needed vs single call or workflow
+
+**Simple tool-use agent**
+```
+think-twice → claude-api → ultracode → tdd
+```
+
+**Complex multi-tool agent**
+```
+adr → sparc → claude-api → ultracode → tdd → change-impact
+```
+
+**Managed agent (Anthropic-hosted)**
+```
+adr → sparc → claude-api → ultracode → tdd → mcp-builder → mcp-inspector
+```
+- mcp-builder: expose tools as MCP for the managed agent to consume
+
+**Nested / multi-agent systems**
+```
+adr → orchestrator → nested-subagents → claude-api → ultracode → tdd
+```
+- orchestrator: design the agent hierarchy first
+
+**Debugging a broken agent**
+```
+debug → mcp-inspector → claude-api → ultracode (quick-mode)
+```
+
+**Cost-aware agent development**
+```
+sipcode/estimate → [build] → sipcode/why
+```
+- Agents compound token cost fast — estimate before building
+
+**Shipping an agent**
+```
+ultracode → change-impact → tdd → handoff
+```
+
+**Key rules**
+- Pass the "should I build an agent?" test: complexity + value + viability + cost of error
+- `sparc` before any agent with >3 tools or open-ended loop logic
+- `tdd` for every tool — tools are contracts
+- `claude-api` always — don't guess SDK patterns for tool use or streaming
+- `sipcode/estimate` before any L/XL agent chain — costs compound per loop iteration
+- Managed agents need `mcp-builder` — tools must be MCP-exposed
 
 ---
 
