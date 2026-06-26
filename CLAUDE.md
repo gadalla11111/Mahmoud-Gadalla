@@ -45,6 +45,9 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Set up Sentry SDK in Python | `anthropic_skills/sentry/sentry-python-setup` |
 | Neon serverless Postgres setup/branching | `anthropic_skills/neon/neon-postgres` |
 | Diagnose & cut Postgres egress costs | `anthropic_skills/neon/neon-postgres-egress-optimizer` |
+| Write Terraform HCL (style conventions) | `anthropic_skills/terraform/terraform-style-guide` |
+| Write/run Terraform tests (.tftest.hcl) | `anthropic_skills/terraform/terraform-test` |
+| Terraform Stacks (multi-env/region infra) | `anthropic_skills/terraform/terraform-stacks` |
 
 ### Document & Content Generation
 | Task | Skill |

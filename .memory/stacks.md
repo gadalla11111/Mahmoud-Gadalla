@@ -1,5 +1,5 @@
 # Skill Stacks — Knowledge Checkpoint
-**Last updated**: 2026-06-26 (rev 15) — added Neon Postgres (61 skills total)
+**Last updated**: 2026-06-26 (rev 16) — added Terraform IaC trio (64 skills total)
 
 ---
 
@@ -862,6 +862,40 @@ neon-postgres-egress-optimizer + sipcode/why + sentry-setup-ai-monitoring
 
 ---
 
+## Infrastructure-as-Code Stacks (Terraform)
+
+**Author infra**
+```
+terraform-style-guide → terraform-test
+```
+- Write HCL to HashiCorp conventions, then pin behavior with `.tftest.hcl`
+
+**Multi-env / multi-region**
+```
+terraform-style-guide → terraform-stacks → terraform-test
+```
+- Build modules, orchestrate via Stacks components/deployments, test before prod
+
+**Full IaC change**
+```
+adr → terraform-style-guide → terraform-test → change-impact
+```
+- Record the infra decision, author, test, assess blast radius before apply
+
+**Provision a Neon DB via IaC**
+```
+terraform-style-guide → neon-postgres
+```
+
+**Key rules**
+- `terraform fmt -recursive` + `terraform validate` before every commit; also tflint/checkov/tfsec
+- Never commit state, `.terraform/`, plan files, or secret `.tfvars`; always commit `.terraform.lock.hcl`
+- `for_each` over `count` for named resources
+- Stacks: workload-identity OIDC, `ephemeral = true` tokens; modules in Stacks carry no provider blocks
+- Test public-registry modules before production Stacks use
+
+---
+
 ## Cross-Domain Complementary Pairs
 
 | Pair | Why |
@@ -888,3 +922,5 @@ neon-postgres-egress-optimizer + sipcode/why + sentry-setup-ai-monitoring
 | `sentry-setup-ai-monitoring` + `sipcode/why` | latency/token spans cross-check cost forensics |
 | `neon-postgres` + `neon-postgres-egress-optimizer` | provision the DB, then keep its bill in check |
 | `neon-postgres-egress-optimizer` + `sipcode/why` | DB egress cost + token cost, correlated |
+| `terraform-style-guide` + `terraform-test` | author HCL, then pin behavior with tests |
+| `terraform-stacks` + `adr` | record the multi-env orchestration decision |

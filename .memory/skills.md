@@ -5,8 +5,9 @@
 ---
 
 ## Library Stats
-- **Total skills**: 61 (54 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
-- **Newest**: Neon Postgres (2: neon-postgres, neon-postgres-egress-optimizer) under anthropic_skills/neon/
+- **Total skills**: 64 (57 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
+- **Newest**: Terraform IaC trio (style-guide, test, stacks) under anthropic_skills/terraform/ — from hashicorp/agent-skills
+- **Prior**: Neon Postgres (2: neon-postgres, neon-postgres-egress-optimizer) under anthropic_skills/neon/
 - **Prior**: Sentry observability suite (5) under anthropic_skills/sentry/ — requires Sentry MCP
 - **Prior**: gh-fix-ci, gh-address-comments, yeet (GitHub CI trio, from openai/skills .curated, adapted for github MCP tools)
 - **All skills have**: `auto-trigger` + `do-not-trigger` frontmatter
@@ -47,6 +48,9 @@
 | sentry-python-setup | `sentry/sentry-python-setup` | add Sentry SDK to a Python app (Django/Flask/FastAPI) |
 | neon-postgres | `neon/neon-postgres` | Neon serverless Postgres setup, connections, branching, scale-to-zero |
 | neon-postgres-egress-optimizer | `neon/neon-postgres-egress-optimizer` | high Neon bill, cut Postgres egress via pg_stat_statements |
+| terraform-style-guide | `terraform/terraform-style-guide` | write/review Terraform HCL per HashiCorp conventions |
+| terraform-test | `terraform/terraform-test` | write/run `.tftest.hcl` tests, mock providers, assertions |
+| terraform-stacks | `terraform/terraform-stacks` | Terraform Stacks, multi-env/region infra, `.tfcomponent.hcl`/`.tfdeploy.hcl` |
 
 ### Document & Content Generation
 | Skill | Path | Auto-triggers on |
