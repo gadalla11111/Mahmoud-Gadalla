@@ -4,7 +4,9 @@ description: A set of resources to help me write all kinds of internal communica
 license: Complete terms in LICENSE.txt
 auto-trigger:
   - team announcement, internal memo, or all-hands message
-  - "write an email to the team", "internal announcement", "Slack message to channel"
+  - "write an email to the team"
+  - "internal announcement"
+  - "Slack message to channel"
   - change management communication, incident postmortem comms
 do-not-trigger:
   - external-facing content

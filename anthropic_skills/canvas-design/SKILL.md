@@ -3,7 +3,9 @@ name: canvas-design
 description: Create beautiful static visual art in .png and .pdf documents using a design-philosophy-first method. Use when the user asks to create a poster, piece of art, print design, or other static visual piece. Outputs a philosophy .md plus a .pdf/.png artifact. Create original visual designs, never copying existing artists' work to avoid copyright violations.
 license: Complete terms in LICENSE.txt
 auto-trigger:
-  - "create a poster", "make a print design", "a piece of art"
+  - "create a poster"
+  - "make a print design"
+  - "a piece of art"
   - static visual artwork output as .pdf or .png
   - philosophy-driven aesthetic composition (not a UI, not code)
 do-not-trigger:

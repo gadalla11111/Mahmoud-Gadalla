@@ -5,7 +5,9 @@ license: Complete terms in LICENSE.txt
 auto-trigger:
   - UI component, React / Vue / Svelte / HTML page, or dashboard
   - responsive web layout, form, or interactive widget
-  - "build me a UI for", "create a component", "design this screen"
+  - "build me a UI for"
+  - "create a component"
+  - "design this screen"
   - Tailwind, CSS, shadcn, or any frontend framework work
 do-not-trigger:
   - backend-only code
