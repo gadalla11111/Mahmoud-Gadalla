@@ -1,5 +1,5 @@
 # Skill Stacks — Knowledge Checkpoint
-**Last updated**: 2026-06-26 (rev 10)
+**Last updated**: 2026-06-26 (rev 11)
 
 ---
 
@@ -632,6 +632,76 @@ debug → internal-comms → change-impact → ultracode (quick-mode) → handof
 - `adr` for any decision that affects trust boundaries or data access
 - No security fix ships without `tdd` — untested patches create new vulnerabilities
 - Never commit `.env` or credentials — DiffGate blocks it but don't rely on it
+
+---
+
+## Testing Stacks
+
+**Core (always)**
+```
+think-twice → tdd → ultracode (quick-mode) → change-impact
+```
+
+**New feature tests**
+```
+sparc → tdd → ultracode → change-impact
+```
+- sparc: spec the behaviour before writing tests
+
+**Regression tests after a bug fix**
+```
+debug → tdd → ultracode (quick-mode)
+```
+- debug: reproduce the bug first, then write a test that pins it
+
+**E2E / browser tests**
+```
+think-twice → webapp-testing → tdd
+```
+- webapp-testing: Playwright automation, UI flows, E2E scenarios
+
+**API / tool contract tests**
+```
+tdd → claude-api → ultracode
+```
+- claude-api if testing Claude SDK integrations
+
+**MCP tool tests**
+```
+mcp-inspector → tdd → webapp-testing
+```
+- mcp-inspector: understand the tool interface before writing tests
+
+**Performance / load tests**
+```
+adr → tdd → change-impact
+```
+- adr: document the performance contract before testing against it
+
+**Security tests**
+```
+debug → tdd → change-impact
+```
+- Test the exploit path first, then the fix, then the regression
+
+**Test coverage audits**
+```
+change-impact → debug → tdd
+```
+- change-impact: find the uncovered surface
+
+**Agent / loop tests**
+```
+tdd → claude-api → ultracode → change-impact
+```
+- Test each tool in isolation, then loop exit conditions
+
+**Key rules**
+- `tdd` always before `ultracode` — tests drive implementation, never the reverse
+- `debug` before regression tests — reproduce first, then pin with a test
+- `webapp-testing` for anything with a UI — Playwright over manual QA
+- `change-impact` after any test suite change — tests are part of the API contract
+- `mcp-inspector` before MCP tool tests — understand the schema before asserting
 
 ---
 
