@@ -9,7 +9,9 @@ description: >
 allowed-tools: [WebSearch, WebFetch, Read, Write, Bash]
 argument-hint: "[GitHub URL of MCP server repository]"
 auto-trigger:
-  - "debug MCP", "MCP server not working", "tool not showing up"
+  - "debug MCP"
+  - "MCP server not working"
+  - "tool not showing up"
   - diagnosing MCP connection or schema issues
   - testing an MCP server's responses
 do-not-trigger:

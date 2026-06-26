@@ -11,7 +11,9 @@ description: >
 allowed-tools: [Read, Glob, Grep, "Bash(find:*)", "Bash(cat:*)", "Bash(git log:*)", "Bash(git diff:*)", "Bash(git status:*)", "Bash(test:*)", "Bash(ls:*)"]
 argument-hint: "[--links] [--drift] [--deps] [--all] [days=7] [manifest-path]"
 auto-trigger:
-  - "audit CLAUDE.md", "is my CLAUDE.md good", "improve project instructions"
+  - "audit CLAUDE.md"
+  - "is my CLAUDE.md good"
+  - "improve project instructions"
   - CLAUDE.md has grown large or conflicts with actual behaviour
   - onboarding a new project
 do-not-trigger:

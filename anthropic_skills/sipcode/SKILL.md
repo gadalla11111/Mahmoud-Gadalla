@@ -9,9 +9,12 @@ description: >
   - "prove the headline savings claim" → benchmark (reproducibility proof)
   Use when the user asks about token spend, session cost, or Sipcode itself.
 auto-trigger:
-  - "how much will this cost", "estimate tokens", "token budget"
+  - "how much will this cost"
+  - "estimate tokens"
+  - "token budget"
   - before starting an L or XL task chain
-  - "audit token spend", "why did this cost so much"
+  - "audit token spend"
+  - "why did this cost so much"
 do-not-trigger:
   - quick single-turn exchanges
   - sub-100-token tasks

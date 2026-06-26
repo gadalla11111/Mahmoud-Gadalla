@@ -16,10 +16,13 @@ description: >
 allowed-tools: [WebSearch, WebFetch, Bash, Read, Write]
 auto-trigger:
   - complex multi-step research question spanning many sources
-  - "research X thoroughly", "give me a comprehensive overview of"
+  - "research X thoroughly"
+  - "give me a comprehensive overview of"
   - due-diligence research for a business or technical decision
   - literature review or technology survey
-  - "deep dive", "thorough investigation", "exhaustive research"
+  - "deep dive"
+  - "thorough investigation"
+  - "exhaustive research"
 do-not-trigger:
   - quick one-source lookup (use ultra-search)
   - factual questions answerable from training knowledge

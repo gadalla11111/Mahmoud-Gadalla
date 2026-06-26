@@ -11,7 +11,10 @@ description: >
 auto-trigger:
   - visual design task without a specific named tool or medium
   - layout, typography, colour, or composition decisions
-  - "design this", "make this look good", "visual hierarchy", "which design skill"
+  - "design this"
+  - "make this look good"
+  - "visual hierarchy"
+  - "which design skill"
 do-not-trigger:
   - code-only tasks
   - purely textual content generation

@@ -15,7 +15,9 @@ description: >
 allowed-tools: [WebSearch, WebFetch, Bash, Read, Write]
 auto-trigger:
   - exhaustive search across many sources needed
-  - "find everything about X", "search thoroughly", "leave no stone unturned"
+  - "find everything about X"
+  - "search thoroughly"
+  - "leave no stone unturned"
   - prior searches returned insufficient results
   - competitive or market research requiring breadth
   - fast lookup needing multiple tool passes

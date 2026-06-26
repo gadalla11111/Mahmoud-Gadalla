@@ -13,7 +13,9 @@ description: >
 allowed-tools: [WebSearch, WebFetch, Read, Write, Bash]
 argument-hint: "<brand/handle> [--platforms ig,fb,x,li,tiktok] [--competitors @a,@b]"
 auto-trigger:
-  - "social media audit", "audit my social", "review my channels"
+  - "social media audit"
+  - "audit my social"
+  - "review my channels"
   - benchmarking social channels against competitors
   - producing a prioritized social recommendations report
 do-not-trigger:

@@ -10,7 +10,9 @@ argument-hint: "[create <title> | review [--branch BRANCH] | verify | index]"
 auto-trigger:
   - significant architectural decision (new tech, API design, data model, infra choice)
   - user asks 'should we use X or Y' at an architectural level
-  - "create adr", "record decision", "document why we chose"
+  - "create adr"
+  - "record decision"
+  - "document why we chose"
 do-not-trigger:
   - trivial implementation details
   - bug fixes
