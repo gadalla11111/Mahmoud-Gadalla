@@ -5,8 +5,9 @@
 ---
 
 ## Library Stats
-- **Total skills**: 71 (64 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
-- **Newest**: Trail of Bits security (3: semgrep, codeql, sharp-edges) under anthropic_skills/trailofbits/ — from trailofbits/skills; reinforces the Security stack
+- **Total skills**: 76 (69 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
+- **Newest**: Marketing & Education (5: brand-framework, linkedin-branding, social-audit, curriculum-builder, presentation-architect) — first-party, from 2026 web research; see Marketing & Brand Strategy section
+- **Prior**: Trail of Bits security (3: semgrep, codeql, sharp-edges) under anthropic_skills/trailofbits/ — from trailofbits/skills; reinforces the Security stack
 - **Prior**: Expo mobile (2: expo-deployment, expo-building-native-ui) — re-synced verbatim from expo/skills (plugins/expo/skills/); note: Expo RN UI uses inline styles, CSS/Tailwind unsupported
 - **Prior**: stripe-best-practices under anthropic_skills/stripe/ — from stripe/ai; consults Stripe MCP planner when available
 - **Prior**: shadcn (shadcn/ui component management) under anthropic_skills/shadcn/ — from shadcn-ui/ui
@@ -14,7 +15,7 @@
 - **Prior**: Neon Postgres (2: neon-postgres, neon-postgres-egress-optimizer) under anthropic_skills/neon/
 - **Prior**: Sentry observability suite (5) under anthropic_skills/sentry/ — requires Sentry MCP
 - **Prior**: gh-fix-ci, gh-address-comments, yeet (GitHub CI trio, from openai/skills .curated, adapted for github MCP tools)
-- **All skills have**: `auto-trigger` + `do-not-trigger` frontmatter
+- **All skills have**: `auto-trigger` + `do-not-trigger` frontmatter; all first-party skills carry a `health:` block; entire library parses as valid YAML
 - **Auto-apply rule**: Skills trigger automatically by context — no explicit invocation needed
 
 ---
@@ -70,6 +71,7 @@
 | internal-comms | `internal-comms` | Team announcement, internal memo, all-hands, incident comms |
 | prd-generator | `prd-generator` | "write a PRD", product requirements, pre-engineering feature spec |
 | handoff | `handoff` | Session end, "handoff notes", "what did we accomplish", context switch |
+| curriculum-builder | `curriculum-builder` | University course/syllabus, learning outcomes, exam/quiz generation, rubric, grading (Backward Design + Bloom's) |
 
 ### Research & Verification
 | Skill | Path | Auto-triggers on |
@@ -84,9 +86,10 @@
 | Skill | Path | Auto-triggers on |
 |---|---|---|
 | frontend-design | `frontend-design` | UI component, React/Vue/Svelte/HTML, dashboard, Tailwind/shadcn |
-| design | `design` | Visual design task, layout/typography/colour decisions, "make this look good" |
-| brand-guidelines | `brand-guidelines` | Brand consistency check, "is this on-brand", visual identity work |
-| canvas-design | `canvas-design` | HTML canvas, Fabric.js/Konva, interactive drawing/whiteboard |
+| design | `design` | Design router — unsure which design skill; routes the whole cluster by medium |
+| brand-guidelines | `brand-guidelines` | Brand consistency check, "is this on-brand", Anthropic visual identity |
+| canvas-design | `canvas-design` | Static art — poster/print/.pdf/.png artwork (philosophy-first; NOT interactive canvas) |
+| presentation-architect | `presentation-architect` | Deck design — narrative spine (title test), data storytelling, visual hierarchy |
 | theme-factory | `theme-factory` | "create a theme", colour palette, design tokens, component theming |
 | algorithmic-art | `algorithmic-art` | "generative art", "p5.js", "flow field", code-driven visual output |
 | web-artifacts-builder | `web-artifacts-builder` | Self-contained HTML artifact, single-file interactive tool/demo |
@@ -117,6 +120,15 @@
 | sipcode/benchmark | `sipcode/benchmark` | Reproducibility proof — "run the benchmark", verify headline savings claim |
 | claude-md-audit | `claude-md-audit` | "audit CLAUDE.md", large/conflicting instructions, new project onboarding |
 | steering-lint | `steering-lint` | "audit instruction placement", CLAUDE.md/rules/hooks may be misplaced |
+
+### Marketing & Brand Strategy
+| Skill | Path | Auto-triggers on |
+|---|---|---|
+| brand-framework | `brand-framework` | Brand strategy/positioning, brand pyramid, value proposition, rebrand (strategy, not visuals) |
+| linkedin-branding | `linkedin-branding` | LinkedIn strategy, personal brand, thought leadership, content calendar (4-axis + 5-3-2) |
+| social-audit | `social-audit` | Social media audit, channel benchmark vs competitors, prioritized recommendations |
+
+**Brand routing**: `brand-framework` = strategy/positioning · `brand-guidelines`/`applying-brand-guidelines` = applying an existing visual identity · `ministry-proposal` = MERIDIAN/Jahizoon ministry brand.
 
 ### Domain-Specific
 | Skill | Path | Auto-triggers on |
@@ -160,12 +172,16 @@
 
 ---
 
-## Recent Session Work (2026-06-26)
-- Built `ministry-proposal`, `fact-checker`, `steering-lint`, `ultracode` skills
-- Added `auto-trigger` / `do-not-trigger` to all skills (originally 44)
-- Fixed flake8 F824 in `claude_agent_sdk/utils/agent_visualizer.py`
-- Created `.memory/stacks.md` — ~16 domain stack guides mapping all 68 skills (rev 19)
-- Installed 24 vendor skills from official repos: GitHub CI trio (openai/skills),
-  Sentry suite ×5 (getsentry), Neon ×2, Terraform ×3 (hashicorp), shadcn,
-  Stripe, Expo ×2 (re-synced verbatim from expo/skills)
-- Library grew 44 → 68 skills; all merged to main via PRs #4–#32
+## Recent Session Work (2026-06-26, PRs #35–#47)
+- Evolved 11 skills: skill-creator, orchestrator, ultracode, nested-subagents,
+  deep-research, ultra-search, prd-generator, promptize, mcp-builder, queue, ministry-proposal
+- Added 5 first-party Marketing & Education skills: brand-framework, linkedin-branding,
+  social-audit, curriculum-builder, presentation-architect (from 2026 web research)
+- Fixed canvas-design trigger/body contradiction; unified the `design` router into one
+  entry point for the 9-skill design cluster with a disambiguation table
+- Synced orchestrator + CLAUDE.md routing with the 5 new skills; count 71 → 76
+- Standardized library hygiene: `health:` blocks on all first-party skills; gave
+  steering-lint and the template scaffold proper frontmatter; fixed invalid YAML in
+  auto-trigger/do-not-trigger across the ENTIRE library (first-party + 13 bundled) —
+  all 51 top-level SKILL.md frontmatter blocks now parse as valid YAML
+- Library grew 68 → 76 skills; merged to main via PRs #35–#46
