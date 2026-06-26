@@ -1,5 +1,5 @@
 # Skill Stacks — Knowledge Checkpoint
-**Last updated**: 2026-06-26 (rev 4)
+**Last updated**: 2026-06-26 (rev 5)
 
 ---
 
@@ -303,6 +303,62 @@ queue → orchestrator → engram/working
 - `promptize` before acting on any request that could be interpreted multiple ways
 - `engram/working` at every natural pause — memory is cheap, context loss is not
 - `steering-lint` whenever CLAUDE.md feels bloated or contradictory
+
+---
+
+## Finance Stacks
+
+**Core (always)**
+```
+think-twice → analyzing-financial-statements → fact-checker
+```
+
+**Financial modelling**
+```
+think-twice → creating-financial-models → fact-checker
+```
+
+**Full investment analysis**
+```
+deep-research → analyzing-financial-statements → creating-financial-models → fact-checker
+```
+
+**Financial reports / deliverables**
+```
+analyzing-financial-statements → fact-checker → xlsx → pdf / docx
+```
+
+**Financial models as deliverables**
+```
+creating-financial-models → fact-checker → xlsx
+```
+
+**Presentations with financial data**
+```
+analyzing-financial-statements → fact-checker → pptx
+```
+- Never put unverified figures in a slide deck
+
+**Due diligence**
+```
+deep-research → ultra-search → analyzing-financial-statements → creating-financial-models → fact-checker
+```
+
+**Scenario / sensitivity analysis**
+```
+creating-financial-models → fact-checker → xlsx → doc-coauthoring
+```
+
+**Branded financial deliverables (Acme Corp)**
+```
+[finance skill] → fact-checker → applying-brand-guidelines → xlsx / pdf / docx
+```
+
+**Key rules**
+- `fact-checker` always gates financial output — numbers without sources don't ship
+- `analyzing-financial-statements` before `creating-financial-models` — understand history before projecting
+- `deep-research` before analysis on any unfamiliar company or sector
+- `xlsx` is the canonical output for financial models
 
 ---
 
