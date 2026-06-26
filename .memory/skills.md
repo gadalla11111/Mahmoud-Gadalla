@@ -5,8 +5,9 @@
 ---
 
 ## Library Stats
-- **Total skills**: 68 (61 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
-- **Newest**: Expo mobile (2: expo-deployment, expo-building-native-ui) — re-synced verbatim from expo/skills (plugins/expo/skills/); note: Expo RN UI uses inline styles, CSS/Tailwind unsupported
+- **Total skills**: 71 (64 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
+- **Newest**: Trail of Bits security (3: semgrep, codeql, sharp-edges) under anthropic_skills/trailofbits/ — from trailofbits/skills; reinforces the Security stack
+- **Prior**: Expo mobile (2: expo-deployment, expo-building-native-ui) — re-synced verbatim from expo/skills (plugins/expo/skills/); note: Expo RN UI uses inline styles, CSS/Tailwind unsupported
 - **Prior**: stripe-best-practices under anthropic_skills/stripe/ — from stripe/ai; consults Stripe MCP planner when available
 - **Prior**: shadcn (shadcn/ui component management) under anthropic_skills/shadcn/ — from shadcn-ui/ui
 - **Prior**: Terraform IaC trio (style-guide, test, stacks) under anthropic_skills/terraform/ — from hashicorp/agent-skills
@@ -54,6 +55,9 @@
 | terraform-style-guide | `terraform/terraform-style-guide` | write/review Terraform HCL per HashiCorp conventions |
 | terraform-test | `terraform/terraform-test` | write/run `.tftest.hcl` tests, mock providers, assertions |
 | terraform-stacks | `terraform/terraform-stacks` | Terraform Stacks, multi-env/region infra, `.tfcomponent.hcl`/`.tfdeploy.hcl` |
+| semgrep | `trailofbits/semgrep` | "scan this codebase", parallel Semgrep static analysis, SARIF |
+| codeql | `trailofbits/codeql` | "run codeql", deep interprocedural taint/data-flow analysis |
+| sharp-edges | `trailofbits/sharp-edges` | API misuse / footgun design review, dangerous defaults |
 
 ### Document & Content Generation
 | Skill | Path | Auto-triggers on |
