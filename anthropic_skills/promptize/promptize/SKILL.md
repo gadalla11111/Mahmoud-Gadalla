@@ -4,6 +4,11 @@ description: Turn a rough ask into a structured prompt that the user reviews bef
 user-invocable: true
 arguments: [initial_ask]
 argument-hint: "<rough initial ask>  e.g. /promptize audit my settings.json for risks"
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 allowed-tools:
   - Read
   - Write
