@@ -5,6 +5,14 @@ disable-model-invocation: false
 metadata:
   author: Backchain
   version: 1.0.0
+auto-trigger:
+  - "catch me up", "brief me", "where were we", "what did we do"
+  - returning to a project after a break
+  - start of a new session on an ongoing project
+do-not-trigger:
+  - mid-session status checks
+  - first-ever session with no history
+
 ---
 
 # Briefing

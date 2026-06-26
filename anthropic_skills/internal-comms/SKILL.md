@@ -2,6 +2,15 @@
 name: internal-comms
 description: A set of resources to help me write all kinds of internal communications, using the formats that my company likes to use. Claude should use this skill whenever asked to write some sort of internal communications (status reports, leadership updates, 3P updates, company newsletters, FAQs, incident reports, project updates, etc.).
 license: Complete terms in LICENSE.txt
+auto-trigger:
+  - team announcement, internal memo, or all-hands message
+  - "write an email to the team", "internal announcement", "Slack message to channel"
+  - change management communication, incident postmortem comms
+do-not-trigger:
+  - external-facing content
+  - marketing copy
+  - customer emails
+
 ---
 
 ## When to use this skill

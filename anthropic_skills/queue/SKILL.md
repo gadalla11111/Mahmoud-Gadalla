@@ -8,6 +8,14 @@ description: >
   "prompt bank", "save as template", "batch of tasks", "claude-queue".
 allowed-tools: [Bash, Read, Glob, Write]
 argument-hint: "[task description or subcommand: add|template|status|batch|bank]"
+auto-trigger:
+  - managing a backlog of tasks across a session
+  - "add to queue", "whats next", "task list", "backlog"
+  - multi-step project where tasks arrive incrementally
+do-not-trigger:
+  - single-task sessions
+  - one-shot requests
+
 ---
 
 # Queue

@@ -23,6 +23,14 @@ paths:
   - "**/*.sh"
   - "**/*.sql"
 allowed-tools: [Read, Glob, Grep]
+auto-trigger:
+  - every non-trivial code edit, review, or refactor (always active on code tasks)
+  - implementing a feature, fixing a bug, or reviewing a diff
+do-not-trigger:
+  - documentation-only
+  - config value updates
+  - renaming only
+
 ---
 
 # Karpathy Guidelines for LLM Coding

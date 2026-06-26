@@ -13,6 +13,13 @@ allowed-tools:
   - Bash
   - WebFetch
   - AskUserQuestion
+auto-trigger:
+  - request is ambiguous or could be interpreted multiple ways
+  - unclear whether user wants a quick answer or a deep solution
+  - missing context that would change the approach significantly
+do-not-trigger:
+  - clear, specific, unambiguous requests
+
 ---
 
 # /promptize — Turn a rough ask into a structured prompt

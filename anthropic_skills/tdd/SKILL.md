@@ -6,6 +6,15 @@ description: >
   tests or implementing features and wants TDD discipline applied.
   Never mention "TDD" in code, comments, commits, or PRs — the process
   is invisible; only the code speaks.
+auto-trigger:
+  - writing tests or implementing features with test-first discipline
+  - "test first", "red green refactor", "write a failing test"
+  - any new function or module where correctness is critical
+  - bug fix where a regression test should prevent recurrence
+do-not-trigger:
+  - exploratory / throwaway scripts
+  - docs-only changes
+
 ---
 
 # TDD

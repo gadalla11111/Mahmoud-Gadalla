@@ -9,6 +9,14 @@ description: >
   chosen the approach or library, when the task is under ~10 lines, when fixing a bug in existing
   code, or for infra/terraform/k8s and DB queries. Run the checklist before writing code, stop at
   the first question that reveals a cheaper path, and take that path.
+auto-trigger:
+  - before implementing any non-trivial task
+  - "is there a simpler way?", "think before coding"
+  - solution space feels over-engineered
+  - task could be solved in multiple ways with very different complexity
+do-not-trigger:
+  - already-decided approach with clear implementation path
+
 ---
 
 # Lazy Agent — Work Smarter, Not Harder

@@ -9,6 +9,14 @@ description: >
   are the explicit subject of the request, or when the user asked for a complete or
   production-ready implementation. The best code is code you didn't write.
 version: 1.1.0
+auto-trigger:
+  - small, targeted edit with strict scope boundaries
+  - "just change X", "only update Y", "surgical edit"
+  - user explicitly wants no scope creep
+do-not-trigger:
+  - broad refactors
+  - new feature implementation
+
 ---
 
 # Surgical — Build Exactly What Was Asked

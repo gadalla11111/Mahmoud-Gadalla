@@ -8,6 +8,14 @@ description: >
   author for every claim.
 allowed-tools: [WebSearch, WebFetch, Read, Write]
 argument-hint: "[topic or question]"
+auto-trigger:
+  - current events or recent news query
+  - "what is happening with X", "latest news on", "recent developments"
+  - time-sensitive information from the last days/weeks
+do-not-trigger:
+  - historical research
+  - evergreen technical topics
+
 ---
 
 # News Research

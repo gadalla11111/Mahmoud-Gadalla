@@ -5,6 +5,14 @@ disable-model-invocation: false
 metadata:
   author: Backchain
   version: 1.0.0
+auto-trigger:
+  - "consolidate knowledge", "audit memory", "clean up notes"
+  - knowledge directories have grown stale, duplicated, or inconsistent
+  - before archiving or handing off a long-running project
+do-not-trigger:
+  - active in-progress sessions
+  - single-file note tasks
+
 ---
 
 # Consolidate

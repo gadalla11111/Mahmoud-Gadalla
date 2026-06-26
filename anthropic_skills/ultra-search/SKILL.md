@@ -7,6 +7,15 @@ description: >
   to use. Use when a simple WebSearch isn't enough and the user needs
   comprehensive, source-documented results on a specific topic or question.
 allowed-tools: [WebSearch, WebFetch, Bash, Read, Write]
+auto-trigger:
+  - exhaustive search across many sources needed
+  - "find everything about X", "search thoroughly", "leave no stone unturned"
+  - prior searches returned insufficient results
+  - competitive or market research requiring breadth
+do-not-trigger:
+  - quick single-source lookup
+  - narrow technical questions
+
 ---
 
 # Ultra Search

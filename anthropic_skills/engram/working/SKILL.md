@@ -5,6 +5,14 @@ disable-model-invocation: false
 metadata:
   author: Backchain
   version: 1.0.0
+auto-trigger:
+  - before ending a session or switching context
+  - "checkpoint", "save state", "working memory snapshot"
+  - mid-task pause on a long multi-step operation
+do-not-trigger:
+  - session just started
+  - trivial single-turn tasks
+
 ---
 
 # Working Memory

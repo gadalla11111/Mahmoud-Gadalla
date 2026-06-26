@@ -9,6 +9,16 @@ description: >
   "triple check", "QA grid".
 allowed-tools: [Read, WebSearch, WebFetch, Grep, Glob]
 argument-hint: "<document-path or inline text> [--strict] [--lang ar|en]"
+auto-trigger:
+  - any document, proposal, or content containing statistics or cited claims
+  - "verify this", "source this", "fact check", "triple check"
+  - before finalising a ministry proposal, research paper, or published content
+  - any claim prefixed with a percentage, date, named study, or institution
+do-not-trigger:
+  - internal code comments
+  - purely creative/fictional writing
+  - rhetorical framing
+
 ---
 
 # Fact Checker

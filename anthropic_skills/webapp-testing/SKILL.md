@@ -2,6 +2,16 @@
 name: webapp-testing
 description: Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.
 license: Complete terms in LICENSE.txt
+auto-trigger:
+  - automated browser / UI testing with Playwright or similar
+  - "test the UI", "end-to-end test", "browser automation"
+  - verifying a web feature works in a real browser
+  - regression test suite for a web app
+do-not-trigger:
+  - unit tests (use tdd)
+  - API tests
+  - CLI testing
+
 ---
 
 # Web Application Testing

@@ -8,6 +8,15 @@ description: >
   fix. Uses subagents to isolate investigation context from conversation.
 allowed-tools: [Read, Bash, Grep, Glob, Write, AskUserQuestion, Task]
 argument-hint: "[--diagnose] [issue description]"
+auto-trigger:
+  - error, exception, or traceback investigation
+  - "why is X broken", "this test fails", "unexpected behaviour"
+  - production incident diagnosis
+  - reproducing a reported bug
+do-not-trigger:
+  - feature implementation with no error yet
+  - proactive refactoring
+
 ---
 
 # Debug
