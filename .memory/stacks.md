@@ -1,5 +1,5 @@
 # Skill Stacks — Knowledge Checkpoint
-**Last updated**: 2026-06-26 (rev 16) — added Terraform IaC trio (64 skills total)
+**Last updated**: 2026-06-26 (rev 17) — added shadcn/ui (65 skills total)
 
 ---
 
@@ -58,6 +58,13 @@ think-twice → design → brand-guidelines
 ```
 think-twice → frontend-design → brand-guidelines → webapp-testing
 ```
+
+**Frontend/UI with shadcn/ui (components.json projects)**
+```
+think-twice → shadcn → frontend-design → brand-guidelines → webapp-testing
+```
+- shadcn first: search the registry before building custom UI; compose, don't reinvent
+- Semantic tokens (`bg-primary`), `gap-*`/`size-*`, FieldGroup forms, accessible overlay titles
 
 **Design systems**
 ```
@@ -924,3 +931,5 @@ terraform-style-guide → neon-postgres
 | `neon-postgres-egress-optimizer` + `sipcode/why` | DB egress cost + token cost, correlated |
 | `terraform-style-guide` + `terraform-test` | author HCL, then pin behavior with tests |
 | `terraform-stacks` + `adr` | record the multi-env orchestration decision |
+| `shadcn` + `frontend-design` | registry components first, then custom UI around them |
+| `shadcn` + `theme-factory` | shadcn semantic tokens feed/consume the theme |
