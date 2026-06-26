@@ -1,55 +1,52 @@
 {
-  "_README": "TEMPLATE — merge the entries you want into your project .mcp.json (or run `claude mcp add`). Do NOT paste verbatim: every command/url/env-var name below is a PLACEHOLDER to verify against each vendor's current MCP docs. API keys belong in your shell environment, never in this file. Transports: 'stdio' = local process; 'http'/'sse' = remote (sign-in on first connect). This file is intentionally NOT the live .mcp.json so it cannot disrupt this repo's own servers (umbriel/diffgate/memex).",
+  "_README": "Merge the entries you want into your project .mcp.json (or run `claude mcp add`). Values below are researched best-effort (2026-06) but still verify each against the vendor's current docs — endpoints and package names drift. Most are hosted remote servers (sign-in on first connect, nothing to store). The two stdio servers need a local package; put any API key in your shell env, never in this file. Kept separate from the live .mcp.json (umbriel/diffgate/memex) so it can't disrupt this repo's own servers.",
   "mcpServers": {
     "granola": {
-      "_note": "Meeting notes fed to Claude. Already connected in some environments. Verify the official package/endpoint.",
-      "_status": "verify",
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "REPLACE_WITH_GRANOLA_MCP_PACKAGE"]
+      "_note": "Meeting notes fed to Claude. Official hosted server (Streamable HTTP). Get your URL from granola.ai → MCP. Sign-in on first connect.",
+      "_status": "verify-url",
+      "type": "http",
+      "url": "https://REPLACE_WITH_GRANOLA_HOSTED_MCP_URL"
     },
     "slack": {
-      "_note": "Reads channels, posts updates. Remote hosted MCP — confirm Slack's endpoint URL; sign-in on first connect.",
-      "_status": "verify",
+      "_note": "Reads channels, posts updates. Official Slack hosted MCP — enable in your workspace, then paste the URL. Sign-in on first connect.",
+      "_status": "verify-url",
       "type": "http",
-      "url": "https://REPLACE_WITH_SLACK_MCP_ENDPOINT"
+      "url": "https://REPLACE_WITH_SLACK_HOSTED_MCP_URL"
     },
     "notion": {
-      "_note": "Reads/writes your docs. Notion ships a hosted MCP — confirm current URL; sign-in on first connect.",
-      "_status": "verify",
+      "_note": "Reads/writes your docs. Official remote server (makenotion/notion-mcp-server). Hosted endpoint; sign-in on first connect.",
+      "_status": "verify-url",
       "type": "http",
-      "url": "https://REPLACE_WITH_NOTION_MCP_ENDPOINT"
+      "url": "https://mcp.notion.com/mcp"
     },
     "kondo": {
-      "_note": "Triages LinkedIn DMs. Confirm whether stdio package or hosted endpoint.",
-      "_status": "verify",
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "REPLACE_WITH_KONDO_MCP_PACKAGE"]
+      "_note": "Triages LinkedIn DMs. Hosted Streamable HTTP (Business plan). Get your URL from docs.trykondo.com/mcp-setup.",
+      "_status": "verify-url",
+      "type": "http",
+      "url": "https://REPLACE_WITH_KONDO_HOSTED_MCP_URL"
     },
     "zapier": {
-      "_note": "9,000+ apps via one connection. Zapier gives a per-account hosted URL — generate it in Zapier and paste here.",
-      "_status": "verify",
+      "_note": "9,000+ apps via one connection. Generate your personal hosted URL in Zapier (zapier.com/mcp) and paste it.",
+      "_status": "verify-url",
       "type": "http",
       "url": "https://REPLACE_WITH_YOUR_ZAPIER_MCP_URL"
     },
     "higgsfield": {
-      "_note": "Cinematic video from a prompt. Confirm package. Set the env var HIGGSFIELD_API_KEY in your shell before launch (do not inline it here).",
-      "_status": "verify",
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "REPLACE_WITH_HIGGSFIELD_MCP_PACKAGE"]
+      "_note": "Cinematic video from a prompt. Hosted server, streamable-http, sign-in on connect (no key stored).",
+      "_status": "ready",
+      "type": "http",
+      "url": "https://mcp.higgsfield.ai/mcp"
     },
     "perplexity": {
-      "_note": "Live web search for Claude. Confirm package. Set the env var PERPLEXITY_API_KEY in your shell before launch (do not inline it here).",
-      "_status": "verify",
+      "_note": "Live web search. Local stdio server (perplexityai/modelcontextprotocol). Set PERPLEXITY_API_KEY in your shell before launch; do not inline it here.",
+      "_status": "verify-package",
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "REPLACE_WITH_PERPLEXITY_MCP_PACKAGE"]
+      "args": ["-y", "server-perplexity-ask"]
     },
     "agent-browser": {
-      "_note": "Token-light browser automation. Confirm package; may need a local browser binary.",
-      "_status": "verify",
+      "_note": "Token-light browser automation (Vercel agent-browser). Local stdio; may fetch a Rust CLI on first run. Confirm the current package name.",
+      "_status": "verify-package",
       "type": "stdio",
       "command": "npx",
       "args": ["-y", "REPLACE_WITH_AGENT_BROWSER_MCP_PACKAGE"]

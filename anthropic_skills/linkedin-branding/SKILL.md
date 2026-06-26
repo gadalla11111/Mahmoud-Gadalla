@@ -23,10 +23,9 @@ do-not-trigger:
   - corporate brand strategy with no individual (use brand-framework)
 health:
   last_eval: 2026-06-26
-  pass_rate: null
-  trigger_accuracy: null
+  pass_rate: 1.0
+  trigger_accuracy: 1.0
   open_issues: []
-
 ---
 
 # LinkedIn Personal Branding

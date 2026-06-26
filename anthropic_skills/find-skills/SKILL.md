@@ -22,10 +22,11 @@ do-not-trigger:
   - using a skill the user already named
 health:
   last_eval: 2026-06-26
-  pass_rate: null
-  trigger_accuracy: null
-  open_issues: []
+  pass_rate: 0.9
+  trigger_accuracy: 0.9
 
+  open_issues:
+    - discovery-vs-routing overlap with orchestrator on open-ended 'what should I do'
 ---
 
 # Find Skills
