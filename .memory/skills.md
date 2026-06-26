@@ -5,7 +5,7 @@
 ---
 
 ## Library Stats
-- **Total skills**: 47 (44 in anthropic_skills/ + 3 in skills/custom_skills/)
+- **Total skills**: 51 (44 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
 - **All skills have**: `auto-trigger` + `do-not-trigger` frontmatter
 - **Auto-apply rule**: Skills trigger automatically by context — no explicit invocation needed
 
@@ -83,6 +83,10 @@
 | lazy-cat/think-twice | `lazy-cat/think-twice` | Before any non-trivial implementation, "is there a simpler way" |
 | promptize/promptize | `promptize/promptize` | Ambiguous/multi-interpretation request, missing context changes approach |
 | sipcode | `sipcode` | "how much will this cost", token estimate, before L/XL task chains |
+| sipcode/estimate | `sipcode/estimate` | Pre-flight cost prediction — "estimate the cost", model selection question |
+| sipcode/why | `sipcode/why` | Post-session forensics — "where did my tokens go", "why was that so expensive" |
+| sipcode/impact | `sipcode/impact` | Before/after A/B savings comparison — "is sipcode saving me tokens" |
+| sipcode/benchmark | `sipcode/benchmark` | Reproducibility proof — "run the benchmark", verify headline savings claim |
 | claude-md-audit | `claude-md-audit` | "audit CLAUDE.md", large/conflicting instructions, new project onboarding |
 | steering-lint | `steering-lint` | "audit instruction placement", CLAUDE.md/rules/hooks may be misplaced |
 
