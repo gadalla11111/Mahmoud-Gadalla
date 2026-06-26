@@ -66,6 +66,7 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Internal communications | `anthropic_skills/internal-comms` |
 | Product requirement docs | `anthropic_skills/prd-generator` |
 | Session/work handoff notes | `anthropic_skills/handoff` |
+| University curriculum / syllabus / exam / rubric / grading | `anthropic_skills/curriculum-builder` |
 
 ### Research & Verification
 | Task | Skill |
@@ -88,6 +89,14 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Web artifact construction | `anthropic_skills/web-artifacts-builder` |
 | Animated GIFs for Slack | `anthropic_skills/slack-gif-creator` |
 | shadcn/ui components (components.json projects) | `anthropic_skills/shadcn` |
+| Presentation design (narrative spine, data storytelling, visual hierarchy) | `anthropic_skills/presentation-architect` |
+
+### Marketing & Brand Strategy
+| Task | Skill |
+|---|---|
+| Brand strategy / positioning / brand pyramid / value proposition | `anthropic_skills/brand-framework` |
+| LinkedIn / personal branding / content calendar / thought leadership | `anthropic_skills/linkedin-branding` |
+| Social media audit / channel benchmark / recommendations | `anthropic_skills/social-audit` |
 
 ### Orchestration & Meta
 | Task | Skill |

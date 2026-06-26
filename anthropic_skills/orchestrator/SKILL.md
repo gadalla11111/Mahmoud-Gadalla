@@ -2,7 +2,7 @@
 name: orchestrator
 description: >
   Meta-skill that reads the incoming task, selects the right skill(s) from the
-  71-skill library, resolves conflicts when multiple skills match, chains them in
+  76-skill library, resolves conflicts when multiple skills match, chains them in
   the correct order, and applies quality gates — all while minimising token spend.
   Use whenever a task could benefit from a structured skill but the user has not
   named one. Trigger on: "best way to", "help me with", "what skill should I use",
@@ -31,7 +31,7 @@ health:
 
 # Orchestrator
 
-One entry point for the full 71-skill library. Classify the task → resolve conflicts → select the minimum viable chain → execute with quality gates → report.
+One entry point for the full 76-skill library. Classify the task → resolve conflicts → select the minimum viable chain → execute with quality gates → report.
 
 ---
 
@@ -132,6 +132,7 @@ When two or more skills match, apply these tiebreakers in order:
 | Team announcement / internal memo / all-hands / incident comms | `internal-comms` | S |
 | "write a PRD" / product requirements / pre-engineering feature spec | `prd-generator` | M |
 | "handoff notes" / "what did we accomplish" / context switch | `handoff` | S |
+| University course / syllabus / learning outcomes / exam / rubric / grading | `curriculum-builder` | M |
 
 ### Research & Verification
 
@@ -148,9 +149,10 @@ When two or more skills match, apply these tiebreakers in order:
 | Intent signal | Skill | Tier |
 |---|---|---|
 | UI component / React/Vue/Svelte/HTML / dashboard / Tailwind/shadcn | `frontend-design` | M |
-| Visual design / layout / typography / colour / "make this look good" | `design` | M |
-| Brand consistency / "is this on-brand" / visual identity | `brand-guidelines` | S |
-| HTML canvas / Fabric.js / Konva / interactive drawing/whiteboard | `canvas-design` | M |
+| Visual design / layout / typography / colour / "make this look good" / unsure which design skill | `design` (router) | M |
+| Brand consistency / "is this on-brand" / Anthropic visual identity | `brand-guidelines` | S |
+| Static art / poster / print / .pdf/.png artwork | `canvas-design` | M |
+| Slide deck narrative + visual structure / "design my presentation" | `presentation-architect` | M |
 | "create a theme" / colour palette / design tokens / component theming | `theme-factory` | M |
 | "generative art" / p5.js / flow field / code-driven visual output | `algorithmic-art` | M |
 | Self-contained HTML artifact / single-file interactive tool/demo | `web-artifacts-builder` | M |
@@ -190,6 +192,16 @@ When two or more skills match, apply these tiebreakers in order:
 | Intent signal | Skill | Tier |
 |---|---|---|
 | Arabic ministry proposal / وزارة / MBK/Jahizoon/MERIDIAN brand | `ministry-proposal` | L |
+
+### Marketing & Brand Strategy
+
+| Intent signal | Skill | Tier |
+|---|---|---|
+| Brand strategy / positioning / brand pyramid / value proposition / rebrand | `brand-framework` | M |
+| LinkedIn strategy / personal brand / thought leadership / content calendar | `linkedin-branding` | M |
+| Social media audit / channel review / benchmark vs competitors | `social-audit` | M |
+
+**Brand routing rule:** `brand-framework` = strategy/positioning (what the brand *means*); `brand-guidelines`/`applying-brand-guidelines` = applying an existing visual identity (what it *looks like*); `ministry-proposal` = the MERIDIAN/Jahizoon ministry brand specifically.
 
 ### Finance & Brand
 
