@@ -82,21 +82,23 @@ Skills auto-trigger by context. Grouped by domain. ✅ = present in this repo.
 
 ---
 
-## 🔌 PLUGINS — external (not installed here)
+## 🔌 PLUGINS — external tooling + native skill-equivalents
 
-These are third-party plugin products from the reference stack. They live outside
-this repo and are **not installable into this environment**; listed for parity.
+Tooling plugins install on your machine (see `stack/STACK_SETUP.md`). Skill-bundle
+plugins are covered by native skills here — no plugin needed.
 
-| Plugin | What it does | In repo? |
+| Plugin | What it does | Coverage here |
 |---|---|---|
-| gstack | 23 dev tools, one install | ❌ external |
-| superpowers | Dev methodology, 14 skills | ❌ external |
-| codex-plugin-cc | OpenAI's official Codex plugin | ❌ external |
-| financial-services | IB, PE, equity, wealth | ⚠ overlaps `skills/custom_skills/` finance |
-| claude-for-legal | Legal practice | ❌ external |
-| claude-skills | 263+ skills, every platform | ❌ external |
-| marketingskills | 40 tools, growth ops | ⚠ overlaps Marketing & Brand cluster |
-| social-media-skills | Posts, reels content OS | ⚠ overlaps `social-audit` / `linkedin-branding` |
+| gstack | 23 dev tools, one install | ⬇ install via marketplace |
+| superpowers | Dev methodology, 14 skills | ⬇ install via marketplace |
+| codex-plugin-cc | OpenAI's official Codex plugin | ⬇ install via marketplace |
+| financial-services | IB, PE, equity, wealth | ✅ `skills/custom_skills/` finance |
+| claude-for-legal | Legal practice | ✅ `legal-practice` (native) |
+| claude-skills | 263+ skills, every platform | ✅ discover via `find-skills` |
+| marketingskills | 40 tools, growth ops | ✅ brand-framework + linkedin-branding + social-audit + social-content |
+| social-media-skills | Posts, reels content OS | ✅ `social-content` + social-audit + linkedin-branding |
+
+**Setup**: `stack/STACK_SETUP.md` · **MCP template**: `stack/mcp-servers.stack.json` · **Plugin config**: `stack/settings.plugins.template.json`
 
 ---
 

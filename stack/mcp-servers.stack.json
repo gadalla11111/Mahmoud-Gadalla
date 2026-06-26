@@ -1,0 +1,58 @@
+{
+  "_README": "TEMPLATE — merge the entries you want into your project .mcp.json (or run `claude mcp add`). Do NOT paste verbatim: every command/url/env-var name below is a PLACEHOLDER to verify against each vendor's current MCP docs. API keys belong in your shell environment, never in this file. Transports: 'stdio' = local process; 'http'/'sse' = remote (sign-in on first connect). This file is intentionally NOT the live .mcp.json so it cannot disrupt this repo's own servers (umbriel/diffgate/memex).",
+  "mcpServers": {
+    "granola": {
+      "_note": "Meeting notes fed to Claude. Already connected in some environments. Verify the official package/endpoint.",
+      "_status": "verify",
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "REPLACE_WITH_GRANOLA_MCP_PACKAGE"]
+    },
+    "slack": {
+      "_note": "Reads channels, posts updates. Remote hosted MCP — confirm Slack's endpoint URL; sign-in on first connect.",
+      "_status": "verify",
+      "type": "http",
+      "url": "https://REPLACE_WITH_SLACK_MCP_ENDPOINT"
+    },
+    "notion": {
+      "_note": "Reads/writes your docs. Notion ships a hosted MCP — confirm current URL; sign-in on first connect.",
+      "_status": "verify",
+      "type": "http",
+      "url": "https://REPLACE_WITH_NOTION_MCP_ENDPOINT"
+    },
+    "kondo": {
+      "_note": "Triages LinkedIn DMs. Confirm whether stdio package or hosted endpoint.",
+      "_status": "verify",
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "REPLACE_WITH_KONDO_MCP_PACKAGE"]
+    },
+    "zapier": {
+      "_note": "9,000+ apps via one connection. Zapier gives a per-account hosted URL — generate it in Zapier and paste here.",
+      "_status": "verify",
+      "type": "http",
+      "url": "https://REPLACE_WITH_YOUR_ZAPIER_MCP_URL"
+    },
+    "higgsfield": {
+      "_note": "Cinematic video from a prompt. Confirm package. Set the env var HIGGSFIELD_API_KEY in your shell before launch (do not inline it here).",
+      "_status": "verify",
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "REPLACE_WITH_HIGGSFIELD_MCP_PACKAGE"]
+    },
+    "perplexity": {
+      "_note": "Live web search for Claude. Confirm package. Set the env var PERPLEXITY_API_KEY in your shell before launch (do not inline it here).",
+      "_status": "verify",
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "REPLACE_WITH_PERPLEXITY_MCP_PACKAGE"]
+    },
+    "agent-browser": {
+      "_note": "Token-light browser automation. Confirm package; may need a local browser binary.",
+      "_status": "verify",
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "REPLACE_WITH_AGENT_BROWSER_MCP_PACKAGE"]
+    }
+  }
+}

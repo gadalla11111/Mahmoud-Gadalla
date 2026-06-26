@@ -2,7 +2,7 @@
 name: orchestrator
 description: >
   Meta-skill that reads the incoming task, selects the right skill(s) from the
-  81-skill library, resolves conflicts when multiple skills match, chains them in
+  83-skill library, resolves conflicts when multiple skills match, chains them in
   the correct order, and applies quality gates — all while minimising token spend.
   Use whenever a task could benefit from a structured skill but the user has not
   named one. Trigger on: "best way to", "help me with", "what skill should I use",
@@ -31,7 +31,7 @@ health:
 
 # Orchestrator
 
-One entry point for the full 81-skill library. Classify the task → resolve conflicts → select the minimum viable chain → execute with quality gates → report.
+One entry point for the full 83-skill library. Classify the task → resolve conflicts → select the minimum viable chain → execute with quality gates → report.
 
 ---
 
@@ -197,6 +197,7 @@ When two or more skills match, apply these tiebreakers in order:
 | Intent signal | Skill | Tier |
 |---|---|---|
 | Arabic ministry proposal / وزارة / MBK/Jahizoon/MERIDIAN brand | `ministry-proposal` | L |
+| Draft/review contracts, NDAs, policies, ToS / legal risk redline | `legal-practice` | M |
 
 ### Marketing & Brand Strategy
 
@@ -205,6 +206,7 @@ When two or more skills match, apply these tiebreakers in order:
 | Brand strategy / positioning / brand pyramid / value proposition / rebrand | `brand-framework` | M |
 | LinkedIn strategy / personal brand / thought leadership / content calendar | `linkedin-branding` | M |
 | Social media audit / channel review / benchmark vs competitors | `social-audit` | M |
+| Create social posts / reel scripts / captions / multi-platform content | `social-content` | M |
 
 **Brand routing rule:** `brand-framework` = strategy/positioning (what the brand *means*); `brand-guidelines`/`applying-brand-guidelines` = applying an existing visual identity (what it *looks like*); `ministry-proposal` = the MERIDIAN/Jahizoon ministry brand specifically.
 
