@@ -43,6 +43,8 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Instrument AI/LLM agent monitoring | `anthropic_skills/sentry/sentry-setup-ai-monitoring` |
 | Sentry Seer bug-prediction PR review | `anthropic_skills/sentry/sentry-pr-code-review` |
 | Set up Sentry SDK in Python | `anthropic_skills/sentry/sentry-python-setup` |
+| Neon serverless Postgres setup/branching | `anthropic_skills/neon/neon-postgres` |
+| Diagnose & cut Postgres egress costs | `anthropic_skills/neon/neon-postgres-egress-optimizer` |
 
 ### Document & Content Generation
 | Task | Skill |
