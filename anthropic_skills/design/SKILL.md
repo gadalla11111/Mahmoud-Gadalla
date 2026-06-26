@@ -5,13 +5,22 @@ description: >
   from Anthropic brand compliance to generative art to web UI to slide themes.
   Invoke this skill whenever a visual design question arises; it routes to the
   right sub-skill based on the output medium and creative latitude requested.
+  Single entry point for the whole design cluster: canvas-design, frontend-design,
+  theme-factory, brand-guidelines, presentation-architect, web-artifacts-builder,
+  algorithmic-art, shadcn. Routes — does not duplicate their content.
 auto-trigger:
-  - visual design task without a specific named tool
+  - visual design task without a specific named tool or medium
   - layout, typography, colour, or composition decisions
-  - "design this page", "make this look good", "visual hierarchy"
+  - "design this", "make this look good", "visual hierarchy", "which design skill"
 do-not-trigger:
   - code-only tasks
   - purely textual content generation
+  - when the medium is already obvious (invoke the specific sub-skill directly)
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 
 ---
 
@@ -23,14 +32,35 @@ One entry point for all visual design decisions. Read the request, identify the 
 
 ## Routing table
 
-| Medium | Creative latitude | Path |
+| Medium / output | Creative latitude | Path |
 |---|---|---|
-| Static art — poster, print, PDF/PNG canvas | High (original artwork) | → **canvas-design** |
-| Web UI — page, component, app interface | High (distinctive point of view) | → **frontend-design** |
-| Slides, docs, reports, HTML pages | Low–medium (apply a preset or custom theme) | → **theme-factory** |
-| Any artifact that must carry Anthropic branding | Any | → **brand-guidelines** (apply after the medium path) |
+| Static art — poster, print, PDF/PNG | High (original artwork) | → **canvas-design** |
+| Generative/algorithmic art — p5.js, flow fields, particles | High (computational) | → **algorithmic-art** |
+| Web UI — page, component, app interface | High (distinctive POV) | → **frontend-design** |
+| Complex standalone HTML artifact — state, routing, shadcn | Medium (functional) | → **web-artifacts-builder** |
+| shadcn/ui components in a components.json project | Low–medium | → **shadcn** |
+| Slides / deck — narrative + visual structure | Medium (research-backed) | → **presentation-architect** |
+| Slides/docs/reports — apply a preset/custom theme | Low–medium | → **theme-factory** |
+| Any artifact that must carry Anthropic branding | Any | → **brand-guidelines** (layer last) |
+| Brand strategy / positioning (not visuals) | — | → **brand-framework** (strategy, not look) |
 
-If the request spans multiple rows (e.g., "an Anthropic-branded web page"), run the medium path first, then layer brand-guidelines on top.
+If the request spans multiple rows (e.g., "an Anthropic-branded web page"), run the medium path first, then layer brand-guidelines on top. For a deck: **presentation-architect** sets the spine, **theme-factory** or **brand-guidelines** styles it, **pptx** produces the file.
+
+---
+
+## Disambiguation — the easy-to-confuse pairs
+
+| If the user says… | They mean | Route to |
+|---|---|---|
+| "canvas" + poster/print/.png | Static art | **canvas-design** |
+| "canvas" + drawing tool / whiteboard / Fabric.js | Interactive web canvas | **frontend-design** / **web-artifacts-builder** |
+| "art from code" / generative | p5.js computational art | **algorithmic-art** |
+| "design a deck/slides" | Narrative + layout | **presentation-architect** |
+| "theme my slides" | Apply palette/fonts | **theme-factory** |
+| "make it on-brand" | Anthropic identity | **brand-guidelines** |
+| "build our brand" | Positioning strategy | **brand-framework** (not a visual skill) |
+
+When still ambiguous, ask one question: **"What's the final output — a static image, a web interface, a slide deck, or a styled document?"** Then route.
 
 ---
 
@@ -135,3 +165,16 @@ Apply after any medium path when the output must carry Anthropic's visual identi
 - Non-text shapes cycle through orange → blue → green accents
 
 Apply via `python-pptx`'s `RGBColor` for slides, or inline CSS / Tailwind custom tokens for web. Preserve text hierarchy; smart color selection based on background lightness.
+
+---
+
+## Other cluster paths (hand off — don't reimplement)
+
+| Path | Use when | Follow |
+|---|---|---|
+| **presentation-architect** | Deck needs a narrative spine + visual hierarchy | Title-test spine → data storytelling → then theme-factory/brand-guidelines → pptx |
+| **algorithmic-art** | Computational/generative art via p5.js | Seeded randomness + parameter exploration |
+| **web-artifacts-builder** | Elaborate single-file HTML artifact (state/routing/shadcn) | Not for simple JSX — that's frontend-design |
+| **shadcn** | Project already uses components.json | Component-level work within an existing system |
+
+These are full skills — route to them, don't duplicate their guidance here. This router only carries canvas-design / frontend-design / theme-factory / brand-guidelines inline because they share the medium-then-brand layering flow.
