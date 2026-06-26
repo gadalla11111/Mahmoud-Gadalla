@@ -1,5 +1,5 @@
 # Skill Stacks — Knowledge Checkpoint
-**Last updated**: 2026-06-26 (rev 7)
+**Last updated**: 2026-06-26 (rev 8)
 
 ---
 
@@ -473,6 +473,52 @@ design → pptx → applying-brand-guidelines → fact-checker
 - Always confirm which brand system applies before designing (Acme ≠ MERIDIAN ≠ Jahizoon)
 - Brand check comes after content is locked, before delivery
 - `fact-checker` always follows brand check if the doc has any cited claims
+
+---
+
+## MCP Stacks
+
+**Core (always)**
+```
+think-twice → mcp-builder → ultracode → mcp-inspector
+```
+
+**New MCP server from scratch**
+```
+adr → sparc → mcp-builder → ultracode → tdd → mcp-inspector
+```
+
+**Debugging a broken MCP server**
+```
+debug → mcp-inspector → ultracode (quick-mode)
+```
+
+**MCP servers using Claude API**
+```
+claude-api → mcp-builder → ultracode → tdd → mcp-inspector
+```
+
+**Exposing existing codebase as MCP**
+```
+change-impact → adr → mcp-builder → ultracode → mcp-inspector
+```
+- change-impact: assess what exposing as MCP breaks or touches
+
+**Testing MCP tool behaviour**
+```
+mcp-inspector → webapp-testing → tdd
+```
+
+**Shipping an MCP server**
+```
+ultracode → change-impact → mcp-inspector → handoff
+```
+
+**Key rules**
+- `mcp-inspector` is always the last step before declaring an MCP server done
+- `adr` before any MCP server that exposes shared infrastructure
+- `tdd` for every tool — tool schemas are contracts, test them like APIs
+- `claude-api` if Claude is the MCP client — don't guess SDK patterns
 
 ---
 
