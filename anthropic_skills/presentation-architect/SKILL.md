@@ -13,7 +13,10 @@ description: >
 allowed-tools: [WebSearch, WebFetch, Read, Write, Bash]
 argument-hint: "<topic or existing deck> [--build | --restructure | --polish]"
 auto-trigger:
-  - "build a presentation", "design slides", "pitch deck", "slide design"
+  - "build a presentation"
+  - "design slides"
+  - "pitch deck"
+  - "slide design"
   - restructuring or visually upgrading an existing deck
   - turning research/data into a narrative slide sequence
 do-not-trigger:

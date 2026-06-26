@@ -16,7 +16,9 @@ argument-hint: "<problem-statement>"
 auto-trigger:
   - task too large or broad for a single agent turn
   - parallelisable subtasks that can run independently
-  - "spawn agents for", "delegate to subagents", "parallel research"
+  - "spawn agents for"
+  - "delegate to subagents"
+  - "parallel research"
   - multi-domain task requiring specialised agents per domain
   - context window would overflow with all intermediate state
 do-not-trigger:

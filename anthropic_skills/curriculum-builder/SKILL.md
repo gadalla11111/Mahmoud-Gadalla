@@ -12,7 +12,10 @@ description: >
 allowed-tools: [WebSearch, WebFetch, Read, Write]
 argument-hint: "<course or topic> [--syllabus | --exam | --rubric | --mark]"
 auto-trigger:
-  - "design a course", "build a syllabus", "learning outcomes", "curriculum"
+  - "design a course"
+  - "build a syllabus"
+  - "learning outcomes"
+  - "curriculum"
   - generating exam/quiz questions for a course
   - creating a grading rubric or marking student work
 do-not-trigger:

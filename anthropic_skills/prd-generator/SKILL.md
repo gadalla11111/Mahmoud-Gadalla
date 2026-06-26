@@ -14,10 +14,13 @@ description: >
 allowed-tools: [WebSearch, WebFetch, Read, Write, Bash]
 argument-hint: "[product idea or blank to start with questions]"
 auto-trigger:
-  - "write a PRD", "product requirements", "feature spec"
+  - "write a PRD"
+  - "product requirements"
+  - "feature spec"
   - defining scope before engineering starts
   - stakeholder alignment document for a new product or feature
-  - "I want to build X", "help me plan this"
+  - "I want to build X"
+  - "help me plan this"
 do-not-trigger:
   - post-implementation docs
   - technical design docs (use adr instead)

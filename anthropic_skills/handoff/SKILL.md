@@ -11,7 +11,9 @@ allowed-tools: [Read, Write, Bash, Glob]
 argument-hint: "[incoming owner/role] [change-record path]"
 auto-trigger:
   - end of a work session
-  - "handoff notes", "session summary", "what did we accomplish"
+  - "handoff notes"
+  - "session summary"
+  - "what did we accomplish"
   - before a context switch to another person or session
   - wrapping up a multi-day task
 do-not-trigger:

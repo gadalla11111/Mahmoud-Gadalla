@@ -12,7 +12,9 @@ description: >
 allowed-tools: [WebFetch, WebSearch, Read, Write, Bash]
 argument-hint: "<service-name> [--lang python|typescript] [--transport stdio|sse]"
 auto-trigger:
-  - "create an MCP server", "build an MCP tool", "expose X as an MCP"
+  - "create an MCP server"
+  - "build an MCP tool"
+  - "expose X as an MCP"
   - integrating a new service or API as an MCP tool
   - extending Claude's toolset with a custom server
 do-not-trigger:

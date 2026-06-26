@@ -13,7 +13,10 @@ allowed-tools: [Bash, Read, Glob, Write]
 argument-hint: "[task description or subcommand: add|template|status|batch|bank|deps|stale]"
 auto-trigger:
   - managing a backlog of tasks across a session
-  - "add to queue", "whats next", "task list", "backlog"
+  - "add to queue"
+  - "whats next"
+  - "task list"
+  - "backlog"
   - multi-step project where tasks arrive incrementally
   - rate limit already hit this session
 do-not-trigger:

@@ -12,7 +12,9 @@ description: >
 allowed-tools: [WebSearch, WebFetch, Read, Write]
 argument-hint: "<name or niche> [--profile | --calendar | --post]"
 auto-trigger:
-  - "LinkedIn strategy", "personal brand", "thought leadership"
+  - "LinkedIn strategy"
+  - "personal brand"
+  - "thought leadership"
   - planning a LinkedIn content calendar or posting cadence
   - rewriting a LinkedIn profile headline/about for authority
 do-not-trigger:

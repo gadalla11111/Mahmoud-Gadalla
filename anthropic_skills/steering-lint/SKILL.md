@@ -1,3 +1,32 @@
+---
+name: steering-lint
+description: >
+  Audits Claude Code and coding-agent configurations to ensure instructions live
+  in their correct "homes" — the right steering mechanism (CLAUDE.md, rules,
+  skills, subagents, hooks, output styles) — based on load timing, context cost,
+  authority, and compaction behavior. Read-only: reports misplaced instructions
+  without editing. Use when onboarding a project, when CLAUDE.md feels bloated, or
+  when automation/guardrails are written as prose instead of hooks.
+allowed-tools: [Read, Glob, Grep, Bash]
+argument-hint: "[paths to audit, or blank for project + user config]"
+auto-trigger:
+  - "audit instruction placement"
+  - "is this in the right place"
+  - CLAUDE.md vs hooks vs skills confusion
+  - automation or prohibitions written as prose instead of hooks/permissions
+  - long-session or prompt-injection robustness review of config
+do-not-trigger:
+  - auditing CLAUDE.md content quality only (use claude-md-audit)
+  - editing configuration files (this skill is read-only)
+  - general code review
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
+
+---
+
 # steering-lint SKILL.md
 
 This skill audits Claude Code and coding-agent configurations to ensure instructions live in their correct "homes" — the right steering mechanisms (CLAUDE.md, rules, skills, subagents, hooks, output styles) — based on load timing, context cost, authority, and compaction behavior.

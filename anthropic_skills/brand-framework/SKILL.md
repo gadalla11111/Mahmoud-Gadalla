@@ -12,7 +12,10 @@ description: >
 allowed-tools: [WebSearch, WebFetch, Read, Write]
 argument-hint: "<brand or product name> [--audit existing | --build new]"
 auto-trigger:
-  - "brand strategy", "brand framework", "brand pyramid", "positioning"
+  - "brand strategy"
+  - "brand framework"
+  - "brand pyramid"
+  - "positioning"
   - defining or auditing a brand's identity, essence, or messaging
   - building a value proposition or competitive differentiation story
 do-not-trigger:

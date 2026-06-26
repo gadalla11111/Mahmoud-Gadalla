@@ -10,7 +10,9 @@ allowed-tools: [Read, Bash, Grep, Glob, Write, AskUserQuestion, Task]
 argument-hint: "[--diagnose] [issue description]"
 auto-trigger:
   - error, exception, or traceback investigation
-  - "why is X broken", "this test fails", "unexpected behaviour"
+  - "why is X broken"
+  - "this test fails"
+  - "unexpected behaviour"
   - production incident diagnosis
   - reproducing a reported bug
 do-not-trigger:
