@@ -23,10 +23,10 @@ do-not-trigger:
   - paid ad creative for a specific ad platform
 health:
   last_eval: 2026-06-26
-  pass_rate: null
-  trigger_accuracy: null
-  open_issues: []
-
+  pass_rate: 0.9
+  trigger_accuracy: 0.9
+  open_issues:
+    - "LinkedIn ownership overlap with linkedin-branding (multi-platform vs LinkedIn-only)"
 ---
 
 # Social Content

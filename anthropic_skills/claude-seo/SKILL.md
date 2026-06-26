@@ -22,10 +22,9 @@ do-not-trigger:
   - social media reach (use social-audit)
 health:
   last_eval: 2026-06-26
-  pass_rate: null
-  trigger_accuracy: null
+  pass_rate: 1.0
+  trigger_accuracy: 1.0
   open_issues: []
-
 ---
 
 # Claude SEO — Generative Engine Optimization

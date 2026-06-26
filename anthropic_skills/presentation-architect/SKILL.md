@@ -25,10 +25,11 @@ do-not-trigger:
   - written report with no slides (use a doc skill)
 health:
   last_eval: 2026-06-26
-  pass_rate: null
-  trigger_accuracy: null
-  open_issues: []
+  pass_rate: 0.9
+  trigger_accuracy: 0.9
 
+  open_issues:
+    - polish-vs-theme boundary — 'theme my slides' can match --polish or theme-factory
 ---
 
 # Presentation Architect
