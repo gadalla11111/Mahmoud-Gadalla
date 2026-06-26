@@ -35,6 +35,9 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | MCP server creation | `anthropic_skills/mcp-builder` |
 | Inspect/debug MCP servers | `anthropic_skills/mcp-inspector` |
 | Web app test automation | `anthropic_skills/webapp-testing` |
+| Fix failing GitHub Actions CI on a PR | `anthropic_skills/gh-fix-ci` |
+| Address PR review comments | `anthropic_skills/gh-address-comments` |
+| Commit, push & open a PR in one flow | `anthropic_skills/yeet` |
 
 ### Document & Content Generation
 | Task | Skill |
