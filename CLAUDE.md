@@ -24,7 +24,7 @@ Skills are applied **automatically** based on task context — no explicit invoc
 ### Code Quality & Development
 | Task | Skill |
 |---|---|
-| Maximum-quality / production-ready coding | `anthropic_skills/ultracode` |
+| Any non-trivial feature, refactor, bug fix, API/schema change, or security-sensitive task | `anthropic_skills/ultracode` |
 | Build apps with Claude API / SDK | `anthropic_skills/claude-api` |
 | Structured feature development (SPARC) | `anthropic_skills/sparc` |
 | Architecture Decision Records | `anthropic_skills/adr` |

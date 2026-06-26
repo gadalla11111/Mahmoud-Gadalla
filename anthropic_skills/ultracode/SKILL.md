@@ -6,6 +6,21 @@ description: >
   on any non-trivial feature, refactor, or bug fix where correctness and
   long-term maintainability matter. Trigger phrases: "ultracode", "maximum
   quality", "do this right", "production-ready", "no shortcuts".
+auto-trigger:
+  - new feature implementation (more than ~20 lines of net-new logic)
+  - architectural change or module restructuring
+  - refactor of existing working code
+  - bug fix in production or shared code
+  - any task the user marks as important, critical, or production-bound
+  - API design or public interface change
+  - security-sensitive code paths
+  - database migrations or schema changes
+  - performance-critical code
+do-not-trigger:
+  - documentation-only changes
+  - config value updates (env vars, JSON settings)
+  - renaming a variable or file only
+  - adding a log line
 allowed-tools: [Read, Write, Edit, Bash, Grep, Glob]
 argument-hint: "<task-description> [--phase think|spec|build|review|ship]"
 ---
