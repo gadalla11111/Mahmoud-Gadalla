@@ -1,5 +1,5 @@
 # Skill Stacks — Knowledge Checkpoint
-**Last updated**: 2026-06-26 (rev 3)
+**Last updated**: 2026-06-26 (rev 4)
 
 ---
 
@@ -243,6 +243,66 @@ adr → orchestrator → nested-subagents → change-impact
 - `nested-subagents` only when subtasks are genuinely parallelisable
 - `promptize` whenever intent is ambiguous — wrong routing wastes the whole chain
 - `sipcode/estimate` before any L/XL agent tree
+
+---
+
+## Workflow Stacks
+
+**Core (always)**
+```
+think-twice → surgical
+```
+
+**Session start**
+```
+engram/briefing → orchestrator
+```
+
+**Session end / context switch**
+```
+engram/working → handoff
+```
+
+**Ambiguous requests**
+```
+promptize → think-twice → [right skill]
+```
+
+**Recurring tasks**
+```
+think-twice → skill-creator → orchestrator
+```
+- skill-creator formalises the workflow so it auto-triggers next time
+
+**Cost hygiene**
+```
+sipcode/estimate → [task] → sipcode/why
+```
+
+**Instruction / config quality**
+```
+steering-lint → claude-md-audit
+```
+- steering-lint: check CLAUDE.md vs hooks vs skills placement (7 rules)
+- claude-md-audit: audit quality, conflicts, bloat
+
+**Knowledge hygiene**
+```
+engram/consolidate → engram/working
+```
+- consolidate before handoff to deduplicate and prune stale memory
+
+**Queue-driven workflows**
+```
+queue → orchestrator → engram/working
+```
+- checkpoint after each queue item completes
+
+**Key rules**
+- `think-twice` + `surgical` is the default for any workflow step — do less, not more
+- `promptize` before acting on any request that could be interpreted multiple ways
+- `engram/working` at every natural pause — memory is cheap, context loss is not
+- `steering-lint` whenever CLAUDE.md feels bloated or contradictory
 
 ---
 
