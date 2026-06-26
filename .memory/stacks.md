@@ -1,5 +1,5 @@
 # Skill Stacks — Knowledge Checkpoint
-**Last updated**: 2026-06-26 (rev 14) — added Sentry observability suite (59 skills total)
+**Last updated**: 2026-06-26 (rev 15) — added Neon Postgres (61 skills total)
 
 ---
 
@@ -827,6 +827,41 @@ sentry-python-setup → sentry-setup-ai-monitoring → sipcode/why
 
 ---
 
+## Database Stacks (Neon Postgres)
+
+**Set up a database**
+```
+neon-postgres → [ORM integration]
+```
+- Self-driving: `neonctl init --agent`; pick driver by runtime (TCP pooled vs HTTP serverless)
+- Branch per preview/PR; scale-to-zero on dev branches
+
+**Cut a surprise bill**
+```
+neon-postgres-egress-optimizer
+```
+- pg_stat_statements → find heavy queries → fix SELECT *, missing pagination, JOIN duplication
+
+**Database-backed agent (this repo)**
+```
+neon-postgres → claude-api → ultracode → tdd
+```
+- Provision the DB, wire it into agent code, build with the quality pipeline
+
+**Cost-correlated investigation**
+```
+neon-postgres-egress-optimizer + sipcode/why + sentry-setup-ai-monitoring
+```
+- When egress spikes track LLM/agent workloads pulling large result sets
+
+**Key rules**
+- Neon docs are source of truth — verify against current docs, don't rely on training data
+- Never commit the connection string / `.env`
+- Driver matches runtime — HTTP driver in a long-running server wastes Neon's pooling
+- Measure with pg_stat_statements before rewriting queries — fix top offenders only
+
+---
+
 ## Cross-Domain Complementary Pairs
 
 | Pair | Why |
@@ -851,3 +886,5 @@ sentry-python-setup → sentry-setup-ai-monitoring → sipcode/why
 | `sentry-python-setup` + `sentry-setup-ai-monitoring` | base SDK, then AI agent monitoring |
 | `sentry-fix-issues` + `tdd` | fix the production issue, pin it with a regression test |
 | `sentry-setup-ai-monitoring` + `sipcode/why` | latency/token spans cross-check cost forensics |
+| `neon-postgres` + `neon-postgres-egress-optimizer` | provision the DB, then keep its bill in check |
+| `neon-postgres-egress-optimizer` + `sipcode/why` | DB egress cost + token cost, correlated |
