@@ -1,5 +1,5 @@
 # Skill Stacks — Knowledge Checkpoint
-**Last updated**: 2026-06-26
+**Last updated**: 2026-06-26 (rev 2)
 
 ---
 
@@ -134,6 +134,67 @@ sipcode/estimate → deep-research → sipcode/why
 **Quick single claim**
 ```
 prove-claims
+```
+
+---
+
+## Document Stacks
+
+**Core (always)**
+```
+think-twice → [format skill] → fact-checker
+```
+- fact-checker is mandatory if the doc contains any stats or claims
+
+**By output format**
+
+| Output | Skill |
+|---|---|
+| Word (.docx) | `docx` |
+| PDF | `pdf` |
+| PowerPoint (.pptx) | `pptx` |
+| Excel (.xlsx) | `xlsx` |
+
+**Collaborative writing**
+```
+doc-coauthoring → fact-checker → handoff
+```
+
+**Product specs / PRDs**
+```
+deep-research → prove-claims → prd-generator → docx / pdf
+```
+
+**Internal communications**
+```
+internal-comms → fact-checker
+```
+
+**Arabic ministry proposals**
+```
+deep-research → fact-checker → ministry-proposal → pptx
+```
+- fact-checker is a hard gate — cannot finalize without it
+
+**Data-heavy documents**
+```
+xlsx → fact-checker → pdf / docx
+```
+- Build data model in Excel first, export narrative around verified numbers
+
+**Branded documents**
+```
+[format skill] → brand-guidelines → fact-checker
+```
+
+**Session handoff notes**
+```
+handoff → docx / pdf
+```
+
+**Quick single doc (no claims)**
+```
+surgical + [format skill]
 ```
 
 ---
