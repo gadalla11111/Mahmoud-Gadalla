@@ -5,8 +5,9 @@
 ---
 
 ## Library Stats
-- **Total skills**: 54 (47 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
-- **Newest**: gh-fix-ci, gh-address-comments, yeet (GitHub CI trio, from openai/skills .curated, adapted for github MCP tools)
+- **Total skills**: 59 (52 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
+- **Newest**: Sentry observability suite (5: fix-issues, create-alert, setup-ai-monitoring, pr-code-review, python-setup) under anthropic_skills/sentry/ — requires Sentry MCP
+- **Prior**: gh-fix-ci, gh-address-comments, yeet (GitHub CI trio, from openai/skills .curated, adapted for github MCP tools)
 - **All skills have**: `auto-trigger` + `do-not-trigger` frontmatter
 - **Auto-apply rule**: Skills trigger automatically by context — no explicit invocation needed
 
@@ -38,6 +39,11 @@
 | gh-fix-ci | `gh-fix-ci` | "fix CI", failing GitHub Actions checks on a PR, autofix red checks |
 | gh-address-comments | `gh-address-comments` | "address the comments", reviewer feedback on the open PR |
 | yeet | `yeet` | "yeet", "ship it", commit + push + open a draft PR in one flow |
+| sentry-fix-issues | `sentry/sentry-fix-issues` | "fix this Sentry issue", debug production error via Sentry MCP |
+| sentry-create-alert | `sentry/sentry-create-alert` | "create a Sentry alert", notify on errors/regressions |
+| sentry-setup-ai-monitoring | `sentry/sentry-setup-ai-monitoring` | monitor AI agents, token/latency for Anthropic/OpenAI/LangChain |
+| sentry-pr-code-review | `sentry/sentry-pr-code-review` | Seer bug-prediction PR review pre-merge |
+| sentry-python-setup | `sentry/sentry-python-setup` | add Sentry SDK to a Python app (Django/Flask/FastAPI) |
 
 ### Document & Content Generation
 | Skill | Path | Auto-triggers on |
