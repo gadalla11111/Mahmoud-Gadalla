@@ -67,6 +67,7 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Product requirement docs | `anthropic_skills/prd-generator` |
 | Session/work handoff notes | `anthropic_skills/handoff` |
 | University curriculum / syllabus / exam / rubric / grading | `anthropic_skills/curriculum-builder` |
+| Strip AI writing tells / humanize a draft | `anthropic_skills/humanizer` |
 
 ### Research & Verification
 | Task | Skill |
@@ -76,6 +77,7 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Exhaustive multi-source search | `anthropic_skills/ultra-search` |
 | News & current events research | `anthropic_skills/news-research` |
 | Substantiate claims | `anthropic_skills/prove-claims` |
+| GEO / SEO for AI answer engines | `anthropic_skills/claude-seo` |
 
 ### Design & Frontend
 | Task | Skill |
@@ -90,6 +92,7 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Animated GIFs for Slack | `anthropic_skills/slack-gif-creator` |
 | shadcn/ui components (components.json projects) | `anthropic_skills/shadcn` |
 | Presentation design (narrative spine, data storytelling, visual hierarchy) | `anthropic_skills/presentation-architect` |
+| HTML-to-video rendering (MP4/GIF/WebM from markup) | `anthropic_skills/hyperframes` |
 
 ### Marketing & Brand Strategy
 | Task | Skill |
@@ -105,6 +108,7 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Deep delegation via agent tree | `anthropic_skills/nested-subagents` |
 | Task queue management | `anthropic_skills/queue` |
 | Create a new skill | `anthropic_skills/skill-creator` |
+| Find & install a skill (discover capability) | `anthropic_skills/find-skills` |
 
 ### Workflow & Process
 | Task | Skill |
@@ -114,6 +118,7 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Clarify intent before agent acts | `anthropic_skills/promptize/promptize` |
 | Estimate task cost | `anthropic_skills/sipcode/estimate` |
 | Audit session token spend | `anthropic_skills/sipcode/why` |
+| Compress model-facing prompt/context tokens | `anthropic_skills/caveman` |
 | Audit CLAUDE.md quality | `anthropic_skills/claude-md-audit` |
 | Audit instruction placement (CLAUDE.md vs hooks vs skills) | `anthropic_skills/steering-lint` |
 

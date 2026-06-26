@@ -5,8 +5,9 @@
 ---
 
 ## Library Stats
-- **Total skills**: 76 (69 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
-- **Newest**: Marketing & Education (5: brand-framework, linkedin-branding, social-audit, curriculum-builder, presentation-architect) — first-party, from 2026 web research; see Marketing & Brand Strategy section
+- **Total skills**: 81 (74 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
+- **Newest**: Claude Stack set (5: hyperframes, claude-seo, find-skills, humanizer, caveman) — first-party, completes the reference 'My Claude Stack' Skills column; see MY_CLAUDE_STACK.md
+- **Prior**: Marketing & Education (5: brand-framework, linkedin-branding, social-audit, curriculum-builder, presentation-architect) — from 2026 web research
 - **Prior**: Trail of Bits security (3: semgrep, codeql, sharp-edges) under anthropic_skills/trailofbits/ — from trailofbits/skills; reinforces the Security stack
 - **Prior**: Expo mobile (2: expo-deployment, expo-building-native-ui) — re-synced verbatim from expo/skills (plugins/expo/skills/); note: Expo RN UI uses inline styles, CSS/Tailwind unsupported
 - **Prior**: stripe-best-practices under anthropic_skills/stripe/ — from stripe/ai; consults Stripe MCP planner when available
@@ -72,6 +73,7 @@
 | prd-generator | `prd-generator` | "write a PRD", product requirements, pre-engineering feature spec |
 | handoff | `handoff` | Session end, "handoff notes", "what did we accomplish", context switch |
 | curriculum-builder | `curriculum-builder` | University course/syllabus, learning outcomes, exam/quiz generation, rubric, grading (Backward Design + Bloom's) |
+| humanizer | `humanizer` | Strip AI writing tells from a draft — meaning intact, more human cadence |
 
 ### Research & Verification
 | Skill | Path | Auto-triggers on |
@@ -81,6 +83,7 @@
 | ultra-search | `ultra-search` | Exhaustive search needed, prior searches insufficient, competitive research |
 | news-research | `news-research` | Current events, "latest news on", time-sensitive information |
 | prove-claims | `prove-claims` | "substantiate this", single-claim verification, "source this" |
+| claude-seo | `claude-seo` | GEO — get content cited by AI answer engines (ChatGPT/Perplexity/AI Overviews) |
 
 ### Design & Frontend
 | Skill | Path | Auto-triggers on |
@@ -90,6 +93,7 @@
 | brand-guidelines | `brand-guidelines` | Brand consistency check, "is this on-brand", Anthropic visual identity |
 | canvas-design | `canvas-design` | Static art — poster/print/.pdf/.png artwork (philosophy-first; NOT interactive canvas) |
 | presentation-architect | `presentation-architect` | Deck design — narrative spine (title test), data storytelling, visual hierarchy |
+| hyperframes | `hyperframes` | Write HTML, render to MP4/GIF/WebM via headless Chromium + ffmpeg |
 | theme-factory | `theme-factory` | "create a theme", colour palette, design tokens, component theming |
 | algorithmic-art | `algorithmic-art` | "generative art", "p5.js", "flow field", code-driven visual output |
 | web-artifacts-builder | `web-artifacts-builder` | Self-contained HTML artifact, single-file interactive tool/demo |
@@ -106,6 +110,7 @@
 | nested-subagents | `nested-subagents` | Task too large for single turn, parallelisable subtasks, multi-domain delegation |
 | queue | `queue` | "add to queue", backlog management, multi-step incremental project |
 | skill-creator | `skill-creator` | "create a new skill", "add skill for X", formalise recurring workflow |
+| find-skills | `find-skills` | "is there a skill for X", discover & install a skill (local or external) |
 
 ### Workflow & Process
 | Skill | Path | Auto-triggers on |
@@ -116,6 +121,7 @@
 | sipcode | `sipcode` | "how much will this cost", token estimate, before L/XL task chains |
 | sipcode/estimate | `sipcode/estimate` | Pre-flight cost prediction — "estimate the cost", model selection question |
 | sipcode/why | `sipcode/why` | Post-session forensics — "where did my tokens go", "why was that so expensive" |
+| caveman | `caveman` | Aggressive token reduction of model-facing prompts/context, meaning intact |
 | sipcode/impact | `sipcode/impact` | Before/after A/B savings comparison — "is sipcode saving me tokens" |
 | sipcode/benchmark | `sipcode/benchmark` | Reproducibility proof — "run the benchmark", verify headline savings claim |
 | claude-md-audit | `claude-md-audit` | "audit CLAUDE.md", large/conflicting instructions, new project onboarding |
