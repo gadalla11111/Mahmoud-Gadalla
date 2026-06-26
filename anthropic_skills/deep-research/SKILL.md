@@ -29,10 +29,9 @@ do-not-trigger:
   - when the user needs breadth fast without a synthesis report (use ultra-search)
 health:
   last_eval: 2026-06-26
-  pass_rate: null
-  trigger_accuracy: null
+  pass_rate: 1.0
+  trigger_accuracy: 1.0
   open_issues: []
-
 ---
 
 # Deep Research
