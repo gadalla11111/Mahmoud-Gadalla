@@ -27,10 +27,10 @@ do-not-trigger:
   - when a synthesized report with confidence levels is needed (use deep-research)
 health:
   last_eval: 2026-06-26
-  pass_rate: null
-  trigger_accuracy: null
-  open_issues: []
-
+  pass_rate: 0.9
+  trigger_accuracy: 0.9
+  open_issues:
+    - recency-pass overlaps news-research on 'latest' queries
 ---
 
 # Ultra Search
