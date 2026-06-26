@@ -5,7 +5,8 @@
 ---
 
 ## Library Stats
-- **Total skills**: 51 (44 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
+- **Total skills**: 54 (47 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
+- **Newest**: gh-fix-ci, gh-address-comments, yeet (GitHub CI trio, from openai/skills .curated, adapted for github MCP tools)
 - **All skills have**: `auto-trigger` + `do-not-trigger` frontmatter
 - **Auto-apply rule**: Skills trigger automatically by context — no explicit invocation needed
 
@@ -34,6 +35,9 @@
 | mcp-builder | `mcp-builder` | "create MCP server", expose X as MCP tool |
 | mcp-inspector | `mcp-inspector` | "debug MCP", MCP server not working, tool not showing up |
 | webapp-testing | `webapp-testing` | Playwright/browser automation, "test the UI", E2E tests |
+| gh-fix-ci | `gh-fix-ci` | "fix CI", failing GitHub Actions checks on a PR, autofix red checks |
+| gh-address-comments | `gh-address-comments` | "address the comments", reviewer feedback on the open PR |
+| yeet | `yeet` | "yeet", "ship it", commit + push + open a draft PR in one flow |
 
 ### Document & Content Generation
 | Skill | Path | Auto-triggers on |
