@@ -483,6 +483,70 @@ design → pptx → applying-brand-guidelines → fact-checker
 
 ---
 
+## Marketing & Education Stacks
+
+**Core — brand strategy (always)**
+```
+think-twice → brand-framework → fact-checker
+```
+- `brand-framework` = strategy/positioning (Brand Pyramid + 4C), NOT visual identity
+- Distinct from `brand-guidelines`/`applying-brand-guidelines` (which apply an existing look)
+
+**Full brand build → activation**
+```
+brand-framework → prd-generator → presentation-architect → pptx
+```
+- Positioning first, then scope, then a pitch deck
+
+**Personal brand / LinkedIn growth**
+```
+brand-framework → linkedin-branding → social-audit
+```
+- Position once, build the content system, then baseline + track metrics
+
+**Social presence diagnosis**
+```
+social-audit → linkedin-branding (LinkedIn deep-dive) → brand-framework (if positioning gap)
+```
+- Audit surfaces gaps; route to the system that fixes each
+
+**Research-backed marketing claims**
+```
+deep-research → fact-checker → brand-framework / social-audit
+```
+- Market-size and competitor claims verified before they enter strategy
+
+**Pitch / strategy deck**
+```
+presentation-architect → theme-factory / brand-guidelines → pptx
+```
+- Spine + data storytelling first, styling second, file last
+
+**University course design**
+```
+curriculum-builder (--syllabus) → curriculum-builder (--exam) → curriculum-builder (--rubric)
+```
+- Backward Design: outcomes → assessment → rubric; each item maps to a Bloom-tagged outcome
+
+**Course materials → deliverables**
+```
+curriculum-builder → docx / pdf (syllabus, exam) ; presentation-architect → pptx (lectures)
+```
+
+**Marking student work**
+```
+curriculum-builder (--rubric) → curriculum-builder (--mark)
+```
+- Mark by criterion across all students, anonymized + randomized order
+
+**Key rules**
+- `brand-framework` is strategy; `brand-guidelines`/`applying-brand-guidelines` is visual identity; `ministry-proposal` is the MERIDIAN/Jahizoon brand — never conflate
+- `presentation-architect` sets the deck spine; `theme-factory`/`brand-guidelines` style it; `pptx` produces the file
+- `curriculum-builder` is Backward-Design-first: never start from content; every assessment maps to an outcome
+- Any cited market/competitor stat passes `fact-checker` before it ships
+
+---
+
 ## MCP Stacks
 
 **Core (always)**
