@@ -17,6 +17,11 @@ auto-trigger:
 do-not-trigger:
   - greenfield code with no existing dependents
 
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 ---
 
 # Change Impact

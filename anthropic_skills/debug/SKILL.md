@@ -17,6 +17,11 @@ do-not-trigger:
   - feature implementation with no error yet
   - proactive refactoring
 
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 ---
 
 # Debug

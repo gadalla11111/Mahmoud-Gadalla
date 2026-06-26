@@ -10,6 +10,11 @@ do-not-trigger:
   - addressing review comments on an existing PR (use gh-address-comments)
   - committing without opening a PR, or when the user hasn't asked to push
 allowed-tools: Bash, Read, Edit, Write, Grep, Glob
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 ---
 
 # yeet — commit, push, and open a PR in one flow

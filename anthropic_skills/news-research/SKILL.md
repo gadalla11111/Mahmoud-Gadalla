@@ -16,6 +16,11 @@ do-not-trigger:
   - historical research
   - evergreen technical topics
 
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 ---
 
 # News Research

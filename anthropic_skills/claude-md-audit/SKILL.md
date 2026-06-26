@@ -18,6 +18,11 @@ do-not-trigger:
   - day-to-day coding tasks
   - when instructions are working fine
 
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 ---
 
 # CLAUDE.md Audit

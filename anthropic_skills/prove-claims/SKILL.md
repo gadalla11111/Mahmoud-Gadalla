@@ -17,6 +17,11 @@ do-not-trigger:
   - multi-claim documents (use fact-checker)
   - creative writing
 
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 ---
 
 # Prove Claims

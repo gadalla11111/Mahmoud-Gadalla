@@ -10,6 +10,11 @@ do-not-trigger:
   - opening a fresh commit + PR from local changes (use yeet)
   - failures from non-GitHub-Actions providers (report the details URL only)
 allowed-tools: Bash, Read, Edit, Write, Grep, Glob
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 ---
 
 # gh-fix-ci — fix failing GitHub Actions checks
