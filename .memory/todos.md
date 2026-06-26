@@ -8,7 +8,9 @@
 - [x] Build ultracode skill (5-phase pipeline, auto-trigger conditions)
 - [x] Add auto-trigger / do-not-trigger to all 44 skills
 - [x] Fix flake8 F824 in agent_visualizer.py
-- [x] Merge PR #4, PR #6, PR #7 to main
+- [x] Merge PR #4, PR #6, PR #7, PR #8, PR #9 to main
+- [x] Add auto-trigger to skills/custom_skills/ (3 skills: financial statements, financial models, brand guidelines)
+- [x] Update CLAUDE.md with Finance & Brand routing section
 
 ## Backlog
 - [ ] sipcode sub-skills (estimate, why, benchmark, impact) may need auto-trigger frontmatter — currently skipped
