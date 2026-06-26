@@ -1,11 +1,11 @@
 # Skill Library — Knowledge Checkpoint
 **Last updated**: 2026-06-26
-**Source**: anthropic_skills/ (main branch)
+**Source**: anthropic_skills/ + skills/custom_skills/ (main branch)
 
 ---
 
 ## Library Stats
-- **Total skills**: 44
+- **Total skills**: 47 (44 in anthropic_skills/ + 3 in skills/custom_skills/)
 - **All skills have**: `auto-trigger` + `do-not-trigger` frontmatter
 - **Auto-apply rule**: Skills trigger automatically by context — no explicit invocation needed
 
@@ -90,6 +90,13 @@
 | Skill | Path | Auto-triggers on |
 |---|---|---|
 | **ministry-proposal** | `ministry-proposal` | Arabic ministry doc (وزارة), MBK/Jahizoon/MERIDIAN brand, 15-slide schema |
+
+### Finance & Brand (skills/custom_skills/)
+| Skill | Path | Auto-triggers on |
+|---|---|---|
+| analyzing-financial-statements | `skills/custom_skills/analyzing-financial-statements` | Financial statement data, ratio requests (P/E, ROE, EBITDA, liquidity/leverage) |
+| creating-financial-models | `skills/custom_skills/creating-financial-models` | DCF, Monte Carlo, M&A/LBO, scenario planning, WACC, enterprise value |
+| applying-brand-guidelines | `skills/custom_skills/applying-brand-guidelines` | Any Acme Corp document, "brand compliant", brand consistency check |
 
 ---
 
