@@ -18,6 +18,11 @@ do-not-trigger:
   - docs-only
   - config-only changes
 
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 ---
 
 # SPARC Methodology

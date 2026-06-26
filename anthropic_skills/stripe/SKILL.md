@@ -8,6 +8,11 @@ do-not-trigger:
   - non-Stripe payment providers
   - general financial analysis/modelling (use the finance skills)
 allowed-tools: Bash, Read, Edit, Write, Grep, Glob
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 ---
 
 # stripe-best-practices — Stripe integration guidance

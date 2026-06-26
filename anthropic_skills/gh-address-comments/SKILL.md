@@ -10,6 +10,11 @@ do-not-trigger:
   - opening a fresh commit + PR from local changes (use yeet)
   - comments on an issue unrelated to the current branch's PR
 allowed-tools: Bash, Read, Edit, Write, Grep, Glob
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 ---
 
 # gh-address-comments — resolve PR review comments

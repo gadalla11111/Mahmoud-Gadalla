@@ -19,6 +19,11 @@ do-not-trigger:
   - purely creative/fictional writing
   - rhetorical framing
 
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 ---
 
 # Fact Checker

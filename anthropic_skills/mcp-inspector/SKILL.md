@@ -16,6 +16,11 @@ do-not-trigger:
   - building a new MCP server (use mcp-builder)
   - general debugging
 
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 ---
 
 # MCP Inspector

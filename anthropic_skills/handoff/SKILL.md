@@ -18,6 +18,11 @@ do-not-trigger:
   - mid-session status checks
   - quick status updates
 
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 ---
 
 # Handoff

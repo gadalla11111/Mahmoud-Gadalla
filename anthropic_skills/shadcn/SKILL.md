@@ -9,6 +9,11 @@ do-not-trigger:
   - non-shadcn UI work / no components.json (use frontend-design)
   - pure visual/brand decisions with no components (use design / brand-guidelines)
 allowed-tools: Bash, Read, Edit, Write, Grep, Glob
+health:
+  last_eval: 2026-06-26
+  pass_rate: null
+  trigger_accuracy: null
+  open_issues: []
 ---
 
 # shadcn — shadcn/ui component management
