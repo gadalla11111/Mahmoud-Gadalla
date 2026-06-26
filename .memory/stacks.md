@@ -1,5 +1,5 @@
 # Skill Stacks — Knowledge Checkpoint
-**Last updated**: 2026-06-26 (rev 17) — added shadcn/ui (65 skills total)
+**Last updated**: 2026-06-26 (rev 18) — added Stripe payments (66 skills total)
 
 ---
 
@@ -903,6 +903,38 @@ terraform-style-guide → neon-postgres
 
 ---
 
+## Payments Stacks (Stripe)
+
+**Integrate payments**
+```
+stripe-best-practices → claude-api/ultracode → tdd
+```
+- Consult the Stripe MCP `stripe_implementation_planner` before writing code (when available)
+
+**Subscriptions / billing**
+```
+stripe-best-practices → ultracode → tdd → change-impact
+```
+
+**Agent/LLM billing (this repo)**
+```
+stripe-best-practices → claude-api → sipcode/why
+```
+- `@stripe/token-meter` + `@stripe/agent-toolkit` bill against Anthropic SDK usage
+
+**Payments UI**
+```
+stripe-best-practices → shadcn → frontend-design
+```
+
+**Key rules**
+- Latest API version (`2026-06-24.dahlia`) unless pinned
+- Restricted keys (`rk_`) over secret keys (`sk_`); never commit keys — env only
+- Never pass `payment_method_types` except Terminal (`['card_present']`) — omit for dynamic methods
+- Verify webhook signatures; treat webhook payloads as untrusted input
+
+---
+
 ## Cross-Domain Complementary Pairs
 
 | Pair | Why |
@@ -933,3 +965,5 @@ terraform-style-guide → neon-postgres
 | `terraform-stacks` + `adr` | record the multi-env orchestration decision |
 | `shadcn` + `frontend-design` | registry components first, then custom UI around them |
 | `shadcn` + `theme-factory` | shadcn semantic tokens feed/consume the theme |
+| `stripe-best-practices` + `claude-api` | bill agent/LLM usage via token-meter |
+| `stripe-best-practices` + `shadcn` | payments backend + checkout UI |
