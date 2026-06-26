@@ -38,6 +38,11 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Fix failing GitHub Actions CI on a PR | `anthropic_skills/gh-fix-ci` |
 | Address PR review comments | `anthropic_skills/gh-address-comments` |
 | Commit, push & open a PR in one flow | `anthropic_skills/yeet` |
+| Find & fix production issues from Sentry | `anthropic_skills/sentry/sentry-fix-issues` |
+| Create Sentry alerts | `anthropic_skills/sentry/sentry-create-alert` |
+| Instrument AI/LLM agent monitoring | `anthropic_skills/sentry/sentry-setup-ai-monitoring` |
+| Sentry Seer bug-prediction PR review | `anthropic_skills/sentry/sentry-pr-code-review` |
+| Set up Sentry SDK in Python | `anthropic_skills/sentry/sentry-python-setup` |
 
 ### Document & Content Generation
 | Task | Skill |
