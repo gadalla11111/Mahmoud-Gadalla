@@ -1,6 +1,15 @@
 ---
 name: applying-brand-guidelines
 description: This skill applies consistent corporate branding and styling to all generated documents including colors, fonts, layouts, and messaging
+auto-trigger:
+  - generating any document (pptx, xlsx, pdf, docx) for Acme Corporation
+  - "apply brand guidelines", "use brand colors", "brand compliant", "corporate style"
+  - brand consistency check on an existing document
+  - creating external communications or customer-facing materials
+do-not-trigger:
+  - internal draft documents where brand polish is not yet needed
+  - documents for a different brand/company (use that brand's guidelines)
+  - generic design tasks with no corporate brand requirement
 ---
 
 # Corporate Brand Guidelines Skill
