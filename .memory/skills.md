@@ -5,8 +5,9 @@
 ---
 
 ## Library Stats
-- **Total skills**: 66 (59 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
-- **Newest**: stripe-best-practices under anthropic_skills/stripe/ — from stripe/ai; consults Stripe MCP planner when available
+- **Total skills**: 68 (61 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
+- **Newest**: Expo mobile (2: expo-deployment, expo-building-native-ui) under anthropic_skills/expo/ — from expo/skills
+- **Prior**: stripe-best-practices under anthropic_skills/stripe/ — from stripe/ai; consults Stripe MCP planner when available
 - **Prior**: shadcn (shadcn/ui component management) under anthropic_skills/shadcn/ — from shadcn-ui/ui
 - **Prior**: Terraform IaC trio (style-guide, test, stacks) under anthropic_skills/terraform/ — from hashicorp/agent-skills
 - **Prior**: Neon Postgres (2: neon-postgres, neon-postgres-egress-optimizer) under anthropic_skills/neon/
@@ -88,6 +89,8 @@
 | slack-gif-creator | `slack-gif-creator` | "gif for Slack", animated gif, short looping team communication |
 | shadcn | `shadcn` | add/compose shadcn/ui components, projects with components.json, Tailwind v4 |
 | stripe-best-practices | `stripe` | integrate Stripe payments/billing/Connect, API selection, restricted keys |
+| expo-deployment | `expo/expo-deployment` | EAS Build/Submit, App/Play Store, TestFlight, EAS Update OTA |
+| expo-building-native-ui | `expo/expo-building-native-ui` | Expo Router screens, navigation, native tabs, RN app UI |
 
 ### Orchestration & Meta
 | Skill | Path | Auto-triggers on |

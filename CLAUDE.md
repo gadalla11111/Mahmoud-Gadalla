@@ -49,6 +49,8 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Write/run Terraform tests (.tftest.hcl) | `anthropic_skills/terraform/terraform-test` |
 | Terraform Stacks (multi-env/region infra) | `anthropic_skills/terraform/terraform-stacks` |
 | Stripe payments/billing integration | `anthropic_skills/stripe` |
+| Build/ship Expo apps (EAS Build, stores) | `anthropic_skills/expo/expo-deployment` |
+| Expo Router app UI (screens, navigation) | `anthropic_skills/expo/expo-building-native-ui` |
 
 ### Document & Content Generation
 | Task | Skill |

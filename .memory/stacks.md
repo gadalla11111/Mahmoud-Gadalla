@@ -1,5 +1,5 @@
 # Skill Stacks — Knowledge Checkpoint
-**Last updated**: 2026-06-26 (rev 18) — added Stripe payments (66 skills total)
+**Last updated**: 2026-06-26 (rev 19) — added Expo mobile (68 skills total)
 
 ---
 
@@ -935,6 +935,38 @@ stripe-best-practices → shadcn → frontend-design
 
 ---
 
+## Mobile Stacks (Expo / React Native)
+
+**Build a mobile app**
+```
+think-twice → expo-building-native-ui → ultracode → tdd
+```
+- Expo Router screens/navigation, then quality pipeline
+
+**Ship a mobile app**
+```
+expo-deployment
+```
+- EAS Build → EAS Submit (App/Play Store, TestFlight); EAS Update for OTA JS/asset changes
+
+**Full mobile lifecycle**
+```
+expo-building-native-ui → ultracode → tdd → expo-deployment
+```
+
+**Mobile with payments / backend**
+```
+expo-building-native-ui → stripe-best-practices → neon-postgres → expo-deployment
+```
+
+**Key rules**
+- Expo docs + Expo/EAS CLI are source of truth — verify against current docs
+- Never commit signing credentials, keystores, or `.env` secrets
+- OTA (EAS Update) covers JS/assets only — native changes need a new EAS Build
+- Test the `preview` profile before `production`
+
+---
+
 ## Cross-Domain Complementary Pairs
 
 | Pair | Why |
@@ -967,3 +999,5 @@ stripe-best-practices → shadcn → frontend-design
 | `shadcn` + `theme-factory` | shadcn semantic tokens feed/consume the theme |
 | `stripe-best-practices` + `claude-api` | bill agent/LLM usage via token-meter |
 | `stripe-best-practices` + `shadcn` | payments backend + checkout UI |
+| `expo-building-native-ui` + `expo-deployment` | build the app, then ship it via EAS |
+| `expo-deployment` + `sentry-setup-ai-monitoring` | ship + monitor the mobile app |
