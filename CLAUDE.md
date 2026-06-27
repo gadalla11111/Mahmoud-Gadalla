@@ -101,6 +101,7 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | LinkedIn / personal branding / content calendar / thought leadership | `anthropic_skills/linkedin-branding` |
 | Social media audit / channel benchmark / recommendations | `anthropic_skills/social-audit` |
 | Social content creation (posts, reels, captions, calendar) | `anthropic_skills/social-content` |
+| Paid media buying (campaign plan, bidding, targeting, optimization) | `anthropic_skills/media-buyer` |
 
 ### Orchestration & Meta
 | Task | Skill |

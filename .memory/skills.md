@@ -5,7 +5,7 @@
 ---
 
 ## Library Stats
-- **Total skills**: 84 (77 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
+- **Total skills**: 85 (78 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
 - **Newest**: Stack support (2: legal-practice, social-content) — skill-equivalents for the reference Plugins column; plus `stack/` config templates (MCP + plugins) — see stack/STACK_SETUP.md
 - **Prior**: Claude Stack set (5: hyperframes, claude-seo, find-skills, humanizer, caveman) — completes the reference Skills column; see MY_CLAUDE_STACK.md
 - **Prior**: Marketing & Education (5: brand-framework, linkedin-branding, social-audit, curriculum-builder, presentation-architect) — from 2026 web research
@@ -136,6 +136,7 @@
 | linkedin-branding | `linkedin-branding` | LinkedIn strategy, personal brand, thought leadership, content calendar (4-axis + 5-3-2) |
 | social-audit | `social-audit` | Social media audit, channel benchmark vs competitors, prioritized recommendations |
 | social-content | `social-content` | Multi-platform content creation — posts, reel scripts, captions, calendar |
+| media-buyer | `media-buyer` | Paid media — plan/launch/optimize/report across Meta/Google/TikTok/YouTube/programmatic |
 
 **Brand routing**: `brand-framework` = strategy/positioning · `brand-guidelines`/`applying-brand-guidelines` = applying an existing visual identity · `ministry-proposal` = MERIDIAN/Jahizoon ministry brand.
 
