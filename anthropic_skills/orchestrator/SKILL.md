@@ -2,7 +2,7 @@
 name: orchestrator
 description: >
   Meta-skill that reads the incoming task, selects the right skill(s) from the
-  97-skill library, resolves conflicts when multiple skills match, chains them in
+  103-skill library, resolves conflicts when multiple skills match, chains them in
   the correct order, and applies quality gates — all while minimising token spend.
   Use whenever a task could benefit from a structured skill but the user has not
   named one. Trigger on: "best way to", "help me with", "what skill should I use",
@@ -31,7 +31,7 @@ health:
 
 # Orchestrator
 
-One entry point for the full 97-skill library. Classify the task → resolve conflicts → select the minimum viable chain → execute with quality gates → report.
+One entry point for the full 103-skill library. Classify the task → resolve conflicts → select the minimum viable chain → execute with quality gates → report.
 
 ---
 
@@ -179,6 +179,7 @@ When two or more skills match, apply these tiebreakers in order:
 | Task too large for single turn / parallelisable subtasks / multi-domain delegation | `nested-subagents` | M |
 | "add to queue" / backlog management / multi-step incremental project | `queue` | S |
 | "create a new skill" / "add skill for X" / formalise recurring workflow | `skill-creator` | M |
+| Fuzzy business problem / "help me think through" / strategy decision | `business-consulting` | M |
 | "audit the library" / "maintain the skills" / library health / drift check | `library-maintainer` | S |
 | "is there a skill for X" / find & install a skill / discover capability | `find-skills` | S |
 
@@ -220,6 +221,11 @@ When two or more skills match, apply these tiebreakers in order:
 | LinkedIn outreach / cold DM / connection-request sequence | `linkedin-outreach` | M |
 | Refresh decaying content / recover lost organic traffic | `content-refresh` | M |
 | Plan a free lead-gen tool / calculator / grader / quiz | `free-marketing-tool` | M |
+| Gap analysis / current vs target state / close the gap | `gap-analysis` | M |
+| SWOT / TOWS / strengths-weaknesses-opportunities-threats | `swot-analysis` | M |
+| Diagnose a paid-ad account / ROAS dropping / spend leaking | `ads-analysis` | M |
+| Which ad creative wins / hook rate / creative fatigue | `creative-analysis` | M |
+| Does this message land / comms review / intended vs received | `communication-analysis` | M |
 | Create social posts / reel scripts / captions / multi-platform content | `social-content` | M |
 
 **Brand routing rule:** `brand-framework` = strategy/positioning (what the brand *means*); `brand-guidelines`/`applying-brand-guidelines` = applying an existing visual identity (what it *looks like*); `ministry-proposal` = the MERIDIAN/Jahizoon ministry brand specifically.
