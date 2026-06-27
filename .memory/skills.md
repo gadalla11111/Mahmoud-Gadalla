@@ -5,7 +5,7 @@
 ---
 
 ## Library Stats
-- **Total skills**: 85 (78 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
+- **Total skills**: 90 (83 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
 - **Newest**: Stack support (2: legal-practice, social-content) — skill-equivalents for the reference Plugins column; plus `stack/` config templates (MCP + plugins) — see stack/STACK_SETUP.md
 - **Prior**: Claude Stack set (5: hyperframes, claude-seo, find-skills, humanizer, caveman) — completes the reference Skills column; see MY_CLAUDE_STACK.md
 - **Prior**: Marketing & Education (5: brand-framework, linkedin-branding, social-audit, curriculum-builder, presentation-architect) — from 2026 web research
@@ -75,6 +75,8 @@
 | handoff | `handoff` | Session end, "handoff notes", "what did we accomplish", context switch |
 | curriculum-builder | `curriculum-builder` | University course/syllabus, learning outcomes, exam/quiz generation, rubric, grading (Backward Design + Bloom's) |
 | humanizer | `humanizer` | Strip AI writing tells from a draft — meaning intact, more human cadence |
+| profile-dataset | `profile-dataset` | Profile a table/file — shape, nulls, distributions, quality flags, follow-ups |
+| people-analytics | `people-analytics` | HR/workforce report — headcount, attrition, diversity, org-health (aggregate, sensitive) |
 
 ### Research & Verification
 | Skill | Path | Auto-triggers on |
@@ -95,6 +97,7 @@
 | canvas-design | `canvas-design` | Static art — poster/print/.pdf/.png artwork (philosophy-first; NOT interactive canvas) |
 | presentation-architect | `presentation-architect` | Deck design — narrative spine (title test), data storytelling, visual hierarchy |
 | hyperframes | `hyperframes` | Write HTML, render to MP4/GIF/WebM via headless Chromium + ffmpeg |
+| infographic-maker | `infographic-maker` | Single shareable infographic from stats/steps/comparison; layout spec + image prompt |
 | theme-factory | `theme-factory` | "create a theme", colour palette, design tokens, component theming |
 | algorithmic-art | `algorithmic-art` | "generative art", "p5.js", "flow field", code-driven visual output |
 | web-artifacts-builder | `web-artifacts-builder` | Self-contained HTML artifact, single-file interactive tool/demo |
@@ -137,6 +140,8 @@
 | social-audit | `social-audit` | Social media audit, channel benchmark vs competitors, prioritized recommendations |
 | social-content | `social-content` | Multi-platform content creation — posts, reel scripts, captions, calendar |
 | media-buyer | `media-buyer` | Paid media — plan/launch/optimize/report across Meta/Google/TikTok/YouTube/programmatic |
+| persuasion-psychology | `persuasion-psychology` | Cialdini 7-principle audit/apply on copy; flags dark patterns (fake scarcity, fabricated proof) |
+| brand-voice | `brand-voice` | Voice & tone guidelines — We Are/We Are Not grid, voice-vs-tone, confidence audit |
 
 **Brand routing**: `brand-framework` = strategy/positioning · `brand-guidelines`/`applying-brand-guidelines` = applying an existing visual identity · `ministry-proposal` = MERIDIAN/Jahizoon ministry brand.
 

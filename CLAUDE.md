@@ -67,6 +67,8 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Product requirement docs | `anthropic_skills/prd-generator` |
 | Session/work handoff notes | `anthropic_skills/handoff` |
 | University curriculum / syllabus / exam / rubric / grading | `anthropic_skills/curriculum-builder` |
+| Profile a dataset (shape, nulls, quality, follow-ups) | `anthropic_skills/profile-dataset` |
+| People/HR analytics report (headcount, attrition, diversity, org-health) | `anthropic_skills/people-analytics` |
 | Strip AI writing tells / humanize a draft | `anthropic_skills/humanizer` |
 
 ### Research & Verification
@@ -93,6 +95,7 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | shadcn/ui components (components.json projects) | `anthropic_skills/shadcn` |
 | Presentation design (narrative spine, data storytelling, visual hierarchy) | `anthropic_skills/presentation-architect` |
 | HTML-to-video rendering (MP4/GIF/WebM from markup) | `anthropic_skills/hyperframes` |
+| Single-image infographic (stats/steps/comparison) | `anthropic_skills/infographic-maker` |
 
 ### Marketing & Brand Strategy
 | Task | Skill |
@@ -102,6 +105,8 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Social media audit / channel benchmark / recommendations | `anthropic_skills/social-audit` |
 | Social content creation (posts, reels, captions, calendar) | `anthropic_skills/social-content` |
 | Paid media buying (campaign plan, bidding, targeting, optimization) | `anthropic_skills/media-buyer` |
+| Persuasion psychology (Cialdini audit, social proof, ethical copy) | `anthropic_skills/persuasion-psychology` |
+| Brand voice & tone guidelines (verbal identity) | `anthropic_skills/brand-voice` |
 
 ### Orchestration & Meta
 | Task | Skill |
