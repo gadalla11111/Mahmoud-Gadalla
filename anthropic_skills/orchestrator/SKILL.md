@@ -2,7 +2,7 @@
 name: orchestrator
 description: >
   Meta-skill that reads the incoming task, selects the right skill(s) from the
-  85-skill library, resolves conflicts when multiple skills match, chains them in
+  90-skill library, resolves conflicts when multiple skills match, chains them in
   the correct order, and applies quality gates — all while minimising token spend.
   Use whenever a task could benefit from a structured skill but the user has not
   named one. Trigger on: "best way to", "help me with", "what skill should I use",
@@ -31,7 +31,7 @@ health:
 
 # Orchestrator
 
-One entry point for the full 85-skill library. Classify the task → resolve conflicts → select the minimum viable chain → execute with quality gates → report.
+One entry point for the full 90-skill library. Classify the task → resolve conflicts → select the minimum viable chain → execute with quality gates → report.
 
 ---
 
@@ -134,6 +134,8 @@ When two or more skills match, apply these tiebreakers in order:
 | "handoff notes" / "what did we accomplish" / context switch | `handoff` | S |
 | "make this sound human" / strip AI writing tells / "reads like ChatGPT" | `humanizer` | S |
 | University course / syllabus / learning outcomes / exam / rubric / grading | `curriculum-builder` | M |
+| Profile a dataset / data quality / dataset shape / explore a table or file | `profile-dataset` | M |
+| People/HR analytics / headcount / attrition / diversity / org-health report | `people-analytics` | M |
 
 ### Research & Verification
 
@@ -155,6 +157,7 @@ When two or more skills match, apply these tiebreakers in order:
 | Brand consistency / "is this on-brand" / Anthropic visual identity | `brand-guidelines` | S |
 | Static art / poster / print / .pdf/.png artwork | `canvas-design` | M |
 | Slide deck narrative + visual structure / "design my presentation" | `presentation-architect` | M |
+| Single-image infographic from stats/steps/comparison | `infographic-maker` | M |
 | Write HTML and render it to MP4/GIF/WebM video | `hyperframes` | M |
 | "create a theme" / colour palette / design tokens / component theming | `theme-factory` | M |
 | "generative art" / p5.js / flow field / code-driven visual output | `algorithmic-art` | M |
@@ -208,6 +211,8 @@ When two or more skills match, apply these tiebreakers in order:
 | LinkedIn strategy / personal brand / thought leadership / content calendar | `linkedin-branding` | M |
 | Social media audit / channel review / benchmark vs competitors | `social-audit` | M |
 | Paid media plan / ad campaign / bidding / targeting / optimization (Meta/Google/TikTok) | `media-buyer` | M |
+| Persuasion audit / Cialdini principles / social proof / scarcity copy / dark-pattern flag | `persuasion-psychology` | M |
+| Brand voice / tone of voice / "how should we sound" / verbal identity | `brand-voice` | S |
 | Create social posts / reel scripts / captions / multi-platform content | `social-content` | M |
 
 **Brand routing rule:** `brand-framework` = strategy/positioning (what the brand *means*); `brand-guidelines`/`applying-brand-guidelines` = applying an existing visual identity (what it *looks like*); `ministry-proposal` = the MERIDIAN/Jahizoon ministry brand specifically.
