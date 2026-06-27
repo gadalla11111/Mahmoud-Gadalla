@@ -5,7 +5,7 @@
 ---
 
 ## Library Stats
-- **Total skills**: 90 (83 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
+- **Total skills**: 97 (90 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
 - **Newest**: Stack support (2: legal-practice, social-content) — skill-equivalents for the reference Plugins column; plus `stack/` config templates (MCP + plugins) — see stack/STACK_SETUP.md
 - **Prior**: Claude Stack set (5: hyperframes, claude-seo, find-skills, humanizer, caveman) — completes the reference Skills column; see MY_CLAUDE_STACK.md
 - **Prior**: Marketing & Education (5: brand-framework, linkedin-branding, social-audit, curriculum-builder, presentation-architect) — from 2026 web research
@@ -77,6 +77,7 @@
 | humanizer | `humanizer` | Strip AI writing tells from a draft — meaning intact, more human cadence |
 | profile-dataset | `profile-dataset` | Profile a table/file — shape, nulls, distributions, quality flags, follow-ups |
 | people-analytics | `people-analytics` | HR/workforce report — headcount, attrition, diversity, org-health (aggregate, sensitive) |
+| business-pulse | `business-pulse` | One-page SMB pulse — cash/sales/pipeline/watch-list from connected tools; #1 priority on top |
 
 ### Research & Verification
 | Skill | Path | Auto-triggers on |
@@ -142,6 +143,12 @@
 | media-buyer | `media-buyer` | Paid media — plan/launch/optimize/report across Meta/Google/TikTok/YouTube/programmatic |
 | persuasion-psychology | `persuasion-psychology` | Cialdini 7-principle audit/apply on copy; flags dark patterns (fake scarcity, fabricated proof) |
 | brand-voice | `brand-voice` | Voice & tone guidelines — We Are/We Are Not grid, voice-vs-tone, confidence audit |
+| competitive-brief | `competitive-brief` | Rival positioning brief — messaging gaps, threats, opportunities; cited |
+| blue-ocean-strategy | `blue-ocean-strategy` | Uncontested market — strategy canvas, ERRC, six paths, non-customers |
+| brand-kit | `brand-kit` | Premium brand-kit board image — mode, palette, 9-panel spec + image prompt |
+| linkedin-outreach | `linkedin-outreach` | Outbound LinkedIn — ICP, 4-touch value-first sequence (vs linkedin-branding inbound) |
+| content-refresh | `content-refresh` | Recover decaying organic traffic — diagnose decay, prioritized refresh plan |
+| free-marketing-tool | `free-marketing-tool` | Plan a free lead-gen tool (calculator/grader/quiz); spec → frontend-design |
 
 **Brand routing**: `brand-framework` = strategy/positioning · `brand-guidelines`/`applying-brand-guidelines` = applying an existing visual identity · `ministry-proposal` = MERIDIAN/Jahizoon ministry brand.
 

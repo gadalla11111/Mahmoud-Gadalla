@@ -2,7 +2,7 @@
 name: orchestrator
 description: >
   Meta-skill that reads the incoming task, selects the right skill(s) from the
-  90-skill library, resolves conflicts when multiple skills match, chains them in
+  97-skill library, resolves conflicts when multiple skills match, chains them in
   the correct order, and applies quality gates — all while minimising token spend.
   Use whenever a task could benefit from a structured skill but the user has not
   named one. Trigger on: "best way to", "help me with", "what skill should I use",
@@ -31,7 +31,7 @@ health:
 
 # Orchestrator
 
-One entry point for the full 90-skill library. Classify the task → resolve conflicts → select the minimum viable chain → execute with quality gates → report.
+One entry point for the full 97-skill library. Classify the task → resolve conflicts → select the minimum viable chain → execute with quality gates → report.
 
 ---
 
@@ -136,6 +136,7 @@ When two or more skills match, apply these tiebreakers in order:
 | University course / syllabus / learning outcomes / exam / rubric / grading | `curriculum-builder` | M |
 | Profile a dataset / data quality / dataset shape / explore a table or file | `profile-dataset` | M |
 | People/HR analytics / headcount / attrition / diversity / org-health report | `people-analytics` | M |
+| Daily/weekly business pulse / cross-tool cash-sales-pipeline brief | `business-pulse` | M |
 
 ### Research & Verification
 
@@ -213,6 +214,12 @@ When two or more skills match, apply these tiebreakers in order:
 | Paid media plan / ad campaign / bidding / targeting / optimization (Meta/Google/TikTok) | `media-buyer` | M |
 | Persuasion audit / Cialdini principles / social proof / scarcity copy / dark-pattern flag | `persuasion-psychology` | M |
 | Brand voice / tone of voice / "how should we sound" / verbal identity | `brand-voice` | S |
+| Competitor research / positioning brief / messaging gaps vs rivals | `competitive-brief` | M |
+| Find uncontested market / blue ocean / ERRC / strategy canvas | `blue-ocean-strategy` | M |
+| Brand-kit visual board / mood board / logo+palette image | `brand-kit` | M |
+| LinkedIn outreach / cold DM / connection-request sequence | `linkedin-outreach` | M |
+| Refresh decaying content / recover lost organic traffic | `content-refresh` | M |
+| Plan a free lead-gen tool / calculator / grader / quiz | `free-marketing-tool` | M |
 | Create social posts / reel scripts / captions / multi-platform content | `social-content` | M |
 
 **Brand routing rule:** `brand-framework` = strategy/positioning (what the brand *means*); `brand-guidelines`/`applying-brand-guidelines` = applying an existing visual identity (what it *looks like*); `ministry-proposal` = the MERIDIAN/Jahizoon ministry brand specifically.
