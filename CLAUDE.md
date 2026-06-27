@@ -69,6 +69,7 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | University curriculum / syllabus / exam / rubric / grading | `anthropic_skills/curriculum-builder` |
 | Profile a dataset (shape, nulls, quality, follow-ups) | `anthropic_skills/profile-dataset` |
 | People/HR analytics report (headcount, attrition, diversity, org-health) | `anthropic_skills/people-analytics` |
+| Daily/weekly business pulse (cross-tool cash/sales/pipeline brief) | `anthropic_skills/business-pulse` |
 | Strip AI writing tells / humanize a draft | `anthropic_skills/humanizer` |
 
 ### Research & Verification
@@ -107,6 +108,12 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Paid media buying (campaign plan, bidding, targeting, optimization) | `anthropic_skills/media-buyer` |
 | Persuasion psychology (Cialdini audit, social proof, ethical copy) | `anthropic_skills/persuasion-psychology` |
 | Brand voice & tone guidelines (verbal identity) | `anthropic_skills/brand-voice` |
+| Competitive brief (rival positioning, messaging gaps) | `anthropic_skills/competitive-brief` |
+| Blue Ocean strategy (canvas, ERRC, six paths) | `anthropic_skills/blue-ocean-strategy` |
+| Brand-kit visual board (logo, palette, mockups image) | `anthropic_skills/brand-kit` |
+| LinkedIn outreach sequences (cold DM, follow-ups) | `anthropic_skills/linkedin-outreach` |
+| Content refresh (recover decaying organic traffic) | `anthropic_skills/content-refresh` |
+| Free lead-gen tool planning (calculator, grader, quiz) | `anthropic_skills/free-marketing-tool` |
 
 ### Orchestration & Meta
 | Task | Skill |
