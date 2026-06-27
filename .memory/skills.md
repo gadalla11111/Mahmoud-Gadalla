@@ -5,7 +5,7 @@
 ---
 
 ## Library Stats
-- **Total skills**: 97 (90 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
+- **Total skills**: 103 (96 in anthropic_skills/ + 4 sipcode sub-skills + 3 in skills/custom_skills/)
 - **Newest**: Stack support (2: legal-practice, social-content) — skill-equivalents for the reference Plugins column; plus `stack/` config templates (MCP + plugins) — see stack/STACK_SETUP.md
 - **Prior**: Claude Stack set (5: hyperframes, claude-seo, find-skills, humanizer, caveman) — completes the reference Skills column; see MY_CLAUDE_STACK.md
 - **Prior**: Marketing & Education (5: brand-framework, linkedin-branding, social-audit, curriculum-builder, presentation-architect) — from 2026 web research
@@ -149,6 +149,12 @@
 | linkedin-outreach | `linkedin-outreach` | Outbound LinkedIn — ICP, 4-touch value-first sequence (vs linkedin-branding inbound) |
 | content-refresh | `content-refresh` | Recover decaying organic traffic — diagnose decay, prioritized refresh plan |
 | free-marketing-tool | `free-marketing-tool` | Plan a free lead-gen tool (calculator/grader/quiz); spec → frontend-design |
+| business-consulting | `business-consulting` | Issue tree (MECE) → hypothesis → analyze → Pyramid Principle recommendation; routes analysis skills |
+| gap-analysis | `gap-analysis` | Current vs desired state, root cause, prioritized closure plan |
+| swot-analysis | `swot-analysis` | SWOT (internal/external, evidenced) + TOWS strategy matrix |
+| ads-analysis | `ads-analysis` | Diagnose live paid-ad account — funnel read, spend leaks, fixes (vs media-buyer planning) |
+| creative-analysis | `creative-analysis` | Ad creative performance — hook/hold/CTR/CVR, winning pattern, fatigue, next tests |
+| communication-analysis | `communication-analysis` | Message audit — clarity/audience/channel/tone/action; intended vs received gap |
 
 **Brand routing**: `brand-framework` = strategy/positioning · `brand-guidelines`/`applying-brand-guidelines` = applying an existing visual identity · `ministry-proposal` = MERIDIAN/Jahizoon ministry brand.
 

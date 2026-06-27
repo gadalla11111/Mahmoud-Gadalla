@@ -114,6 +114,11 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | LinkedIn outreach sequences (cold DM, follow-ups) | `anthropic_skills/linkedin-outreach` |
 | Content refresh (recover decaying organic traffic) | `anthropic_skills/content-refresh` |
 | Free lead-gen tool planning (calculator, grader, quiz) | `anthropic_skills/free-marketing-tool` |
+| Gap analysis (current vs target, root cause, closure plan) | `anthropic_skills/gap-analysis` |
+| SWOT + TOWS analysis | `anthropic_skills/swot-analysis` |
+| Paid-ad account diagnosis (spend leaks, funnel) | `anthropic_skills/ads-analysis` |
+| Ad creative performance analysis (hook, fatigue, patterns) | `anthropic_skills/creative-analysis` |
+| Communication/messaging analysis (intended vs received) | `anthropic_skills/communication-analysis` |
 
 ### Orchestration & Meta
 | Task | Skill |
@@ -124,6 +129,7 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Create a new skill | `anthropic_skills/skill-creator` |
 | Audit & maintain the skill library (loop) | `anthropic_skills/library-maintainer` |
 | Find & install a skill (discover capability) | `anthropic_skills/find-skills` |
+| Structured business consulting (issue tree, hypothesis, recommend) | `anthropic_skills/business-consulting` |
 
 ### Workflow & Process
 | Task | Skill |
