@@ -52,7 +52,7 @@ httpcore==1.0.9 ; sys_platform == 'darwin'
     # via httpx
 httpx==0.28.1 ; sys_platform == 'darwin'
     # via anthropic
-idna==3.11 ; sys_platform == 'darwin'
+idna==3.15 ; sys_platform == 'darwin'
     # via
     #   anyio
     #   httpx
@@ -183,7 +183,7 @@ typing-inspection==0.4.2 ; sys_platform == 'darwin'
     #   pydantic
 tzdata==2025.3 ; sys_platform == 'darwin'
     # via pandas
-urllib3==2.6.3 ; sys_platform == 'darwin'
+urllib3==2.7.0 ; sys_platform == 'darwin'
     # via requests
 uvicorn==0.42.0 ; sys_platform == 'darwin'
     # via computer-use-best-practices
