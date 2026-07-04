@@ -12,6 +12,9 @@ on:
         required: false
         default: "all"
 
+permissions:
+  contents: read
+
 jobs:
   extract:
     name: Extract
@@ -32,7 +35,7 @@ jobs:
 
       - name: Snapshot memory
         run: |
-          echo "=== .memory snapshot ===" && ls .memory/ 2>/dev/null || echo "(empty)"
+          echo "=== .memory snapshot ==" && ls .memory/ 2>/dev/null || echo "(empty)"
 
   apply:
     name: Apply
@@ -109,6 +112,9 @@ jobs:
     needs: assess
     if: github.ref == 'refs/heads/claude/ana-blueprint-wkp95w' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
         with:
