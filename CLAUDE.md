@@ -75,6 +75,7 @@ Skills are applied **automatically** based on task context — no explicit invoc
 ### Research & Verification
 | Task | Skill |
 |---|---|
+| Scientific database queries (AlphaFold, BLAST, DrugBank, PubMed, ClinVar, genomics, drug discovery) | `anthropic_skills/tooluniverse` |
 | Triple-source fact verification / QA grid | `anthropic_skills/fact-checker` |
 | Deep multi-step research | `anthropic_skills/deep-research` |
 | Exhaustive multi-source search | `anthropic_skills/ultra-search` |
