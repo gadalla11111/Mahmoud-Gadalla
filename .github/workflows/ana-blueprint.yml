@@ -90,6 +90,11 @@ jobs:
             echo "beliefgate tests not available in this checkout"
           fi
 
+      - name: Run skill library audit
+        run: |
+          pip install pyyaml --quiet
+          python misc/library_audit.py || echo "::warning::Library drift detected — see audit output above"
+
       - name: Smoke-test agents
         run: |
           python -c "import anthropic; print('anthropic SDK ok')" 2>/dev/null || true
