@@ -6,6 +6,8 @@ This document is the unified doctrine binding `mahmoud-gadalla` (agents, skills,
 and `gate-repl` (belief-gate: completeness verification by execution) into one
 self-evolving system.
 
+**Iteration:** 2 — 2026-07-04 | Skills: 103 | Eval pass rate: 96.7% (58/60)
+
 ---
 
 ## The Core Principle (from gate-repl/UNIFICATION.md)
@@ -54,10 +56,23 @@ Run deterministic benchmarks:
 # gate-repl: completeness verification
 python -m pytest gate-repl/dist/beliefgate/tests/ -q
 
-# mahmoud-gadalla: skill smoke tests
+# mahmoud-gadalla: skill library audit (drift detection)
+pip install pyyaml -q && python misc/library_audit.py
+
+# smoke tests
 uv run python -m pytest misc/ -q 2>/dev/null || true
 ```
 Verdict: COMPLETE (all required items verified) / INCOMPLETE (gap listed) / UNDECIDABLE.
+
+### Library-Maintainer Loop (sub-loop)
+
+Runs inside Step 3 when `library_audit.py` reports drift (exit 1):
+```
+OVERVIEW → EVALUATE → EVOLVE → MERGE → RE-ARM (only while drift exists)
+```
+- Drift classes: invalid YAML, missing health block, uneval'd skills (`pass_rate=null`), count mismatch, missing from routing surfaces
+- Eval protocol: 5 adversarial cases/skill across ambiguous/boundary/wrong-domain/regression/edge
+- Merge policy: supervised for logic changes; mechanical fixes (YAML, count) may auto-merge
 
 ### 4. Merge to Evolve
 - Merge `claude/ana-blueprint-wkp95w` → `main` when assessment passes
