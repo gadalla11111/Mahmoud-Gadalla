@@ -42,6 +42,28 @@
 **Merge to Evolve:**
 - PR: mahmoud-gadalla#78 (iteration 3)
 
+## Iteration 4 — 2026-07-06
+
+**Extract:**
+- 13 repos surveyed: mims-harvard (ATHENA, ARK/gates-buildathon, Qworld, MedLog), alirezarezvani/claude-skills (355 skills), coreyhaines31/marketingskills (45+ skills), ericosiu/ai-marketing-skills (Python pipelines), twentyhq/twenty (CRM), dubinc/dub (link attribution), mautic/mautic (marketing automation), matomo-org/matomo (analytics)
+- ATHENA: 212 biomedical tools, AI treatment reasoning, 94.7% drug benchmark
+- Qworld: recursive LLM eval framework — wired into library-maintainer eval protocol
+- alirezarezvani/claude-skills: 355 SKILL.md skills; cross-referenced as external skill source
+
+**Apply:**
+- 6 new skills: `anthropic_skills/athena`, `anthropic_skills/ark`, `anthropic_skills/qworld`, `anthropic_skills/twenty`, `anthropic_skills/dub`, `anthropic_skills/mautic`
+- CLAUDE.md: +3 research routing entries, +19 marketing routing entries (launch, ASO, CRO, onboarding, churn, programmatic-SEO, referrals, cold-email, pricing, revops, marketing-council, directory-submissions, schema, experiment-engine, mautic, dub, twenty, seo-audit, product-marketing)
+- ANA_BLUEPRINT.md: iteration 4 marker, 12 new repos in external sources table
+- `.memory/ana-loop.md`: this entry
+
+**Assess:**
+- Skills: 114 total (104 → 114, +10 net after routing additions)
+- All new SKILL.md files follow health block convention
+- CLAUDE.md routing surface expanded to cover scientific reasoning + treatment AI + 19 marketing task types
+
+**Merge to Evolve:**
+- PR: mahmoud-gadalla#84 (iteration 4)
+
 ## Iteration 1 — 2026-07-04
 
 **Applied:** ANA_BLUEPRINT.md, beliefgate SKILL.md, ana-blueprint.yml CI workflows in both repos.
