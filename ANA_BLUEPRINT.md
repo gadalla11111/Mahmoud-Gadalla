@@ -6,7 +6,7 @@ This document is the unified doctrine binding `mahmoud-gadalla` (agents, skills,
 and `gate-repl` (belief-gate: completeness verification by execution) into one
 self-evolving system.
 
-**Iteration:** 5 — 2026-07-06 | Skills: 117 | External tools: ToolUniverse (1,000+) · ATHENA (212) · ARK (biomedical KGs) · open-design (100+ skills, 150 systems)
+**Iteration:** 6 — 2026-07-06 | Skills: 123 | External tools: ToolUniverse (1,000+) · ATHENA (212) · ARK · scientific-research (148) · ai-research (98) · open-design (100+ skills, 150 systems)
 
 ---
 

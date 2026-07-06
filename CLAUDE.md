@@ -78,6 +78,8 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Scientific database queries (AlphaFold, BLAST, DrugBank, PubMed, ClinVar, genomics, drug discovery) | `anthropic_skills/tooluniverse` |
 | Treatment reasoning / clinical decision support / drug recommendations | `anthropic_skills/athena` |
 | Biomedical knowledge graph queries (gene-drug-disease relationships, multi-hop) | `anthropic_skills/ark` |
+| Computational biology / bioinformatics / cheminformatics / RNA-seq / molecular docking | `anthropic_skills/scientific-research` |
+| AI/ML research / fine-tuning / RLHF / RAG / LLM serving / MLOps / ML paper | `anthropic_skills/ai-research` |
 | Evaluate LLM response quality / generate question-specific rubrics | `anthropic_skills/qworld` |
 | Triple-source fact verification / QA grid | `anthropic_skills/fact-checker` |
 | Deep multi-step research | `anthropic_skills/deep-research` |
@@ -103,6 +105,8 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Single-image infographic (stats/steps/comparison) | `anthropic_skills/infographic-maker` |
 | Brand-consistent UI from DESIGN.md / open-design workflow | `anthropic_skills/open-design` |
 | Design system generation (67 UI styles, 161 palettes, industry rules) | `anthropic_skills/ui-ux-pro-max` |
+| Convert markdown/CSV/JSON to HTML / ship-ready HTML across 9 surfaces | `anthropic_skills/html-anything` |
+| Architecture / C4 / UML / ERD / flowchart / ML pipeline diagram (draw.io) | `anthropic_skills/drawio` |
 | Enterprise React UI components (Ant Design) | `anthropic_skills/frontend-design` |
 | Enterprise React app scaffold (Ant Design Pro / Umi) | `anthropic_skills/frontend-design` |
 
@@ -146,6 +150,19 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Directory submissions (startup/SaaS/AI directories) | `anthropic_skills/marketing/directory-submissions` |
 | Schema markup / structured data | `anthropic_skills/marketing/schema` |
 | Autonomous marketing experiments (run, measure, optimize) | `anthropic_skills/marketing/experiment-engine` |
+
+### Product Management
+| Task | Skill |
+|---|---|
+| Product strategy / problem framing / positioning / roadmap | `anthropic_skills/product-manager` |
+| Stakeholder mapping / discovery interviews / PRD / user stories | `anthropic_skills/product-manager` |
+| AI product design / agent orchestration / context engineering | `anthropic_skills/product-manager` |
+
+### Advertising & Direct Response
+| Task | Skill |
+|---|---|
+| Ad copywriting / Schwartz awareness / mechanism builder / headline matrix | `anthropic_skills/ad-creative-expert` |
+| Scroll-stopping creative / objection crusher / full-funnel campaign | `anthropic_skills/ad-creative-expert` |
 
 ### Orchestration & Meta
 | Task | Skill |

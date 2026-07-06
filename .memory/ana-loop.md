@@ -42,6 +42,33 @@
 **Merge to Evolve:**
 - PR: mahmoud-gadalla#78 (iteration 3)
 
+## Iteration 6 — 2026-07-06
+
+**Extract:**
+- Discovered via github.com/topics/claude-code-skills + awesome-agent-skills catalog
+- VoltAgent/awesome-agent-skills: 1,000+ vendor skills (Microsoft Azure, Cloudflare, Netlify, HuggingFace, Figma, Sentry, Trail of Bits, Expo, fal.ai, Google Workspace, OpenAI, Kim Barrett, Apollo GraphQL, Binance, WordPress)
+- sickn33/antigravity-awesome-skills: 1,901 skills (dev/frontend/security/testing/DevOps/data/agents/MCP)
+- K-Dense-AI/scientific-agent-skills: 148 skills + 100+ scientific DBs (bioinformatics, cheminformatics, clinical, lab automation)
+- Orchestra-Research/AI-Research-SKILLs: 98 skills, 23 categories (full AI research lifecycle)
+- nexu-io/html-anything: 75 HTML skills × 9 surfaces
+- deanpeters/Product-Manager-Skills: 26 PM skills (problem framing, stakeholder, PRD, AI product)
+- Agents365-ai/drawio-skill: 7 diagram types, 4 export formats
+- realkimbarrett: 12 direct response/advertising skills (Schwartz awareness, mechanism builder)
+- parcadei/Continuous-Claude-v3: 109 skills + 32 agents + 30 hooks (compaction-proof multi-agent)
+
+**Apply:**
+- 6 new skills: `html-anything`, `drawio`, `scientific-research`, `ai-research`, `product-manager`, `ad-creative-expert`
+- CLAUDE.md: +2 research routes, +2 design routes, +2 new sections (Product Management, Advertising & Direct Response)
+- ANA_BLUEPRINT.md: iteration 6 marker
+- Key external catalog: VoltAgent/awesome-agent-skills = official vendor skill registry
+
+**Assess:**
+- Skills: 117 → 123
+- Research layer now: tooluniverse → athena → ark → scientific-research → ai-research (5-layer scientific stack)
+
+**Merge to Evolve:**
+- PR: mahmoud-gadalla#86 (iteration 6)
+
 ## Iteration 5 — 2026-07-06
 
 **Extract:**
