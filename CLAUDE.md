@@ -101,6 +101,10 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Presentation design (narrative spine, data storytelling, visual hierarchy) | `anthropic_skills/presentation-architect` |
 | HTML-to-video rendering (MP4/GIF/WebM from markup) | `anthropic_skills/hyperframes` |
 | Single-image infographic (stats/steps/comparison) | `anthropic_skills/infographic-maker` |
+| Brand-consistent UI from DESIGN.md / open-design workflow | `anthropic_skills/open-design` |
+| Design system generation (67 UI styles, 161 palettes, industry rules) | `anthropic_skills/ui-ux-pro-max` |
+| Enterprise React UI components (Ant Design) | `anthropic_skills/frontend-design` |
+| Enterprise React app scaffold (Ant Design Pro / Umi) | `anthropic_skills/frontend-design` |
 
 ### Marketing & Brand Strategy
 | Task | Skill |
@@ -185,6 +189,11 @@ Skills are applied **automatically** based on task context — no explicit invoc
 cp .env.example .env   # add ANTHROPIC_API_KEY
 uv sync --all-extras   # install Python deps
 ```
+
+### Backend & Infrastructure
+| Task | Skill |
+|---|---|
+| Go HTTP API / REST / microservice (Gin framework) | `anthropic_skills/gin` |
 
 ## Models
 
