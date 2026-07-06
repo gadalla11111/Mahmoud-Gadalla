@@ -6,7 +6,7 @@ This document is the unified doctrine binding `mahmoud-gadalla` (agents, skills,
 and `gate-repl` (belief-gate: completeness verification by execution) into one
 self-evolving system.
 
-**Iteration:** 3 — 2026-07-04 | Skills: 104 | External tools: ToolUniverse (1,000+)
+**Iteration:** 4 — 2026-07-06 | Skills: 114 | External tools: ToolUniverse (1,000+) · ATHENA (212) · ARK (biomedical KGs)
 
 ---
 
@@ -131,6 +131,17 @@ is unreliable.
 | `gadalla11111/mahmoud-gadalla` | Agent ecosystem: skills, managed agents, tools |
 | `gadalla11111/gate-repl` | Completeness verification library + research |
 | `mims-harvard/ToolUniverse` | Scientific tool layer: 1,000+ APIs via unified SDK + MCP server |
+| `mims-harvard/ATHENA` | Treatment reasoning agent: 212 biomedical tools, 94.7% drug benchmark |
+| `mims-harvard/gates-buildathon` | ARK: biomedical knowledge graph agent (natural language → graph queries) |
+| `mims-harvard/Qworld` | LLM eval via recursive question expansion; 89% expert criteria coverage |
+| `mims-harvard/MedLog` | Medical AI logging protocol: provenance + bias detection (9-field standard) |
+| `alirezarezvani/claude-skills` | 355 SKILL.md skills: engineering, C-suite, research, compliance, marketing |
+| `coreyhaines31/marketingskills` | 45+ marketing skills: CRO, SEO, email, launch, referrals, analytics |
+| `ericosiu/ai-marketing-skills` | Python marketing pipelines: Growth Engine, Sales Pipeline, Content Ops |
+| `twentyhq/twenty` | Open-source CRM (React/NestJS/PostgreSQL); self-hosted, extensible |
+| `dubinc/dub` | Open-source link attribution: shortlinks, click tracking, affiliate mgmt |
+| `mautic/mautic` | Open-source marketing automation: email, lead scoring, campaign builder |
+| `matomo-org/matomo` | Open-source web analytics: self-hosted Google Analytics alternative |
 
 **Branch:** `claude/ana-blueprint-wkp95w` in both gadalla11111 repos.
 

@@ -76,6 +76,9 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Task | Skill |
 |---|---|
 | Scientific database queries (AlphaFold, BLAST, DrugBank, PubMed, ClinVar, genomics, drug discovery) | `anthropic_skills/tooluniverse` |
+| Treatment reasoning / clinical decision support / drug recommendations | `anthropic_skills/athena` |
+| Biomedical knowledge graph queries (gene-drug-disease relationships, multi-hop) | `anthropic_skills/ark` |
+| Evaluate LLM response quality / generate question-specific rubrics | `anthropic_skills/qworld` |
 | Triple-source fact verification / QA grid | `anthropic_skills/fact-checker` |
 | Deep multi-step research | `anthropic_skills/deep-research` |
 | Exhaustive multi-source search | `anthropic_skills/ultra-search` |
@@ -120,6 +123,25 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Paid-ad account diagnosis (spend leaks, funnel) | `anthropic_skills/ads-analysis` |
 | Ad creative performance analysis (hook, fatigue, patterns) | `anthropic_skills/creative-analysis` |
 | Communication/messaging analysis (intended vs received) | `anthropic_skills/communication-analysis` |
+| Product launch planning / launch strategy | `anthropic_skills/marketing/launch` |
+| Marketing automation (email drip, lead scoring, self-hosted) | `anthropic_skills/mautic` |
+| Link shortening / click attribution / affiliate link tracking | `anthropic_skills/dub` |
+| CRM setup / customization / self-hosted CRM (open-source) | `anthropic_skills/twenty` |
+| SEO audit / site diagnosis | `anthropic_skills/marketing/seo-audit` |
+| App Store Optimization (ASO) | `anthropic_skills/marketing/aso` |
+| Conversion rate optimization (CRO) / landing page scoring | `anthropic_skills/marketing/cro` |
+| Onboarding / user activation / time-to-value optimization | `anthropic_skills/marketing/onboarding` |
+| Churn prevention / cancellation flows / payment recovery | `anthropic_skills/marketing/churn-prevention` |
+| Product marketing / positioning document | `anthropic_skills/marketing/product-marketing` |
+| Programmatic SEO / scaled content page generation | `anthropic_skills/marketing/programmatic-seo` |
+| Referral / affiliate program design | `anthropic_skills/marketing/referrals` |
+| Cold email sequences (B2B outreach) | `anthropic_skills/marketing/cold-email` |
+| Pricing strategy / packaging / monetization | `anthropic_skills/marketing/pricing` |
+| Revenue operations / lead lifecycle / marketing-to-sales handoff | `anthropic_skills/marketing/revops` |
+| Marketing council (multi-expert advisory panel) | `anthropic_skills/marketing/marketing-council` |
+| Directory submissions (startup/SaaS/AI directories) | `anthropic_skills/marketing/directory-submissions` |
+| Schema markup / structured data | `anthropic_skills/marketing/schema` |
+| Autonomous marketing experiments (run, measure, optimize) | `anthropic_skills/marketing/experiment-engine` |
 
 ### Orchestration & Meta
 | Task | Skill |
