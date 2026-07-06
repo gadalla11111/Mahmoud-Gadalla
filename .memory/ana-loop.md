@@ -21,6 +21,27 @@
 **Merge to Evolve:**
 - PRs: mahmoud-gadalla#59, gate-repl#2 (iteration 2)
 
+## Iteration 3 — 2026-07-04
+
+**Extract:**
+- mims-harvard/ToolUniverse: 1,000+ scientific tools (AlphaFold, BLAST, DrugBank, PubMed, ClinVar, etc.)
+- Unified `BaseTool` interface + MCP server (`tooluniverse-mcp`) + CLI (`tu`)
+- 151 pre-built skills in ToolUniverse; 68 research workflows
+- beliefgate integration pattern: gate before any scientific API call
+
+**Apply:**
+- `anthropic_skills/tooluniverse/SKILL.md`: skill wrapping ToolUniverse SDK
+- `CLAUDE.md`: routing entry added under Research & Verification
+- `ANA_BLUEPRINT.md`: Layer [0] Tool Layer added to pipeline diagram; ToolUniverse wired in
+- `.memory/ana-loop.md`: this entry
+
+**Assess:**
+- Routing: tooluniverse skill reachable from CLAUDE.md
+- Cross-reference: beliefgate ↔ tooluniverse integration pattern documented
+
+**Merge to Evolve:**
+- PR: mahmoud-gadalla#78 (iteration 3)
+
 ## Iteration 1 — 2026-07-04
 
 **Applied:** ANA_BLUEPRINT.md, beliefgate SKILL.md, ana-blueprint.yml CI workflows in both repos.

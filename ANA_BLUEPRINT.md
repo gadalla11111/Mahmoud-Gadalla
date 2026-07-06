@@ -6,7 +6,7 @@ This document is the unified doctrine binding `mahmoud-gadalla` (agents, skills,
 and `gate-repl` (belief-gate: completeness verification by execution) into one
 self-evolving system.
 
-**Iteration:** 2 — 2026-07-04 | Skills: 103 | Eval pass rate: 96.7% (58/60)
+**Iteration:** 3 — 2026-07-04 | Skills: 104 | External tools: ToolUniverse (1,000+)
 
 ---
 
@@ -20,6 +20,9 @@ The fix — in every layer — is the same shape:
 
 ```
 SOURCE  (DB, API, document, prior turns)
+  │
+  ▼
+[0] TOOL LAYER     ← ToolUniverse: 1,000+ scientific APIs (AlphaFold, BLAST, DrugBank…)
   │
   ▼
 [1] EXTRACTION     ← deterministic (parser, DB query, API — never LLM prose)
@@ -127,5 +130,29 @@ is unreliable.
 |---|---|
 | `gadalla11111/mahmoud-gadalla` | Agent ecosystem: skills, managed agents, tools |
 | `gadalla11111/gate-repl` | Completeness verification library + research |
+| `mims-harvard/ToolUniverse` | Scientific tool layer: 1,000+ APIs via unified SDK + MCP server |
 
-**Branch:** `claude/ana-blueprint-wkp95w` in both.
+**Branch:** `claude/ana-blueprint-wkp95w` in both gadalla11111 repos.
+
+## ToolUniverse Integration
+
+Install the skill from `anthropic_skills/tooluniverse/SKILL.md`.
+
+**Pattern — scientific agent step with gate:**
+```python
+from tooluniverse import ToolUniverse
+from beliefgate import check_set
+
+tu = ToolUniverse()
+tu.load_tools()
+
+def scientific_step(task, context):
+    required = extract_required(task)           # e.g. {"uniprot_id"}
+    present  = set(context.keys())              # from structured source
+    gate = check_set(required, present)
+    if not gate.ok:
+        return fetch_missing(gate.missing)
+    return tu.get_tool(task.tool).run(context)
+```
+
+**MCP server:** run `tooluniverse-mcp` to expose all 1,000+ tools to Claude directly.
