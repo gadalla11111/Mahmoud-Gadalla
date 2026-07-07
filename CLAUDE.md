@@ -249,6 +249,15 @@ uv sync --all-extras   # install Python deps
 |---|---|
 | Go HTTP API / REST / microservice (Gin framework) | `anthropic_skills/gin` |
 
+## MCP Servers
+
+This repo has no `.mcp.json` yet — no project-scoped MCP servers are shared with contributors.
+
+- Add one for the whole team: `claude mcp add --scope project --transport http <name> <url>` writes to `.mcp.json` in the repo root; commit it so it's shared.
+- Add one for yourself only: omit `--scope project` (defaults to `local`, stored in `~/.claude.json`).
+- For MCP server creation, use `anthropic_skills/mcp-builder`; to inspect/debug an existing server, use `anthropic_skills/mcp-inspector`.
+- Never commit tokens/secrets into `.mcp.json` — use the `env` field with a placeholder and document the required var, or pass `--header "Authorization: Bearer <token>"` at `local`/`user` scope instead.
+
 ## Models
 
 - Sonnet: `claude-sonnet-4-6`
