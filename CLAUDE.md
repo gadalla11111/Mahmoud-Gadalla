@@ -164,6 +164,43 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Ad copywriting / Schwartz awareness / mechanism builder / headline matrix | `anthropic_skills/ad-creative-expert` |
 | Scroll-stopping creative / objection crusher / full-funnel campaign | `anthropic_skills/ad-creative-expert` |
 
+### Brand Building & Identity
+| Task | Skill |
+|---|---|
+| Brand strategy / naming / story / manifesto / launch / rebrand / audit / measurement | `anthropic_skills/brand-building` |
+| D2C strategy / B2B brand / influencer / UGC / packaging / email / Meta & Google ads | `anthropic_skills/brand-building` |
+| Brand pillars / visual identity system / logo system / color / typography / motion | `anthropic_skills/brand-identity-pillars` |
+| Sustainability brand pillars / ESG brand positioning / purpose-driven identity | `anthropic_skills/brand-identity-pillars` |
+| Brand design language for 62 world-class brands (Nike, Stripe, Notion, Airbnb…) | `anthropic_skills/brand-identity-pillars` |
+
+### Consumer Behaviour & Psychology
+| Task | Skill |
+|---|---|
+| Consumer psychology / cognitive biases / behavioral economics / why people buy | `anthropic_skills/consumer-behaviour` |
+| Pricing psychology / loss aversion / anchoring / BJ Fogg model / Jobs to Be Done | `anthropic_skills/consumer-behaviour` |
+| UX psychology / 65 behavioral principles / decision architecture / persuasion design | `anthropic_skills/consumer-behaviour` |
+
+### Data Management
+| Task | Skill |
+|---|---|
+| Data governance / data catalog / metadata management / data dictionary | `anthropic_skills/data-management` |
+| Data quality / data lineage / data contracts / data mesh / data observability | `anthropic_skills/data-management` |
+| ETL pipeline design / dataset versioning / GDPR data compliance | `anthropic_skills/data-management` |
+
+### Presentation Design & Aesthetics
+| Task | Skill |
+|---|---|
+| Slide deck design / narrative spine / visual hierarchy / data slide / pitch deck polish | `anthropic_skills/presentation-design` |
+| Cinematic web presentation / script → 16:9 slides → screen-recordable video | `anthropic_skills/presentation-design` |
+| Four-axis aesthetic brief / slide aesthetics / executive deck / presentation template | `anthropic_skills/presentation-design` |
+
+### Fashion Intelligence
+| Task | Skill |
+|---|---|
+| Personal styling / outfit recommendations / wardrobe management / capsule wardrobe | `anthropic_skills/fashion-intelligence` |
+| Fashion history / fashion economics / luxury goods economics / trend analysis | `anthropic_skills/fashion-intelligence` |
+| Fast fashion vs. slow fashion / resale market / fashion sustainability / colour analysis | `anthropic_skills/fashion-intelligence` |
+
 ### Orchestration & Meta
 | Task | Skill |
 |---|---|
