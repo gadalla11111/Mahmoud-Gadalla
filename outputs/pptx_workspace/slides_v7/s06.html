@@ -1,0 +1,25 @@
+<!DOCTYPE html><html dir="rtl"><head><meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 720pt; height: 405pt; }
+  body {
+    width: 720pt; height: 405pt; overflow: hidden;
+    background: #1C2B45; font-family: Arial, sans-serif;
+    display: flex; position: relative;
+  }
+  /* Geometric accent — dark circle anchored at bottom-left corner */
+  .geo { position: absolute; bottom: 0; left: 0;
+    width: 200pt; height: 200pt; border-radius: 50%;
+    background: #0C1520; z-index: 0; }
+  .content { position: relative; z-index: 1; width: 720pt; }
+</style>
+</head><body>
+<div class="geo"></div>
+<div class="content">
+<div style="width:720pt;height:405pt;display:flex;flex-direction:column;padding:32pt 52pt 20pt;">
+  <p style="color:#8090A8;font-size:8pt;letter-spacing:2pt;margin-bottom:6pt;">٠٦ · التوقعات المالية</p>
+  <h2 style="color:#FFFFFF;font-size:28pt;font-weight:bold;margin-bottom:18pt;">مسار الربحية — ١٠ سنوات</h2>
+  <div id="pl-chart" class="placeholder" style="flex:1;background:#131F33;border-radius:8pt;"></div>
+  <p style="color:#3A5070;font-size:7pt;margin-top:10pt;text-align:left;">نموذج مالي مبدئي قائم على تكلفة الدورة التجريبية (٤٥ شابًا) مع معدل نمو سنوي ٤٠٪ · للإطار التشاوري فقط</p>
+</div></div>
+</body></html>

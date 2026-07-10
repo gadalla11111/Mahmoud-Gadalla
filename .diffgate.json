@@ -76,6 +76,7 @@
     "Flare/**",
     "financial-services/**",
     "anthropics-skills/**",
-    "ruflo/**"
+    "ruflo/**",
+    "outputs/**"
   ]
 }
