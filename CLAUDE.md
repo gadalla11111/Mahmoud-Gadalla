@@ -80,6 +80,7 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Biomedical knowledge graph queries (gene-drug-disease relationships, multi-hop) | `anthropic_skills/ark` |
 | Computational biology / bioinformatics / cheminformatics / RNA-seq / molecular docking | `anthropic_skills/scientific-research` |
 | AI/ML research / fine-tuning / RLHF / RAG / LLM serving / MLOps / ML paper | `anthropic_skills/ai-research` |
+| Embedded vector DB / in-process vector search / hybrid retrieval / DiskANN / edge RAG | `anthropic_skills/zvec` |
 | Evaluate LLM response quality / generate question-specific rubrics | `anthropic_skills/qworld` |
 | Triple-source fact verification / QA grid | `anthropic_skills/fact-checker` |
 | Deep multi-step research | `anthropic_skills/deep-research` |
