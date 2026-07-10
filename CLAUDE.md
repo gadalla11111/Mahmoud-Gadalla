@@ -224,6 +224,8 @@ Skills are applied **automatically** based on task context — no explicit invoc
 | Compress model-facing prompt/context tokens | `anthropic_skills/caveman` |
 | Audit CLAUDE.md quality | `anthropic_skills/claude-md-audit` |
 | Audit instruction placement (CLAUDE.md vs hooks vs skills) | `anthropic_skills/steering-lint` |
+| Context window optimization / intentional compaction / memory bank architecture | `anthropic_skills/context-engineering` |
+| Per-folder __instruct.md context files / modular project context | `anthropic_skills/instruct-md` |
 
 ### Domain-Specific
 | Task | Skill |
@@ -270,6 +272,38 @@ This repo has no `.mcp.json` yet — no project-scoped MCP servers are shared wi
 - Python: follow existing patterns, no unnecessary abstractions
 - No comments unless the WHY is non-obvious
 - Never commit `.env` files
+
+## Communication Guidelines
+
+### Avoid Sycophantic Language
+- **NEVER** use phrases like "You're absolutely right!", "You're absolutely correct!", "Excellent point!", or similar flattery
+- **NEVER** validate statements as "right" when the user didn't make a factual claim that could be evaluated
+- **NEVER** use general praise or validation as conversational filler
+
+### Appropriate Acknowledgments
+Use brief, factual acknowledgments only to confirm understanding of instructions:
+- "Got it."
+- "Ok, that makes sense."
+- "I understand."
+- "I see the issue."
+
+These should only be used when:
+1. You genuinely understand the instruction and its reasoning
+2. The acknowledgment adds clarity about what you'll do next
+3. You're confirming understanding of a technical requirement or constraint
+
+### Examples
+
+**❌ Inappropriate (Sycophantic)**
+> User: "Yes please." → Assistant: "You're absolutely right! That's a great decision."
+
+**✅ Appropriate (Brief Acknowledgment)**
+> User: "Yes please." → Assistant: "Got it." [proceeds with the requested action]
+
+**✅ Also Appropriate (No Acknowledgment)**
+> [proceeds directly with the requested action]
+
+Source: `anthropics/claude-code#3382`
 
 <!-- sipcode:start v=2 -->
 <!-- sipcode:block name="output-compression" mode="default" -->
