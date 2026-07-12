@@ -1,1 +1,0 @@
-# Hardstop Plugin Tests

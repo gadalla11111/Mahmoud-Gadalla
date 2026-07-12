@@ -1,5 +1,0 @@
-// Icon
-#if defined(APSTUDIO_INVOKED)
-ICON "Flare.ico"
-#endif
-IDI_ICON1 ICON "Flare.ico"

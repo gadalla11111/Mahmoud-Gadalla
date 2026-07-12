@@ -1,6 +1,0 @@
-documents:
-  - description: "Basic URL Source Test"
-    outputPath: "url-source.md"
-    sources:
-      - type: url
-        description: "Basic URL Source"

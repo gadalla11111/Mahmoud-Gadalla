@@ -1,1 +1,0 @@
-This is file3 in the deepest level of the nested directory structure.
