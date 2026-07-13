@@ -1,0 +1,68 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sunny — Design System</title>
+<style>
+/* Enable premium web fonts when online: */
+/* @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap'); */
+:root{
+  --ink:#3B2E2A; --surface:#FFF7EF; --muted:#9B8A80; --line:#F0E2D4;
+  --accent:#E8674C; --accent2:#F4B740; --soft:#FFEEDD;
+  --font-head:'Quicksand', 'Nunito', 'Trebuchet MS', system-ui, sans-serif; --font-body:'Nunito', 'Quicksand', system-ui, sans-serif;
+  --radius:28px; --border-w:2px; --uppercase:none;
+  --tracking:0em; --head-weight:700; --shadow:0 12px 28px rgba(232,103,76,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-body);color:var(--ink);background:#eceff3;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1160px;margin:0 auto;padding:48px 24px 96px}
+.kit-h{font-family:var(--font-head);font-weight:var(--head-weight);letter-spacing:var(--tracking)}
+.cap{font:600 12px/1.4 var(--font-body);color:#7a828c;letter-spacing:.08em;text-transform:uppercase;margin:28px 0 10px}
+.frame{background:#fff;border-radius:8px;box-shadow:0 4px 18px rgba(0,0,0,.08);display:inline-block;overflow:hidden}
+</style>
+<style>
+.stage{background:var(--surface);color:var(--ink);border-radius:var(--radius);padding:64px;border:var(--border-w) solid var(--line)}
+.brandrow{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;border-bottom:var(--border-w) solid var(--line);padding-bottom:28px;margin-bottom:40px}
+.brandrow h1{font-family:var(--font-head);font-weight:var(--head-weight);font-size:56px;letter-spacing:var(--tracking);}
+.brandrow .t{color:var(--muted);font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.sw{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0 44px}
+.sw div{width:120px}
+.chip{height:76px;border-radius:calc(var(--radius) * .6);border:1px solid rgba(0,0,0,.08)}
+.sw span{display:block;font:600 12px/1.6 var(--font-body);margin-top:8px}
+.sw small{color:var(--muted);font:500 11px/1.4 var(--font-body)}
+.type h2{font-family:var(--font-head);font-weight:var(--head-weight);letter-spacing:var(--tracking);}
+.type .h1{font-size:52px;line-height:1.05} .type .h2{font-size:34px;line-height:1.1;margin-top:20px}
+.type p{font-size:18px;line-height:1.6;max-width:60ch;margin-top:18px;color:var(--ink)}
+.type .small{font-size:13px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:18px}
+.btns{display:flex;gap:16px;margin:44px 0 40px;flex-wrap:wrap}
+.btn{font-family:var(--font-head);font-weight:var(--head-weight);font-size:16px;padding:16px 30px;border-radius:var(--radius);cursor:pointer;border:var(--border-w) solid transparent;;letter-spacing:var(--tracking)}
+.btn.p{background:var(--accent);color:#fff;box-shadow:var(--shadow)}
+.btn.s{background:transparent;color:var(--ink);border-color:var(--ink)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:var(--surface);border:var(--border-w) solid var(--line);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+.card b{font-family:var(--font-head);font-weight:var(--head-weight);font-size:20px;display:block;margin-bottom:10px;}
+.card p{color:var(--muted);font-size:14px;line-height:1.6}
+.card .dot{width:34px;height:34px;border-radius:calc(var(--radius) * .5);background:var(--accent2);margin-bottom:16px}
+</style></head><body><div class="wrap">
+<div class="cap">Design system · preview</div>
+<div class="stage">
+  <div class="brandrow"><h1>Sunny</h1><span class="t">Warm & Playful / Lifestyle</span></div>
+  <div class="sw">
+    <div><div class="chip" style="background:var(--ink)"></div><span>Ink</span><small>#3B2E2A</small></div>
+    <div><div class="chip" style="background:var(--surface)"></div><span>Surface</span><small>#FFF7EF</small></div>
+    <div><div class="chip" style="background:var(--accent)"></div><span>Accent</span><small>#E8674C</small></div>
+    <div><div class="chip" style="background:var(--accent2)"></div><span>Accent 2</span><small>#F4B740</small></div>
+    <div><div class="chip" style="background:var(--muted)"></div><span>Muted</span><small>#9B8A80</small></div>
+  </div>
+  <div class="type">
+    <h2 class="h1">The quick idea, stated with confidence.</h2>
+    <h2 class="h2">A supporting subhead that sets the tone.</h2>
+    <p>Body copy shows the reading texture of the system — measured line-height, comfortable measure, and a color that stays legible on the surface. One idea per asset; let the layout breathe.</p>
+    <div class="small">Caption / kicker · label style</div>
+  </div>
+  <div class="btns"><button class="btn p">Primary action</button><button class="btn s">Secondary</button></div>
+  <div class="cards">
+    <div class="card"><div class="dot"></div><b>Consistent</b><p>Every surface pulls from the same tokens, so nothing drifts.</p></div>
+    <div class="card"><div class="dot"></div><b>Swappable</b><p>Change the palette once; the whole system re-skins.</p></div>
+    <div class="card"><div class="dot"></div><b>Ready</b><p>Drop in a brand and ship the same day.</p></div>
+  </div>
+</div>
+<p class="cap">To brand: edit the palette + fonts in <code>DESIGN.md</code>, then the <code>:root</code> block in the template files.</p>
+</div></body></html>
