@@ -1,0 +1,133 @@
+{
+  "contact": "gadalla111@gmail.com",
+  "plugins": [
+    {
+      "name": "ali1688-seller-assistant",
+      "displayEn": "1688 Seller Assistant",
+      "displayCn": "1688商家助手",
+      "descEn": "One-stop support for 1688 merchants, from shop diagnosis to product operations, helping sellers read data clearly, optimize listings, and boost conversion.",
+      "category": "Developer Tools",
+      "categoryKey": "developer-tools"
+    },
+    {
+      "name": "alibabacloud-core",
+      "displayEn": "Alibaba Cloud Core",
+      "displayCn": "阿里云核心",
+      "descEn": "Core Alibaba Cloud plugin for OpenAPI SDK code generation through a constrained MCP server.",
+      "category": "Developer Tools",
+      "categoryKey": "developer-tools"
+    },
+    {
+      "name": "alibabacloud-spec-ops",
+      "displayEn": "Alibaba Cloud AI Spec Ops",
+      "displayCn": "阿里云AI规范运维",
+      "descEn": "Alibaba Cloud AI Ops Plugin - Infrastructure operations workflow with intelligent planning, validation, and execution powered by MCP tooling.",
+      "category": "Developer Tools",
+      "categoryKey": "developer-tools"
+    },
+    {
+      "name": "consulting-delivery",
+      "displayEn": "Consulting Delivery",
+      "displayCn": "咨询交付",
+      "descEn": "Full-cycle management consulting toolkit covering seven core scenarios: desk research, interview notes, framework design, report writing, benchmarking, weekly status reports, and executive briefings. Works independently; connecting a document collaboration platform enables automatic publishing to Notion.",
+      "category": "Consulting",
+      "categoryKey": "consulting"
+    },
+    {
+      "name": "contract-management",
+      "displayEn": "Contract Management",
+      "displayCn": "合同管理",
+      "descEn": "Full-lifecycle contract management: review contract risks (red/yellow/green grading), draft contract first drafts (Word output), redline comparison of two contract versions, rapid NDA screening, and legal clause lookup.",
+      "category": "Legal & Compliance",
+      "categoryKey": "legal"
+    },
+    {
+      "name": "corporate-finance-tax",
+      "displayEn": "Corporate Finance & Tax",
+      "displayCn": "企业财税",
+      "descEn": "Corporate finance and tax management toolkit covering financial analysis, journal entries, budget analysis, VAT management, annual CIT settlement, internal audit, financial statement prep, and tax planning.",
+      "category": "Finance & Advisory",
+      "categoryKey": "finance"
+    },
+    {
+      "name": "corporate-legal",
+      "displayEn": "Corporate Legal",
+      "displayCn": "公司法务",
+      "descEn": "Comprehensive corporate legal assistant: draft legal documents (demand letters, complaints, defense statements, legal opinions), generate corporate resolutions and articles of association, support compliance reviews.",
+      "category": "Legal & Compliance",
+      "categoryKey": "legal"
+    },
+    {
+      "name": "equity-research",
+      "displayEn": "Equity Research",
+      "displayCn": "权益研究",
+      "descEn": "End-to-end equity research toolkit for sell-side and buy-side analysts, covering deep-dive reports, industry research, annual report analysis, earnings reviews, field research notes, and valuation models.",
+      "category": "Finance & Advisory",
+      "categoryKey": "finance"
+    },
+    {
+      "name": "investment-banking",
+      "displayEn": "Investment Banking",
+      "displayCn": "投资银行",
+      "descEn": "AI-powered investment banking assistant covering six core workflows: IPO prospectus drafting, M&A advisory reports, bond offering memoranda, regulatory response to exchange inquiries, fairness opinions, and pitchbook generation.",
+      "category": "Finance & Advisory",
+      "categoryKey": "finance"
+    },
+    {
+      "name": "marketing",
+      "displayEn": "Marketing",
+      "displayCn": "市场营销",
+      "descEn": "Full-spectrum marketing toolkit covering copywriting, ad compliance, competitive tracking, campaign planning, social media trends, SEO optimization, marketing performance analysis, and content calendars.",
+      "category": "Marketing & Growth",
+      "categoryKey": "marketing"
+    },
+    {
+      "name": "pe-vc-investment",
+      "displayEn": "Private Equity",
+      "displayCn": "私募股权",
+      "descEn": "End-to-end PE/VC toolkit covering deal screening, due diligence checklists, term sheet review, investment committee memos, return modeling, and exit analysis. Built for investment professionals.",
+      "category": "Finance & Advisory",
+      "categoryKey": "finance"
+    },
+    {
+      "name": "product-design",
+      "displayEn": "Product Design",
+      "displayCn": "产品设计",
+      "descEn": "A full-process toolkit for designers, covering eleven core scenarios: problem definition, user research, information architecture, interaction flows, visual standards, marketing assets, design reviews, and design system maintenance.",
+      "category": "Product & Design",
+      "categoryKey": "product-design"
+    },
+    {
+      "name": "product-management",
+      "displayEn": "Product Management",
+      "displayCn": "产品管理",
+      "descEn": "An end-to-end product management toolkit covering eight core workflows: PRD writing, user story breakdown, competitive analysis, requirement prioritization, user feedback analysis, launch planning, roadmap communication, and metrics reviews.",
+      "category": "Product & Design",
+      "categoryKey": "product-design"
+    },
+    {
+      "name": "qoder-for-cn-litigation",
+      "displayEn": "China Civil & Commercial Litigation",
+      "displayCn": "中国民商事诉讼工具箱",
+      "descEn": "Full-lifecycle Chinese civil & commercial litigation toolkit for legal counsel and attorneys. 20 skills across four layers: routing (hub + onboarding interview + quick-config editor), evidence, pleadings, and strategy.",
+      "category": "Legal & Compliance",
+      "categoryKey": "legal"
+    },
+    {
+      "name": "wealth-management",
+      "displayEn": "Wealth Management",
+      "displayCn": "财富管理",
+      "descEn": "Full-spectrum wealth management toolkit covering market snapshots, asset allocation, fund analysis, client reporting, financial planning, and tax planning. Built for relationship managers and advisors.",
+      "category": "Finance & Advisory",
+      "categoryKey": "finance"
+    },
+    {
+      "name": "yqx-tech-service-suite",
+      "displayEn": "Tech Service Suite",
+      "displayCn": "科技服务助手",
+      "descEn": "A full-chain technology service toolkit bridging demand and supply in a closed loop. The demand side covers tech demand mining, results search & matching, value assessment, deal planning. Supply side covers capability profiling and opportunity matching.",
+      "category": "Developer Tools",
+      "categoryKey": "developer-tools"
+    }
+  ]
+}
