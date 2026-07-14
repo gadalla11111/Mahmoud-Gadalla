@@ -1,0 +1,7 @@
+# Qoder runtime files (regenerated)
+.qoder-plugin/installation_state.json
+data/
+cache/
+*.log
+.DS_Store
+Thumbs.db
