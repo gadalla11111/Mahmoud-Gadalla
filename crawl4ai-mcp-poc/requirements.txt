@@ -1,0 +1,10 @@
+# crawl4ai-mcp-poc dependencies
+#
+# After `pip install -r requirements.txt`, run `crawl4ai-setup` once to install
+# the Playwright browser runtime that Crawl4AI drives.
+
+# MCP server SDK (provides FastMCP). `mcp[cli]` also pulls the Inspector helper.
+mcp[cli]>=1.6.0
+
+# Crawl4AI — the scraping/extraction engine (headless browser -> Markdown).
+crawl4ai>=0.6.0
