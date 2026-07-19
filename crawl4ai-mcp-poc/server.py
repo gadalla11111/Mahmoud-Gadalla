@@ -7,12 +7,15 @@ into clean context with one tool call. Transport is stdio (local use).
 
 Tools
 -----
-- ``crawl4ai_scrape_url``     : one URL  -> Markdown (or JSON with metadata)
-- ``crawl4ai_scrape_many``    : N URLs   -> per-URL Markdown/JSON (concurrent)
-- ``crawl4ai_extract_schema`` : one URL  -> structured JSON via a CSS schema
+- ``crawl4ai_scrape_url``     : one URL   -> Markdown (or JSON with metadata)
+- ``crawl4ai_scrape_many``    : N URLs    -> per-URL Markdown/JSON (concurrent)
+- ``crawl4ai_extract_schema`` : one URL   -> structured JSON via a CSS schema
+- ``crawl4ai_deep_crawl``     : start URL -> BFS-crawl linked pages to depth N
+- ``crawl4ai_screenshot``     : one URL   -> full-page PNG saved to disk
 
 Set ``CRAWL4AI_STORAGE_STATE`` to a saved Playwright session file (created by
-``save_session.py``) to run every scrape as a logged-in user.
+``save_session.py``) to run every scrape as a logged-in user. Screenshots are
+written to ``CRAWL4AI_OUTPUT_DIR`` (or the system temp dir).
 
 Crawl4AI is imported **lazily** on first tool call, so this module stays
 importable — and the MCP server registrable/inspectable — before the heavy
@@ -20,13 +23,16 @@ Playwright browser runtime is installed (`crawl4ai-setup`). Run
 ``python server.py --selfcheck`` to list the registered tools without a
 browser.
 
-This is a PoC: three focused read-only tools, not full Crawl4AI coverage.
+This is a PoC: five focused tools, not full Crawl4AI coverage.
 """
 
 from __future__ import annotations
 
+import base64
+import hashlib
 import json
 import os
+import tempfile
 from enum import Enum
 from types import SimpleNamespace
 from typing import Any, Optional
@@ -240,6 +246,80 @@ class ExtractSchemaInput(BaseModel):
         return _require_http_url(v)
 
 
+class DeepCrawlInput(BaseModel):
+    """Input for a bounded breadth-first deep crawl."""
+
+    model_config = ConfigDict(
+        str_strip_whitespace=True, validate_assignment=True, extra="forbid"
+    )
+
+    url: str = Field(
+        ...,
+        description="Absolute http(s) URL to start crawling from.",
+        min_length=1,
+        max_length=2048,
+    )
+    max_depth: int = Field(
+        default=1,
+        description="How many link-hops from the start URL to follow "
+        "(0 = start page only; 1 = start page + its direct links).",
+        ge=0,
+        le=3,
+    )
+    max_pages: int = Field(
+        default=10,
+        description="Hard cap on total pages fetched (safety limit).",
+        ge=1,
+        le=50,
+    )
+    include_external: bool = Field(
+        default=False,
+        description="Follow links to other domains too "
+        "(default: stay on the start URL's domain).",
+    )
+    fit_markdown: bool = Field(
+        default=True,
+        description="Return pruned 'fit' Markdown per page.",
+    )
+    timeout_ms: int = Field(
+        default=DEFAULT_TIMEOUT_MS,
+        description="Per-page navigation timeout in milliseconds.",
+        ge=1_000,
+        le=120_000,
+    )
+
+    @field_validator("url")
+    @classmethod
+    def _validate_url(cls, v: str) -> str:
+        return _require_http_url(v)
+
+
+class ScreenshotInput(BaseModel):
+    """Input for capturing a full-page screenshot."""
+
+    model_config = ConfigDict(
+        str_strip_whitespace=True, validate_assignment=True, extra="forbid"
+    )
+
+    url: str = Field(
+        ...,
+        description="Absolute http(s) URL to screenshot.",
+        min_length=1,
+        max_length=2048,
+    )
+    timeout_ms: int = Field(
+        default=DEFAULT_TIMEOUT_MS,
+        description="Per-page navigation timeout in milliseconds.",
+        ge=1_000,
+        le=120_000,
+    )
+
+    @field_validator("url")
+    @classmethod
+    def _validate_url(cls, v: str) -> str:
+        return _require_http_url(v)
+
+
 # ---------------------------------------------------------------------------
 # Crawl4AI adapter (lazy import + shared helpers)
 # ---------------------------------------------------------------------------
@@ -376,6 +456,76 @@ async def _crawl_extract(
     )
     async with c4.AsyncWebCrawler(config=_browser_config(c4)) as crawler:
         return await crawler.arun(url=url, config=run_config)
+
+
+def _import_bfs_strategy():
+    """Import Crawl4AI's BFS deep-crawl strategy across SDK layouts."""
+    try:
+        from crawl4ai.deep_crawling import BFSDeepCrawlStrategy  # noqa: PLC0415
+        return BFSDeepCrawlStrategy
+    except ImportError:
+        try:
+            from crawl4ai import BFSDeepCrawlStrategy  # noqa: PLC0415
+            return BFSDeepCrawlStrategy
+        except ImportError as exc:
+            raise RuntimeError(
+                "This Crawl4AI version doesn't expose BFSDeepCrawlStrategy for deep "
+                "crawling. Upgrade crawl4ai, or pass an explicit URL list to "
+                f"crawl4ai_scrape_many instead. ({exc})"
+            ) from exc
+
+
+async def _deep_crawl(
+    url: str,
+    *,
+    max_depth: int,
+    max_pages: int,
+    include_external: bool,
+    timeout_ms: int,
+) -> list[Any]:
+    """BFS-crawl from ``url`` and return up to ``max_pages`` page results."""
+    c4 = _import_crawl4ai()
+    bfs = _import_bfs_strategy()
+    try:
+        strategy = bfs(
+            max_depth=max_depth, include_external=include_external, max_pages=max_pages
+        )
+    except TypeError:  # older signature without max_pages
+        strategy = bfs(max_depth=max_depth, include_external=include_external)
+    run_config = c4.CrawlerRunConfig(
+        cache_mode=c4.CacheMode.ENABLED,
+        page_timeout=timeout_ms,
+        deep_crawl_strategy=strategy,
+        stream=False,
+    )
+    async with c4.AsyncWebCrawler(config=_browser_config(c4)) as crawler:
+        results = await crawler.arun(url=url, config=run_config)
+    results = results if isinstance(results, list) else [results]
+    return results[:max_pages]  # enforce cap even if the SDK ignored max_pages
+
+
+async def _crawl_screenshot(url: str, *, timeout_ms: int) -> Any:
+    """Load ``url`` with screenshot capture enabled and return the result."""
+    c4 = _import_crawl4ai()
+    run_config = c4.CrawlerRunConfig(
+        cache_mode=c4.CacheMode.BYPASS,  # a screenshot wants the live page
+        page_timeout=timeout_ms,
+        screenshot=True,
+    )
+    async with c4.AsyncWebCrawler(config=_browser_config(c4)) as crawler:
+        return await crawler.arun(url=url, config=run_config)
+
+
+def _screenshot_dir() -> str:
+    """Directory to write screenshots to (CRAWL4AI_OUTPUT_DIR or the temp dir)."""
+    out = os.environ.get("CRAWL4AI_OUTPUT_DIR") or tempfile.gettempdir()
+    os.makedirs(out, exist_ok=True)
+    return out
+
+
+def _url_slug(url: str) -> str:
+    """Stable, filesystem-safe short name for a URL."""
+    return hashlib.sha1(url.encode("utf-8")).hexdigest()[:12]
 
 
 # ---------------------------------------------------------------------------
@@ -615,6 +765,150 @@ async def crawl4ai_extract_schema(params: ExtractSchemaInput) -> str:
         "records": records,
     }
     return json.dumps(payload, indent=2, ensure_ascii=False)
+
+
+@mcp.tool(
+    name="crawl4ai_deep_crawl",
+    annotations={
+        "title": "Deep-crawl linked pages to depth N",
+        "readOnlyHint": True,
+        "destructiveHint": False,
+        "idempotentHint": True,
+        "openWorldHint": True,
+    },
+)
+async def crawl4ai_deep_crawl(params: DeepCrawlInput) -> str:
+    """Breadth-first crawl from a start URL, following links to depth N.
+
+    Fetches the start page, then its links, and so on up to ``max_depth`` —
+    capped at ``max_pages`` total (a hard safety limit) — and returns Markdown
+    for each page. Stays on the start URL's domain unless ``include_external``
+    is set. Read-only. Use this for "grab this docs section / site area"; use
+    ``crawl4ai_scrape_many`` when you already have the exact URL list.
+
+    Args:
+        params (DeepCrawlInput): Validated input containing:
+            - url (str): start URL.
+            - max_depth (int): link-hops to follow (0–3).
+            - max_pages (int): total-page cap (1–50).
+            - include_external (bool): allow off-domain links.
+            - fit_markdown (bool): pruned Markdown per page.
+            - timeout_ms (int): per-page navigation timeout.
+
+    Returns:
+        str: JSON object:
+        {
+            "start_url": str,
+            "max_depth": int,
+            "count": int,          # pages returned (<= max_pages)
+            "pages": [
+                {"url": str, "depth": int|null, "success": bool,
+                 "status_code": int|null, "markdown": str}
+            ]
+        }
+        On failure, a string starting with "Error: ".
+    """
+    try:
+        results = await _deep_crawl(
+            params.url,
+            max_depth=params.max_depth,
+            max_pages=params.max_pages,
+            include_external=params.include_external,
+            timeout_ms=params.timeout_ms,
+        )
+    except RuntimeError as exc:  # missing dependency / unsupported SDK feature
+        return f"Error: {exc}"
+    except Exception as exc:  # noqa: BLE001
+        return _crawl_error(exc, params.url)
+
+    pages = []
+    for r in results:
+        meta = getattr(r, "metadata", None) or {}
+        success = bool(getattr(r, "success", False))
+        pages.append(
+            {
+                "url": getattr(r, "url", None),
+                "depth": meta.get("depth"),
+                "success": success,
+                "status_code": getattr(r, "status_code", None),
+                "markdown": _extract_markdown(r, params.fit_markdown) if success else "",
+            }
+        )
+    payload = {
+        "start_url": params.url,
+        "max_depth": params.max_depth,
+        "count": len(pages),
+        "pages": pages,
+    }
+    return json.dumps(payload, indent=2, ensure_ascii=False)
+
+
+@mcp.tool(
+    name="crawl4ai_screenshot",
+    annotations={
+        "title": "Screenshot a page to a PNG file",
+        "readOnlyHint": False,  # writes a PNG to the local filesystem
+        "destructiveHint": False,
+        "idempotentHint": False,  # re-fetches the live page; content may differ
+        "openWorldHint": True,
+    },
+)
+async def crawl4ai_screenshot(params: ScreenshotInput) -> str:
+    """Capture a full-page PNG screenshot and save it to disk.
+
+    Renders the page in the headless browser and writes a full-page PNG to
+    ``CRAWL4AI_OUTPUT_DIR`` (or the system temp dir). Returns the file path and
+    size — not the image bytes — to keep the model's context small; open or send
+    the file to view it. (A variant could return an MCP image for inline
+    rendering.) Read-only with respect to the target site; it does write one
+    local file.
+
+    Args:
+        params (ScreenshotInput): Validated input containing:
+            - url (str): URL to screenshot.
+            - timeout_ms (int): per-page navigation timeout.
+
+    Returns:
+        str: JSON object:
+        {
+            "url": str,
+            "screenshot_path": str,   # local PNG path
+            "bytes": int
+        }
+        On failure, a string starting with "Error: ".
+    """
+    try:
+        result = await _crawl_screenshot(params.url, timeout_ms=params.timeout_ms)
+    except RuntimeError as exc:
+        return f"Error: {exc}"
+    except Exception as exc:  # noqa: BLE001
+        return _crawl_error(exc, params.url)
+
+    if not getattr(result, "success", False):
+        return (
+            f"Error: failed to load {params.url} "
+            f"(status {getattr(result, 'status_code', None)}): "
+            f"{getattr(result, 'error_message', None) or 'unknown error'}"
+        )
+    b64 = getattr(result, "screenshot", None)
+    if not b64:
+        return (
+            f"Error: no screenshot was captured for {params.url} "
+            "(the page may not have finished rendering)."
+        )
+    try:
+        data = base64.b64decode(b64)
+    except (ValueError, TypeError) as exc:
+        return f"Error: could not decode screenshot for {params.url}: {exc}"
+
+    path = os.path.join(_screenshot_dir(), f"{_url_slug(params.url)}.png")
+    with open(path, "wb") as handle:
+        handle.write(data)
+    return json.dumps(
+        {"url": params.url, "screenshot_path": path, "bytes": len(data)},
+        indent=2,
+        ensure_ascii=False,
+    )
 
 
 # ---------------------------------------------------------------------------

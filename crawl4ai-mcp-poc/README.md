@@ -18,6 +18,8 @@ transport. It's a **starting skeleton** you can drop into Claude Code or
 | `crawl4ai_scrape_url` | One URL → Markdown (JS-rendered, boilerplate stripped) | `url`, `css_selector`, `fit_markdown`, `bypass_cache`, `timeout_ms`, `response_format` |
 | `crawl4ai_scrape_many` | 1–20 URLs → per-URL Markdown/JSON, concurrent | `urls`, `fit_markdown`, `bypass_cache`, `timeout_ms`, `response_format` |
 | `crawl4ai_extract_schema` | One URL → structured JSON records via a CSS schema | `url`, `base_selector`, `fields[]` (name/selector/type/attribute), `bypass_cache`, `timeout_ms` |
+| `crawl4ai_deep_crawl` | Start URL → BFS-crawl linked pages to depth N | `url`, `max_depth` (0–3), `max_pages` (1–50), `include_external`, `fit_markdown`, `timeout_ms` |
+| `crawl4ai_screenshot` | One URL → full-page PNG saved to disk | `url`, `timeout_ms` (writes to `CRAWL4AI_OUTPUT_DIR`) |
 
 Both are `readOnly` / `openWorld` (they fetch external pages; they don't log
 in, submit forms, or write anything).
@@ -26,7 +28,7 @@ in, submit forms, or write anything).
 
 ```
 crawl4ai-mcp-poc/
-├── server.py         # the FastMCP server (3 tools + lazy Crawl4AI adapter)
+├── server.py         # the FastMCP server (5 tools + lazy Crawl4AI adapter)
 ├── save_session.py   # capture a login session for authenticated scraping
 ├── requirements.txt  # mcp[cli] + crawl4ai
 ├── smoke_test.py     # live end-to-end check (scrapes example.com)
@@ -128,8 +130,8 @@ coming back logged-out.
   defeat hard anti-bot walls or sites like Instagram that disallow automated
   logins — mind each site's ToS, and reach for `browser-use` for genuinely
   agentic, interactive navigation.
-- **Not yet implemented (deliberately):** deep crawling (follow links to depth
-  N), screenshots, LLM-based extraction, and per-request proxy config. Crawl4AI
-  supports all of these — add them as further tools when the PoC graduates.
+- **Not yet implemented (deliberately):** LLM-based (schema-free) extraction,
+  PDF/media capture, and per-request proxy config. Crawl4AI supports these —
+  add them as further tools when the PoC graduates.
 - **No evals yet.** A natural follow-up (per the `mcp-builder` skill) is a small
   eval set that asks a model to answer questions only answerable by scraping.
