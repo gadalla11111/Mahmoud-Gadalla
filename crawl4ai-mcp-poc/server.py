@@ -7,8 +7,12 @@ into clean context with one tool call. Transport is stdio (local use).
 
 Tools
 -----
-- ``crawl4ai_scrape_url``  : one URL  -> Markdown (or JSON with metadata)
-- ``crawl4ai_scrape_many`` : N URLs   -> per-URL Markdown/JSON (concurrent)
+- ``crawl4ai_scrape_url``     : one URL  -> Markdown (or JSON with metadata)
+- ``crawl4ai_scrape_many``    : N URLs   -> per-URL Markdown/JSON (concurrent)
+- ``crawl4ai_extract_schema`` : one URL  -> structured JSON via a CSS schema
+
+Set ``CRAWL4AI_STORAGE_STATE`` to a saved Playwright session file (created by
+``save_session.py``) to run every scrape as a logged-in user.
 
 Crawl4AI is imported **lazily** on first tool call, so this module stays
 importable — and the MCP server registrable/inspectable — before the heavy
@@ -16,16 +20,18 @@ Playwright browser runtime is installed (`crawl4ai-setup`). Run
 ``python server.py --selfcheck`` to list the registered tools without a
 browser.
 
-This is a PoC: two focused read-only tools, not full Crawl4AI coverage.
+This is a PoC: three focused read-only tools, not full Crawl4AI coverage.
 """
 
 from __future__ import annotations
 
 import json
+import os
 from enum import Enum
+from types import SimpleNamespace
 from typing import Any, Optional
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("crawl4ai_mcp")
@@ -37,6 +43,10 @@ DEFAULT_TIMEOUT_MS = 30_000
 MAX_URLS = 20
 # Guard against dumping an enormous page straight into the model's context.
 MAX_MARKDOWN_CHARS = 200_000
+# Optional path to a Playwright storage-state file (cookies + localStorage) that
+# makes every scrape run as a logged-in session. Configured via env (not a tool
+# input, so an agent can't point it at arbitrary files); created by save_session.py.
+STORAGE_STATE_ENV = "CRAWL4AI_STORAGE_STATE"
 
 
 class ResponseFormat(str, Enum):
@@ -143,17 +153,110 @@ class ScrapeManyInput(BaseModel):
         return [_require_http_url(u) for u in v]
 
 
+class FieldType(str, Enum):
+    """How to read a field's value from its matched element."""
+
+    TEXT = "text"
+    ATTRIBUTE = "attribute"
+    HTML = "html"
+
+
+class FieldSpec(BaseModel):
+    """One field to pull out of each matched record."""
+
+    model_config = ConfigDict(str_strip_whitespace=True, extra="forbid")
+
+    name: str = Field(
+        ...,
+        description="Output key for this field (e.g. 'title', 'price').",
+        min_length=1,
+        max_length=100,
+    )
+    selector: str = Field(
+        ...,
+        description="CSS selector relative to the record's base_selector.",
+        min_length=1,
+        max_length=500,
+    )
+    type: FieldType = Field(
+        default=FieldType.TEXT,
+        description="'text' (inner text), 'attribute' (requires `attribute`), or 'html'.",
+    )
+    attribute: Optional[str] = Field(
+        default=None,
+        description="Attribute to read when type='attribute' (e.g. 'href', 'src').",
+        max_length=100,
+    )
+
+    @model_validator(mode="after")
+    def _require_attribute(self) -> "FieldSpec":
+        if self.type is FieldType.ATTRIBUTE and not self.attribute:
+            raise ValueError(
+                "field type 'attribute' requires an `attribute` name (e.g. 'href')"
+            )
+        return self
+
+
+class ExtractSchemaInput(BaseModel):
+    """Input for CSS-schema structured extraction."""
+
+    model_config = ConfigDict(
+        str_strip_whitespace=True, validate_assignment=True, extra="forbid"
+    )
+
+    url: str = Field(
+        ...,
+        description="Absolute http(s) URL to extract from.",
+        min_length=1,
+        max_length=2048,
+    )
+    base_selector: str = Field(
+        ...,
+        description="CSS selector matching each repeating record on the page "
+        "(e.g. 'div.product', 'article', 'tr.row').",
+        min_length=1,
+        max_length=500,
+    )
+    fields: list[FieldSpec] = Field(
+        ...,
+        description="Fields to extract from each matched record (1–50).",
+        min_length=1,
+        max_length=50,
+    )
+    bypass_cache: bool = Field(
+        default=False,
+        description="Bypass Crawl4AI's cache and re-fetch the live page.",
+    )
+    timeout_ms: int = Field(
+        default=DEFAULT_TIMEOUT_MS,
+        description="Per-page navigation timeout in milliseconds.",
+        ge=1_000,
+        le=120_000,
+    )
+
+    @field_validator("url")
+    @classmethod
+    def _validate_url(cls, v: str) -> str:
+        return _require_http_url(v)
+
+
 # ---------------------------------------------------------------------------
 # Crawl4AI adapter (lazy import + shared helpers)
 # ---------------------------------------------------------------------------
-def _import_crawl4ai():
-    """Import Crawl4AI on demand, with an actionable error if it's missing."""
+def _import_crawl4ai() -> SimpleNamespace:
+    """Import Crawl4AI on demand, with an actionable error if it's missing.
+
+    Returns a namespace of the Crawl4AI classes this server uses, so callers
+    read them by attribute (``c4.AsyncWebCrawler``) instead of unpacking a
+    positional tuple.
+    """
     try:
         from crawl4ai import (  # noqa: PLC0415  (intentional lazy import)
             AsyncWebCrawler,
             BrowserConfig,
             CacheMode,
             CrawlerRunConfig,
+            JsonCssExtractionStrategy,
         )
     except ImportError as exc:  # pragma: no cover - depends on environment
         raise RuntimeError(
@@ -162,7 +265,35 @@ def _import_crawl4ai():
             "  crawl4ai-setup      # installs the Playwright browser runtime\n"
             f"(original import error: {exc})"
         ) from exc
-    return AsyncWebCrawler, BrowserConfig, CacheMode, CrawlerRunConfig
+    return SimpleNamespace(
+        AsyncWebCrawler=AsyncWebCrawler,
+        BrowserConfig=BrowserConfig,
+        CacheMode=CacheMode,
+        CrawlerRunConfig=CrawlerRunConfig,
+        JsonCssExtractionStrategy=JsonCssExtractionStrategy,
+    )
+
+
+def _auth_kwargs() -> dict[str, str]:
+    """BrowserConfig kwargs for a saved auth session, or ``{}`` if none configured.
+
+    Pure (env + filesystem only) so it can be unit-tested without Crawl4AI.
+    Raises if the env var points at a path that does not exist.
+    """
+    state = os.environ.get(STORAGE_STATE_ENV)
+    if not state:
+        return {}
+    if not os.path.isfile(state):
+        raise RuntimeError(
+            f"{STORAGE_STATE_ENV} is set to '{state}', but no such file exists. "
+            "Create a session with `python save_session.py <login_url> <out.json>`."
+        )
+    return {"storage_state": state}
+
+
+def _browser_config(c4: SimpleNamespace):
+    """Headless BrowserConfig, loading a saved session if one is configured."""
+    return c4.BrowserConfig(headless=True, **_auth_kwargs())
 
 
 def _extract_markdown(result: Any, fit: bool) -> str:
@@ -221,16 +352,30 @@ async def _crawl(
     css_selector: Optional[str] = None,
 ) -> list[Any]:
     """Open a headless crawler and run one (``arun``) or many (``arun_many``)."""
-    AsyncWebCrawler, BrowserConfig, CacheMode, CrawlerRunConfig = _import_crawl4ai()
-    run_config = CrawlerRunConfig(
-        cache_mode=CacheMode.BYPASS if bypass_cache else CacheMode.ENABLED,
+    c4 = _import_crawl4ai()
+    run_config = c4.CrawlerRunConfig(
+        cache_mode=c4.CacheMode.BYPASS if bypass_cache else c4.CacheMode.ENABLED,
         page_timeout=timeout_ms,
         css_selector=css_selector,
     )
-    async with AsyncWebCrawler(config=BrowserConfig(headless=True)) as crawler:
+    async with c4.AsyncWebCrawler(config=_browser_config(c4)) as crawler:
         if len(urls) == 1:
             return [await crawler.arun(url=urls[0], config=run_config)]
         return list(await crawler.arun_many(urls=urls, config=run_config))
+
+
+async def _crawl_extract(
+    url: str, *, schema: dict[str, Any], bypass_cache: bool, timeout_ms: int
+) -> Any:
+    """Run a single crawl with a CSS-schema extraction strategy attached."""
+    c4 = _import_crawl4ai()
+    run_config = c4.CrawlerRunConfig(
+        cache_mode=c4.CacheMode.BYPASS if bypass_cache else c4.CacheMode.ENABLED,
+        page_timeout=timeout_ms,
+        extraction_strategy=c4.JsonCssExtractionStrategy(schema),
+    )
+    async with c4.AsyncWebCrawler(config=_browser_config(c4)) as crawler:
+        return await crawler.arun(url=url, config=run_config)
 
 
 # ---------------------------------------------------------------------------
@@ -378,6 +523,96 @@ async def crawl4ai_scrape_many(params: ScrapeManyInput) -> str:
         "count": len(dicts),
         "succeeded": sum(1 for d in dicts if d["success"]),
         "results": dicts,
+    }
+    return json.dumps(payload, indent=2, ensure_ascii=False)
+
+
+@mcp.tool(
+    name="crawl4ai_extract_schema",
+    annotations={
+        "title": "Extract structured records via a CSS schema",
+        "readOnlyHint": True,
+        "destructiveHint": False,
+        "idempotentHint": True,
+        "openWorldHint": True,
+    },
+)
+async def crawl4ai_extract_schema(params: ExtractSchemaInput) -> str:
+    """Extract repeating structured records from a page using a CSS schema.
+
+    Instead of Markdown, this returns typed JSON: for every element matching
+    ``base_selector`` it reads each declared field by its CSS ``selector``.
+    Ideal for lists/tables/cards (products, search results, rows) where you want
+    clean columns rather than prose. Selector-based, so no LLM tokens are spent
+    on the extraction itself. Read-only.
+
+    Args:
+        params (ExtractSchemaInput): Validated input containing:
+            - url (str): absolute http(s) URL.
+            - base_selector (str): selector for each repeating record.
+            - fields (list[FieldSpec]): each with name, selector, type
+              ('text' | 'attribute' | 'html'), and attribute (when
+              type='attribute').
+            - bypass_cache (bool), timeout_ms (int).
+
+    Returns:
+        str: JSON object:
+        {
+            "url": str,
+            "base_selector": str,
+            "count": int,          # records found
+            "records": [ {"<field name>": "<value>", ...}, ... ]
+        }
+        On failure, a string starting with "Error: ".
+
+    Examples:
+        - Product grid -> base_selector="div.product", fields=[
+            {"name": "title", "selector": "h2"},
+            {"name": "url", "selector": "a", "type": "attribute", "attribute": "href"}]
+        - Don't use for articles/prose — use crawl4ai_scrape_url for Markdown.
+    """
+    schema = {
+        "name": "extraction",
+        "baseSelector": params.base_selector,
+        "fields": [
+            {
+                "name": f.name,
+                "selector": f.selector,
+                "type": f.type.value,
+                **({"attribute": f.attribute} if f.type is FieldType.ATTRIBUTE else {}),
+            }
+            for f in params.fields
+        ],
+    }
+    try:
+        result = await _crawl_extract(
+            params.url,
+            schema=schema,
+            bypass_cache=params.bypass_cache,
+            timeout_ms=params.timeout_ms,
+        )
+    except RuntimeError as exc:  # missing dependency / bad session file
+        return f"Error: {exc}"
+    except Exception as exc:  # noqa: BLE001
+        return _crawl_error(exc, params.url)
+
+    if not getattr(result, "success", False):
+        return (
+            f"Error: failed to load {params.url} "
+            f"(status {getattr(result, 'status_code', None)}): "
+            f"{getattr(result, 'error_message', None) or 'unknown error'}"
+        )
+
+    raw = getattr(result, "extracted_content", None)
+    try:
+        records = json.loads(raw) if raw else []
+    except (TypeError, ValueError):
+        records = []
+    payload = {
+        "url": getattr(result, "url", params.url),
+        "base_selector": params.base_selector,
+        "count": len(records) if isinstance(records, list) else 0,
+        "records": records,
     }
     return json.dumps(payload, indent=2, ensure_ascii=False)
 

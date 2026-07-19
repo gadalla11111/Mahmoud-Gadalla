@@ -203,7 +203,9 @@ vendored, integrated, or built — these are notes to inform decisions. Add new 
 A **self-contained proof-of-concept MCP server** (Python / FastMCP, stdio) that wraps
 [Crawl4AI](https://github.com/unclecode/crawl4ai) to turn URLs into LLM-ready Markdown —
 built to validate the top pick from `research/web-scraping-tooling-scan-2026-07.md`. It
-exposes two read-only tools: `crawl4ai_scrape_url` and `crawl4ai_scrape_many`.
+exposes three read-only tools (`crawl4ai_scrape_url`, `crawl4ai_scrape_many`,
+`crawl4ai_extract_schema`) and can scrape behind a login via a saved session
+(`CRAWL4AI_STORAGE_STATE` env + `save_session.py`).
 
 - **Toolchain:** Python 3.11+. `pip install -r requirements.txt` (into a venv), then
   `crawl4ai-setup` to install the Playwright browser Crawl4AI drives.

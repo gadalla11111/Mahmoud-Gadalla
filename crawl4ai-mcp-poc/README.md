@@ -17,6 +17,7 @@ transport. It's a **starting skeleton** you can drop into Claude Code or
 |------|------|----------|
 | `crawl4ai_scrape_url` | One URL → Markdown (JS-rendered, boilerplate stripped) | `url`, `css_selector`, `fit_markdown`, `bypass_cache`, `timeout_ms`, `response_format` |
 | `crawl4ai_scrape_many` | 1–20 URLs → per-URL Markdown/JSON, concurrent | `urls`, `fit_markdown`, `bypass_cache`, `timeout_ms`, `response_format` |
+| `crawl4ai_extract_schema` | One URL → structured JSON records via a CSS schema | `url`, `base_selector`, `fields[]` (name/selector/type/attribute), `bypass_cache`, `timeout_ms` |
 
 Both are `readOnly` / `openWorld` (they fetch external pages; they don't log
 in, submit forms, or write anything).
@@ -25,7 +26,8 @@ in, submit forms, or write anything).
 
 ```
 crawl4ai-mcp-poc/
-├── server.py         # the FastMCP server (2 tools + lazy Crawl4AI adapter)
+├── server.py         # the FastMCP server (3 tools + lazy Crawl4AI adapter)
+├── save_session.py   # capture a login session for authenticated scraping
 ├── requirements.txt  # mcp[cli] + crawl4ai
 ├── smoke_test.py     # live end-to-end check (scrapes example.com)
 ├── .mcp.json         # example Claude Code registration
@@ -79,7 +81,31 @@ claude mcp add crawl4ai -- /abs/path/to/.venv/bin/python /abs/path/to/crawl4ai-m
 
 **ruflo** — register it the same way you wire any stdio MCP server into the
 harness (point the command at the venv's `python` and this `server.py`); the
-two tools then show up alongside ruflo's own MCP tools.
+three tools then show up alongside ruflo's own MCP tools.
+
+## Authenticated scraping (saved session)
+
+By default the tools scrape anonymously. To scrape **behind a login**, capture a
+browser session once and point the server at it:
+
+```bash
+# 1) Log in by hand; save cookies + localStorage to a file:
+python save_session.py https://SITE/login session.json
+
+# 2) Tell the server to use it — every scrape now runs authenticated:
+export CRAWL4AI_STORAGE_STATE="$PWD/session.json"
+python server.py
+```
+
+The session path is read from the **environment** (not a tool argument), so an
+agent can't point the server at arbitrary files and credentials never pass
+through the model. Sessions expire — re-run `save_session.py` when scrapes start
+coming back logged-out.
+
+> **On the Instagram thread:** this makes *authenticated* scraping possible, but
+> logging a bot into Instagram still runs into its ToS, 2FA, and checkpoints.
+> `save_session.py` needs you to complete a real login by hand, and IG may still
+> block automated reuse — treat it as "possible with care", not "solved".
 
 ## Design notes
 
@@ -97,14 +123,13 @@ two tools then show up alongside ruflo's own MCP tools.
 
 ## Caveats & next steps
 
-- **Auth / anti-bot.** This PoC does plain read-only scraping. It does **not**
-  log in — so it does not solve authenticated walls like the Instagram post in
-  the other research thread. For that you'd add a Crawl4AI browser profile with
-  a saved session (Crawl4AI supports it), or reach for `browser-use`; either way
-  mind the target site's ToS.
-- **Not yet implemented (deliberately):** structured/CSS-schema extraction,
-  deep crawling (follow links to depth N), screenshots, and per-request proxy
-  config. Crawl4AI supports all of these — add them as further tools when the
-  PoC graduates.
+- **Auth / anti-bot.** Scraping is read-only. It **can** run behind a login via
+  a saved session (see "Authenticated scraping" above), but it still doesn't
+  defeat hard anti-bot walls or sites like Instagram that disallow automated
+  logins — mind each site's ToS, and reach for `browser-use` for genuinely
+  agentic, interactive navigation.
+- **Not yet implemented (deliberately):** deep crawling (follow links to depth
+  N), screenshots, LLM-based extraction, and per-request proxy config. Crawl4AI
+  supports all of these — add them as further tools when the PoC graduates.
 - **No evals yet.** A natural follow-up (per the `mcp-builder` skill) is a small
   eval set that asks a model to answer questions only answerable by scraping.
