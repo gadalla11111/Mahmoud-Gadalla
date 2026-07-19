@@ -1,0 +1,9 @@
+{
+  "//": "Example Claude Code registration for the crawl4ai PoC. Copy into your project's .mcp.json (or run `claude mcp add`). Use an ABSOLUTE path to server.py, and point `command` at the interpreter from the venv where you installed requirements.txt.",
+  "mcpServers": {
+    "crawl4ai": {
+      "command": "python",
+      "args": ["/absolute/path/to/crawl4ai-mcp-poc/server.py"]
+    }
+  }
+}

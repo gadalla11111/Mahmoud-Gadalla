@@ -27,6 +27,7 @@ Mahmoud-Gadalla/
 │                           #   (pyproject.toml + uv.lock; source not vendored here)
 ├── social_media_review/    # A content-strategy deliverable (markdown, not code)
 ├── research/               # Reference research briefs on external tools (markdown, not code)
+├── crawl4ai-mcp-poc/       # PoC: MCP server wrapping Crawl4AI (Python/FastMCP, stdio)
 └── uv.lock                 # ⚠ Orphaned lockfile (see "Known loose ends")
 ```
 
@@ -39,6 +40,7 @@ Mahmoud-Gadalla/
 | The `rulebook-ai` Python package (deps, lockfile)            | `rulebook-ai/`            |
 | Social-media / content-review writing                        | `social_media_review/`    |
 | Reference research / evaluations of external tools & repos    | `research/`               |
+| Building/using the Crawl4AI MCP scraping server (PoC)         | `crawl4ai-mcp-poc/`       |
 
 If a request is ambiguous about which project it targets, ask before editing — these
 projects are unrelated and a change in one is meaningless in another.
@@ -196,6 +198,26 @@ vendored, integrated, or built — these are notes to inform decisions. Add new 
 
 ---
 
+## Sub-project: `crawl4ai-mcp-poc/`
+
+A **self-contained proof-of-concept MCP server** (Python / FastMCP, stdio) that wraps
+[Crawl4AI](https://github.com/unclecode/crawl4ai) to turn URLs into LLM-ready Markdown —
+built to validate the top pick from `research/web-scraping-tooling-scan-2026-07.md`. It
+exposes six tools (`crawl4ai_scrape_url`, `crawl4ai_scrape_many`,
+`crawl4ai_extract_schema`, `crawl4ai_deep_crawl`, `crawl4ai_screenshot`,
+`crawl4ai_capture_pdf`) and can scrape behind a login via a saved session
+(`CRAWL4AI_STORAGE_STATE` + `save_session.py`) or through a proxy (`CRAWL4AI_PROXY`).
+
+- **Toolchain:** Python 3.11+. `pip install -r requirements.txt` (into a venv), then
+  `crawl4ai-setup` to install the Playwright browser Crawl4AI drives.
+- **Verify:** `python server.py --selfcheck` lists the tools without a browser (Crawl4AI is
+  imported lazily); `python smoke_test.py` does a live scrape. Register with Claude Code via
+  its `.mcp.json` / `claude mcp add`.
+- **Scope:** deliberately minimal — read-only scraping, no auth/deep-crawl/screenshots. See
+  its own `README.md`. Self-contained; don't wire its deps into other sub-projects.
+
+---
+
 ## Repository-wide conventions
 
 ### Git & branching
@@ -250,3 +272,4 @@ into the specific sub-project and use its documented commands.
 | `rulebook-ai/`            | `pyproject.toml`                    | `uv lock` (no source to run here)          |
 | `social_media_review/`    | `kuji-eg-content-review.md`         | n/a (prose)                                |
 | `research/`               | `ai-agent-tooling-scan-2026-07.md`  | n/a (prose)                                |
+| `crawl4ai-mcp-poc/`       | `crawl4ai-mcp-poc/README.md`        | `python server.py --selfcheck`; `smoke_test.py` |
