@@ -1,15 +1,14 @@
 # crawl4ai-mcp-poc
 
-A minimal **proof-of-concept MCP server that wraps [Crawl4AI](https://github.com/unclecode/crawl4ai)**,
-turning any URL into **LLM-ready Markdown** through two MCP tools. Built to
-validate the top recommendation from
+A **proof-of-concept MCP server that wraps [Crawl4AI](https://github.com/unclecode/crawl4ai)**,
+turning any URL into **LLM-ready Markdown** (and more) through six MCP tools.
+Built to validate the top recommendation from
 [`research/web-scraping-tooling-scan-2026-07.md`](../research/web-scraping-tooling-scan-2026-07.md):
 *crawl4ai — OSS Python, MCP-native, stealth + auth, LLM-markdown — as the
 default scrape→markdown engine.*
 
-It's intentionally small: one file (`server.py`), two read-only tools, stdio
-transport. It's a **starting skeleton** you can drop into Claude Code or
-`ruflo`, not a productionised server.
+It stays a single-file server (`server.py`), stdio transport — a **skeleton**
+you can drop into Claude Code or `ruflo`, not a productionised server.
 
 ## What it exposes
 
@@ -20,15 +19,18 @@ transport. It's a **starting skeleton** you can drop into Claude Code or
 | `crawl4ai_extract_schema` | One URL → structured JSON records via a CSS schema | `url`, `base_selector`, `fields[]` (name/selector/type/attribute), `bypass_cache`, `timeout_ms` |
 | `crawl4ai_deep_crawl` | Start URL → BFS-crawl linked pages to depth N | `url`, `max_depth` (0–3), `max_pages` (1–50), `include_external`, `fit_markdown`, `timeout_ms` |
 | `crawl4ai_screenshot` | One URL → full-page PNG saved to disk | `url`, `timeout_ms` (writes to `CRAWL4AI_OUTPUT_DIR`) |
+| `crawl4ai_capture_pdf` | One URL → full-page PDF saved to disk | `url`, `timeout_ms` (writes to `CRAWL4AI_OUTPUT_DIR`) |
 
-Both are `readOnly` / `openWorld` (they fetch external pages; they don't log
-in, submit forms, or write anything).
+`scrape_url`, `scrape_many`, `extract_schema`, and `deep_crawl` are `readOnly` /
+`openWorld`. `screenshot` and `capture_pdf` also just fetch a page, but they
+additionally write **one local file** (so they're annotated non-read-only).
+None of the tools log in or submit forms.
 
 ## Layout
 
 ```
 crawl4ai-mcp-poc/
-├── server.py         # the FastMCP server (5 tools + lazy Crawl4AI adapter)
+├── server.py         # the FastMCP server (6 tools + lazy Crawl4AI adapter)
 ├── save_session.py   # capture a login session for authenticated scraping
 ├── requirements.txt  # mcp[cli] + crawl4ai
 ├── smoke_test.py     # live end-to-end check (scrapes example.com)
@@ -50,9 +52,8 @@ crawl4ai-setup        # installs the Playwright browser runtime Crawl4AI drives
 ```bash
 # 1) Structural check — lists the registered tools, no browser needed:
 python server.py --selfcheck
-#    crawl4ai_mcp: 2 tool(s) registered
-#      - crawl4ai_scrape_url: Fetch a single web page and return it as LLM-ready Markdown.
-#      - crawl4ai_scrape_many: Scrape several URLs concurrently and return their Markdown.
+#    crawl4ai_mcp: 6 tool(s) registered
+#      - crawl4ai_scrape_url / _scrape_many / _extract_schema / _deep_crawl / _screenshot / _capture_pdf
 
 # 2) Live end-to-end check — actually scrapes a page:
 python smoke_test.py                    # -> prints Markdown from example.com
@@ -83,7 +84,7 @@ claude mcp add crawl4ai -- /abs/path/to/.venv/bin/python /abs/path/to/crawl4ai-m
 
 **ruflo** — register it the same way you wire any stdio MCP server into the
 harness (point the command at the venv's `python` and this `server.py`); the
-three tools then show up alongside ruflo's own MCP tools.
+six tools then show up alongside ruflo's own MCP tools.
 
 ## Authenticated scraping (saved session)
 
@@ -109,6 +110,21 @@ coming back logged-out.
 > `save_session.py` needs you to complete a real login by hand, and IG may still
 > block automated reuse — treat it as "possible with care", not "solved".
 
+## Proxy
+
+Route every request through a proxy by setting `CRAWL4AI_PROXY` (also read from
+the environment, not a tool argument):
+
+```bash
+export CRAWL4AI_PROXY="http://user:pass@proxy.example.com:3128"
+python server.py
+```
+
+Any `user:pass@` credentials in the URL are parsed into Crawl4AI's `proxy_config`
+(`server` / `username` / `password`) — the deprecated bare-`proxy` field (a
+silent no-op in current Crawl4AI) is avoided. Useful for geo-routing or spreading
+requests across IPs to ease rate limits.
+
 ## Design notes
 
 - **Lazy Crawl4AI import.** `server.py` imports `crawl4ai` only on the first
@@ -131,7 +147,8 @@ coming back logged-out.
   logins — mind each site's ToS, and reach for `browser-use` for genuinely
   agentic, interactive navigation.
 - **Not yet implemented (deliberately):** LLM-based (schema-free) extraction,
-  PDF/media capture, and per-request proxy config. Crawl4AI supports these —
-  add them as further tools when the PoC graduates.
+  video/media capture, and per-call proxy override (the proxy is currently global
+  via `CRAWL4AI_PROXY`). Crawl4AI supports these — add them as further tools when
+  the PoC graduates.
 - **No evals yet.** A natural follow-up (per the `mcp-builder` skill) is a small
   eval set that asks a model to answer questions only answerable by scraping.

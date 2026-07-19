@@ -12,10 +12,12 @@ Tools
 - ``crawl4ai_extract_schema`` : one URL   -> structured JSON via a CSS schema
 - ``crawl4ai_deep_crawl``     : start URL -> BFS-crawl linked pages to depth N
 - ``crawl4ai_screenshot``     : one URL   -> full-page PNG saved to disk
+- ``crawl4ai_capture_pdf``    : one URL   -> full-page PDF saved to disk
 
-Set ``CRAWL4AI_STORAGE_STATE`` to a saved Playwright session file (created by
-``save_session.py``) to run every scrape as a logged-in user. Screenshots are
-written to ``CRAWL4AI_OUTPUT_DIR`` (or the system temp dir).
+Env config: ``CRAWL4AI_STORAGE_STATE`` = a saved Playwright session file (from
+``save_session.py``) to scrape logged-in; ``CRAWL4AI_PROXY`` = a proxy URL routed
+for every request; ``CRAWL4AI_OUTPUT_DIR`` = where screenshots/PDFs are written
+(defaults to the system temp dir).
 
 Crawl4AI is imported **lazily** on first tool call, so this module stays
 importable — and the MCP server registrable/inspectable — before the heavy
@@ -23,7 +25,7 @@ Playwright browser runtime is installed (`crawl4ai-setup`). Run
 ``python server.py --selfcheck`` to list the registered tools without a
 browser.
 
-This is a PoC: five focused tools, not full Crawl4AI coverage.
+This is a PoC: six focused tools, not full Crawl4AI coverage.
 """
 
 from __future__ import annotations
@@ -36,6 +38,7 @@ import tempfile
 from enum import Enum
 from types import SimpleNamespace
 from typing import Any, Optional
+from urllib.parse import urlparse
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 from mcp.server.fastmcp import FastMCP
@@ -53,6 +56,8 @@ MAX_MARKDOWN_CHARS = 200_000
 # makes every scrape run as a logged-in session. Configured via env (not a tool
 # input, so an agent can't point it at arbitrary files); created by save_session.py.
 STORAGE_STATE_ENV = "CRAWL4AI_STORAGE_STATE"
+# Optional proxy URL (e.g. "http://user:pass@host:port") routed for every scrape.
+PROXY_ENV = "CRAWL4AI_PROXY"
 
 
 class ResponseFormat(str, Enum):
@@ -294,8 +299,8 @@ class DeepCrawlInput(BaseModel):
         return _require_http_url(v)
 
 
-class ScreenshotInput(BaseModel):
-    """Input for capturing a full-page screenshot."""
+class PageCaptureInput(BaseModel):
+    """Input for capturing a page as an image or PDF (url + timeout only)."""
 
     model_config = ConfigDict(
         str_strip_whitespace=True, validate_assignment=True, extra="forbid"
@@ -303,7 +308,7 @@ class ScreenshotInput(BaseModel):
 
     url: str = Field(
         ...,
-        description="Absolute http(s) URL to screenshot.",
+        description="Absolute http(s) URL to capture.",
         min_length=1,
         max_length=2048,
     )
@@ -371,9 +376,34 @@ def _auth_kwargs() -> dict[str, str]:
     return {"storage_state": state}
 
 
+def _proxy_kwargs() -> dict[str, Any]:
+    """BrowserConfig kwargs for a proxy, or ``{}`` if CRAWL4AI_PROXY is unset.
+
+    Pure (env + urlparse only). Uses Crawl4AI's non-deprecated ``proxy_config``
+    (a plain dict BrowserConfig accepts), splitting any ``user:pass@`` credentials
+    out of the URL into separate fields.
+    """
+    proxy = os.environ.get(PROXY_ENV)
+    if not proxy:
+        return {}
+    parsed = urlparse(proxy)
+    if parsed.hostname:
+        server = f"{parsed.scheme or 'http'}://{parsed.hostname}"
+        if parsed.port:
+            server += f":{parsed.port}"
+    else:
+        server = proxy  # not a standard URL; hand it over verbatim
+    config: dict[str, str] = {"server": server}
+    if parsed.username:
+        config["username"] = parsed.username
+    if parsed.password:
+        config["password"] = parsed.password
+    return {"proxy_config": config}
+
+
 def _browser_config(c4: SimpleNamespace):
-    """Headless BrowserConfig, loading a saved session if one is configured."""
-    return c4.BrowserConfig(headless=True, **_auth_kwargs())
+    """Headless BrowserConfig with any configured saved session and/or proxy."""
+    return c4.BrowserConfig(headless=True, **_auth_kwargs(), **_proxy_kwargs())
 
 
 def _extract_markdown(result: Any, fit: bool) -> str:
@@ -516,8 +546,20 @@ async def _crawl_screenshot(url: str, *, timeout_ms: int) -> Any:
         return await crawler.arun(url=url, config=run_config)
 
 
-def _screenshot_dir() -> str:
-    """Directory to write screenshots to (CRAWL4AI_OUTPUT_DIR or the temp dir)."""
+async def _crawl_pdf(url: str, *, timeout_ms: int) -> Any:
+    """Load ``url`` with PDF capture enabled and return the result."""
+    c4 = _import_crawl4ai()
+    run_config = c4.CrawlerRunConfig(
+        cache_mode=c4.CacheMode.BYPASS,  # a fresh PDF wants the live page
+        page_timeout=timeout_ms,
+        pdf=True,
+    )
+    async with c4.AsyncWebCrawler(config=_browser_config(c4)) as crawler:
+        return await crawler.arun(url=url, config=run_config)
+
+
+def _output_dir() -> str:
+    """Directory to write captures to (CRAWL4AI_OUTPUT_DIR or the temp dir)."""
     out = os.environ.get("CRAWL4AI_OUTPUT_DIR") or tempfile.gettempdir()
     os.makedirs(out, exist_ok=True)
     return out
@@ -853,7 +895,7 @@ async def crawl4ai_deep_crawl(params: DeepCrawlInput) -> str:
         "openWorldHint": True,
     },
 )
-async def crawl4ai_screenshot(params: ScreenshotInput) -> str:
+async def crawl4ai_screenshot(params: PageCaptureInput) -> str:
     """Capture a full-page PNG screenshot and save it to disk.
 
     Renders the page in the headless browser and writes a full-page PNG to
@@ -864,7 +906,7 @@ async def crawl4ai_screenshot(params: ScreenshotInput) -> str:
     local file.
 
     Args:
-        params (ScreenshotInput): Validated input containing:
+        params (PageCaptureInput): Validated input containing:
             - url (str): URL to screenshot.
             - timeout_ms (int): per-page navigation timeout.
 
@@ -901,11 +943,81 @@ async def crawl4ai_screenshot(params: ScreenshotInput) -> str:
     except (ValueError, TypeError) as exc:
         return f"Error: could not decode screenshot for {params.url}: {exc}"
 
-    path = os.path.join(_screenshot_dir(), f"{_url_slug(params.url)}.png")
+    path = os.path.join(_output_dir(), f"{_url_slug(params.url)}.png")
     with open(path, "wb") as handle:
         handle.write(data)
     return json.dumps(
         {"url": params.url, "screenshot_path": path, "bytes": len(data)},
+        indent=2,
+        ensure_ascii=False,
+    )
+
+
+@mcp.tool(
+    name="crawl4ai_capture_pdf",
+    annotations={
+        "title": "Save a page as a PDF file",
+        "readOnlyHint": False,  # writes a PDF to the local filesystem
+        "destructiveHint": False,
+        "idempotentHint": False,  # re-fetches the live page; content may differ
+        "openWorldHint": True,
+    },
+)
+async def crawl4ai_capture_pdf(params: PageCaptureInput) -> str:
+    """Render a page and save it as a PDF file.
+
+    Loads the page in the headless browser and writes a full PDF to
+    ``CRAWL4AI_OUTPUT_DIR`` (or the system temp dir). Returns the file path and
+    size rather than the bytes, to keep the model's context small — open or send
+    the file to view it. Read-only with respect to the target site; it writes
+    one local file.
+
+    Args:
+        params (PageCaptureInput): Validated input containing:
+            - url (str): URL to capture.
+            - timeout_ms (int): per-page navigation timeout.
+
+    Returns:
+        str: JSON object:
+        {
+            "url": str,
+            "pdf_path": str,   # local PDF path
+            "bytes": int
+        }
+        On failure, a string starting with "Error: ".
+    """
+    try:
+        result = await _crawl_pdf(params.url, timeout_ms=params.timeout_ms)
+    except RuntimeError as exc:
+        return f"Error: {exc}"
+    except Exception as exc:  # noqa: BLE001
+        return _crawl_error(exc, params.url)
+
+    if not getattr(result, "success", False):
+        return (
+            f"Error: failed to load {params.url} "
+            f"(status {getattr(result, 'status_code', None)}): "
+            f"{getattr(result, 'error_message', None) or 'unknown error'}"
+        )
+    raw = getattr(result, "pdf", None)
+    if not raw:
+        return (
+            f"Error: no PDF was captured for {params.url} "
+            "(the page may not have finished rendering)."
+        )
+    if isinstance(raw, str):  # some SDK builds return base64 text
+        try:
+            data = base64.b64decode(raw)
+        except (ValueError, TypeError) as exc:
+            return f"Error: could not decode PDF for {params.url}: {exc}"
+    else:
+        data = raw
+
+    path = os.path.join(_output_dir(), f"{_url_slug(params.url)}.pdf")
+    with open(path, "wb") as handle:
+        handle.write(data)
+    return json.dumps(
+        {"url": params.url, "pdf_path": path, "bytes": len(data)},
         indent=2,
         ensure_ascii=False,
     )
