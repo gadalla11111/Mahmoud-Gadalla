@@ -1,8 +1,9 @@
-# Repo Research Brief — 10 AI/agent/dev-tooling projects
+# Repo Research Brief — 11 AI/agent/dev-tooling projects
 
 **Date:** 2026-07-19
 **Method:** one WebFetch per repo (public GitHub landing page + README). Star counts are **approximate** (read off the page, rounded). License/maturity noted where the page stated it.
 **Lens:** what each project is + **how it maps to your repo** (`ruflo` harness, `qoder-plugins-publish`, `rulebook-ai`, `social_media_review`, and the deleted ANA-Blueprint skills idea).
+**Update (2026-07-19):** appended `huggingface/ml-intern` as an 11th entry (agent-harness tier).
 
 ---
 
@@ -14,6 +15,7 @@
 | `bytedance/deer-flow` | Long-horizon multi-agent | 77k | Python (LangGraph) | MIT | v2.0 rewrite, Jun 2026 | ★★★ peer to `ruflo` **and** ANA-Blueprint (skills/memory/sub-agents) |
 | `D4Vinci/Scrapling` | Adaptive web scraping | 70k | Python (Playwright) | BSD-3 | 92% cov, MCP server | ★★★ solves your **IG/anti-bot** wall; fits `rulebook-ai` + qoder Playwright |
 | `decolua/9router` | LLM router / cost proxy | 22k | JS (Next) | MIT | 73 releases | ★★★ maps to `ruflo` 3-tier routing + the "cut Claude costs" theme |
+| `huggingface/ml-intern` | Autonomous ML-engineer agent | 11k | Python + TS | Apache-2.0 | 490 commits, no formal releases | ★★☆ agent-harness peer to `ruflo`, HF/ML-specialized |
 | `infiniflow/ragflow` | RAG engine | 85k | Go + Python + TS | Apache-2.0 | Very mature | ★★☆ feeds `ruflo` rag-memory + doc-heavy qoder plugins |
 | `johannesjo/parallel-code` | Parallel coding agents | 0.9k | TS (Electron/Solid) | MIT | Small but active | ★★☆ complements `ruflo` swarm (worktree-per-agent) |
 | `JCodesMore/ai-website-cloner-template` | Claude-Code clone command | 29k | TS (Next/shadcn) | MIT | Viral template, 5 releases | ★★☆ command/skill-authoring pattern; design cloning |
@@ -35,6 +37,9 @@
 
 **`johannesjo/parallel-code` — 0.9k★, TS/Electron, MIT.** Runs Claude Code, Codex, and Gemini **side by side, each in its own git worktree**; side-by-side diff review, selective merge.
 → *Fit:* a lightweight, concrete take on `ruflo`'s parallel-swarm premise. The worktree-isolation pattern is exactly how agent parallelism is done safely (this very session's sub-agents use worktree isolation too). Good reference even if you don't adopt it.
+
+**`huggingface/ml-intern` — 11k★, Python+TS, Apache-2.0.** *(added 2026-07-19)* "An open-source ML engineer that reads papers, trains models, and ships models." A **domain-specialized autonomous agent** on Hugging Face's stack: agentic loop with tool routing across HF docs/datasets/compute/GitHub, automatic **context compaction**, **approval workflows** for sensitive ops, real-time event streaming, and pluggable backends (local via Ollama/vLLM or hosted HF Inference).
+→ *Fit:* a useful **contrast** to `ruflo` rather than a peer to adopt — same harness anatomy (agentic loop, tool routing, context management, approval gates) but **verticalized for ML engineering and wired to HF infra**, where `ruflo` is general-purpose orchestration. Worth mining for two patterns specifically: its **approval-gate placement** (echoes the belief-gate / "verify-on-novelty" idea from the deleted ANA-Blueprint) and its **context-compaction** loop. Not relevant to the business-domain qoder plugins.
 
 ### 2. Routing & cost control
 
@@ -85,7 +90,7 @@ Ranked by relevance × how cleanly they'd become a reusable skill/plugin:
 3. **RAGFlow** — retrieval skill for the doc-heavy qoder plugins.
 4. **DeerFlow** — mine for the skill/memory *schema*, not as a skill itself.
 5. **ai-website-cloner** — reference for authoring multi-phase commands.
-6–10. goose / parallel-code / dyad / pipecat / daytona — watch/adjacency; daytona only as a concept.
+6–11. goose / parallel-code / ml-intern / dyad / pipecat / daytona — watch/adjacency; ml-intern only for its approval-gate + context-compaction patterns, daytona only as a concept.
 
 ---
 
