@@ -178,7 +178,9 @@ upstream repo — here you can update dependencies/lockfile but cannot run its t
 A single deliverable: `kuji-eg-content-review.md` — a content-strategy **swipe file /
 genre teardown** for kuji.eg ("Claude & AI, made practical for marketers and developers").
 This is **documentation/writing, not code**. Edit it as prose; there is nothing to build
-or test.
+or test. Heads-up: it cites skill paths like `anthropic_skills/social-audit` and
+`anthropic_skills/claude-api` that were removed with the ANA Blueprint (see "Known loose
+ends") and **no longer resolve in-tree** — treat them as historical references, not live paths.
 
 ---
 
@@ -217,6 +219,15 @@ into the specific sub-project and use its documented commands.
 - **`rulebook-ai/` has no source** (manifest + lock only), as noted above.
 - **Version strings drift inside `ruflo/`** across `package.json` (3.28.0), the plugin
   manifest (2.5.0), and doc headers — this is expected for a bulk-vendored upstream tree.
+- **Git history shows a larger, since-removed system — don't try to revive it uninvited.**
+  Before today's four sub-projects were assembled, this repo hosted an **"ANA Blueprint"**
+  self-evolving-agent project: `ANA_BLUEPRINT.md`, a ~338-line root `CLAUDE.md` full of
+  routing tables, an `anthropic_skills/<name>/SKILL.md` skill library, a `.memory/` store,
+  a `ClaudeForge/` tree, and a `.github/workflows/ana-blueprint.yml` CI loop. It was
+  **intentionally stripped out** in the `Finalize` commit (`29779d0b`). So `git log` /
+  `git show` will surface files, skills, and conventions that **do not exist in the current
+  tree**. Treat them as deliberately-removed history, not as scaffolding to restore — if a
+  task seems to want that system back, confirm first.
 
 ## Quick reference: per-project entry points
 
