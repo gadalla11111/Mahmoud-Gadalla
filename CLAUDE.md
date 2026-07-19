@@ -26,6 +26,7 @@ Mahmoud-Gadalla/
 ├── rulebook-ai/            # Python package "rulebook-ai" — manifest + lockfile only
 │                           #   (pyproject.toml + uv.lock; source not vendored here)
 ├── social_media_review/    # A content-strategy deliverable (markdown, not code)
+├── research/               # Reference research briefs on external tools (markdown, not code)
 └── uv.lock                 # ⚠ Orphaned lockfile (see "Known loose ends")
 ```
 
@@ -37,6 +38,7 @@ Mahmoud-Gadalla/
 | Publishing / packaging the Chinese-market business plugins   | `qoder-plugins-publish/`  |
 | The `rulebook-ai` Python package (deps, lockfile)            | `rulebook-ai/`            |
 | Social-media / content-review writing                        | `social_media_review/`    |
+| Reference research / evaluations of external tools & repos    | `research/`               |
 
 If a request is ambiguous about which project it targets, ask before editing — these
 projects are unrelated and a change in one is meaningless in another.
@@ -184,6 +186,16 @@ ends") and **no longer resolve in-tree** — treat them as historical references
 
 ---
 
+## Sub-project: `research/`
+
+Reference material, not code: dated markdown **research briefs / evaluations of external
+tools and repositories** (e.g. `ai-agent-tooling-scan-2026-07.md`, a scan of external
+AI/agent/dev-tooling projects mapped to this repo's sub-projects). Nothing here is
+vendored, integrated, or built — these are notes to inform decisions. Add new scans as
+`research/<topic>-<YYYY-MM>.md`; there is nothing to build or test.
+
+---
+
 ## Repository-wide conventions
 
 ### Git & branching
@@ -237,3 +249,4 @@ into the specific sub-project and use its documented commands.
 | `qoder-plugins-publish/`  | `README.md`, `INDEX.md`             | `python automate.py <setup\|prep\|submit\|status\|all>` |
 | `rulebook-ai/`            | `pyproject.toml`                    | `uv lock` (no source to run here)          |
 | `social_media_review/`    | `kuji-eg-content-review.md`         | n/a (prose)                                |
+| `research/`               | `ai-agent-tooling-scan-2026-07.md`  | n/a (prose)                                |
