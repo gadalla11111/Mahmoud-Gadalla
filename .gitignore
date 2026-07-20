@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.whl
+venv/
+.venv/
+env/
+
+# Node / JavaScript
+node_modules/
+.npm
+.eslintcache
+.next/
+.svelte-kit/
+.output/
+
+# Rust
+target/
+*.rs.bk
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment / Secrets
+.env
+.env.local
+*.pem
+*.key
+
+# UV / Python tooling
+.uv/
+
+# AI tool generated files (keep out of repo)
+.qoder/
+.claude/
+
+# Research artifacts
+results/
+
+# Lockfile exceptions (keep uv.lock at root)
+# uv.lock
