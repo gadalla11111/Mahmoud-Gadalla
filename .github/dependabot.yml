@@ -1,0 +1,6 @@
+version: 2
+updates: []
+# Disable Dependabot scanning on vendored code in ruflo/
+# The ruflo/ directory contains vendored upstream code (ruvnet/claude-flow)
+# with its own dependency management. Vulnerabilities in these dependencies
+# should be tracked upstream, not in this aggregation repo.
