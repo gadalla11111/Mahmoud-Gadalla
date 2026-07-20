@@ -52,6 +52,9 @@ Thumbs.db
 .qoder/
 .claude/
 
+# Vendored upstream lockfiles (do not track)
+ruflo/package-lock.json
+
 # Research artifacts
 results/
 
